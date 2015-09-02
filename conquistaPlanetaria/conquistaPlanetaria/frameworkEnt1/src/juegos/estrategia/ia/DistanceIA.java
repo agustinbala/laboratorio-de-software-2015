@@ -5,7 +5,7 @@ import java.util.Set;
 import juegos.estrategia.Planet;
 import juegos.estrategia.PlanetWars;
 
-public class DistanceIA extends AbstractIA {
+public class DistanceIA implements AbstractIA {
 
 	public void makeAMove(PlanetWars pw) {
 		HashMap<Planet, Planet> ataques = new HashMap<Planet, Planet>();
@@ -28,7 +28,7 @@ public class DistanceIA extends AbstractIA {
 						minPlanet = planeta;
 					}
 			}
-					ataques.put(mio, minPlanet);
+			ataques.put(mio, minPlanet);
 				
 			
 			}
