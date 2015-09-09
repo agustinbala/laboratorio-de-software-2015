@@ -1,8 +1,5 @@
 package juegos.estrategia.ia;
 
-import java.util.HashMap;
-import java.util.Set;
-
 import juegos.estrategia.Planet;
 import juegos.estrategia.PlanetWars;
 
