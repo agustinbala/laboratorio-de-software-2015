@@ -5,15 +5,13 @@ import juegos.estrategia.bots.remotes.strategy.StrategyBot;
 import juegos.estrategia.ia.AbstractIA;
 import juegos.estrategia.ia.DistanceIA;
 
-public class RemoteBot implements IRemoteBot{
+public abstract class RemoteBot implements IRemoteBot{
 
-	@Override
-	public AbstractIA getAbstractIA(PlanetWars pw) {
-		return StrategyBot.getInstance().getStrategy(pw);		
-	}
+	
+	public abstract AbstractIA getAbstractIA(PlanetWars pw) ;
 	
 	public static void main(String[] args) {
-		(new RemoteBot()).play();
+		(new StrategicBot()).play();
 	}
 	
 	public void play() {
