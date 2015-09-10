@@ -4,8 +4,12 @@
 // this file if you know what you're doing.
 package juegos.estrategia;
 
-import java.util.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 
 public class PlanetWars {
