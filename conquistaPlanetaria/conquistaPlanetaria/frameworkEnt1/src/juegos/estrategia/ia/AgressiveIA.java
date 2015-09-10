@@ -1,8 +1,5 @@
 package juegos.estrategia.ia;
 
-import java.util.HashMap;
-import java.util.Set;
-
 import juegos.estrategia.Planet;
 import juegos.estrategia.PlanetWars;
 
@@ -11,8 +8,7 @@ public class AgressiveIA implements AbstractIA {
 	@Override
 	public void makeAMove(PlanetWars pw) {
 		
-		try{
-			
+		
 		if (pw.getMyPlanets().length == 0) {
 		
 			return;
@@ -48,10 +44,7 @@ public class AgressiveIA implements AbstractIA {
 			pw.issueOrder(mioMayor.planetID(), minPlanet.planetID(), minCantNaves + 1);
 		}
 		return;
-		}
-		catch(Exception e){
-			System.out.println("EL ERROR ES NUESTROOOOOOOOOOOOO");
-		}
+		
 	}
 
 }
