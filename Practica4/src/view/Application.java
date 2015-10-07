@@ -1,17 +1,19 @@
 package view;
 
 
-
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
@@ -19,6 +21,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 
 import org.jfugue.player.Player;
 
@@ -29,28 +34,29 @@ public class Application {
 
 	static Figura figura;
 	static Nota nota;
-	static ArrayList<Nota> notas = new ArrayList<Nota>();
-	static ArrayList<Figura> figuras = new ArrayList<Figura>();
 	static JTextField labelNotas;
 
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws IOException {
 		final JFrame frame = new JFrame("Pentagrama");
 		frame.setSize(950, 450);
-
+		frame.setLocationRelativeTo(null);
+		
 		Container cont = frame.getContentPane();
 		JComponent contentpane = (JComponent) cont;
+		
 		frame.getContentPane().setLayout(new GridLayout(1, 2));
 
 		JPanel panelIzquierdo = new JPanel();
 		panelIzquierdo
 				.setLayout(new BoxLayout(panelIzquierdo, BoxLayout.Y_AXIS));
-
+		
+		setMargin(panelIzquierdo,25);
 		panelIzquierdo.setLayout(new BoxLayout(panelIzquierdo, BoxLayout.Y_AXIS));
-		panelIzquierdo.setBorder(BorderFactory.createLineBorder(Color.black));
+		
 		
 		JPanel panel1 = new JPanel();
-		
+		panel1.setAlignmentX(JPanel.CENTER_ALIGNMENT);
 		panel1.setLayout(new GridLayout(7, 1));
 		panel1.add(createPanel(Figura.REDONDA));
 		panel1.add(createPanel(Figura.BLANCA));
@@ -62,15 +68,15 @@ public class Application {
 		panelIzquierdo.add(panel1);
 
 		JPanel panel2 = new JPanel();
-		panel2.setBorder(BorderFactory.createLineBorder(Color.black));
-		panel2.setLayout(new GridLayout(2,1));
+		panel2.setLayout(new GridLayout(4,1));
+		panel2.add(new JLabel());
 		labelNotas = new JTextField();
 		labelNotas.setFocusable(true);
 		labelNotas.setBorder(BorderFactory.createLineBorder(Color.black));
 		panel2.add(labelNotas);
-		
+		panel2.add(new JLabel());
 		JButton button = new JButton("Reproducir");
-
+		button.setSize(150, 80);
 	
 		button.addMouseListener(new MouseListener() {
 			
@@ -102,12 +108,17 @@ public class Application {
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
 				JDialog dialog = new JDialog(frame);
-				dialog.setSize(400, 100);
+				dialog.setTitle("Reproducir patron");
+				dialog.setLocationRelativeTo(frame);
+				dialog.setSize(300, 200);
 				dialog.setAlwaysOnTop(true);
 				dialog.setModal(true);
-				dialog.setLayout(new GridLayout(1, 2) );
+				dialog.setLayout(new  GridLayout(1, 1) );
+				JPanel panelInterno = new JPanel(new GridLayout(3,1) );
+				setMargin(panelInterno,25);
+				dialog.add(panelInterno);
 				final JTextField textField = new JTextField();
-				dialog.add(textField);
+				panelInterno.add(textField);
 				JButton button = new JButton("Reproducir");
 				button.addMouseListener(new MouseListener() {
 					
@@ -141,7 +152,9 @@ public class Application {
 						 player.play(textField.getText());
 					}
 				});
-				dialog.add(button);
+				panelInterno.add(new JLabel());
+				panelInterno.add(button);
+				
 				dialog.setVisible(true);
 			}
 		});
@@ -190,6 +203,20 @@ public class Application {
 
 		frame.setVisible(true);
 
+	}
+	
+	private static void setMargin(JPanel component, Integer margin){
+		Border current = component.getBorder();
+		Border empty = new EmptyBorder(margin,margin,margin,margin);
+		if (current == null)
+		{
+			component.setBorder(empty);
+		}
+		else
+		{
+			component.setBorder(new CompoundBorder(empty, current));
+		}
+		
 	}
 
 	private static void setSelectedNote(MouseEvent arg0) {
@@ -247,11 +274,17 @@ public class Application {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(1, 3));
 		panel.add(new JLabel(figuraTemp.getNombre()));
-		panel.add(new JLabel("------------------------->"));
+		panel.add(new JLabel("----------------------------->"));
 
-		JPanelWithBackground panelImagen = new JPanelWithBackground(
-				figuraTemp.getImagen());
-		panelImagen.addMouseListener(new MouseListener() {
+		/*JPanelWithBackground panelImagen = new JPanelWithBackground(
+				figuraTemp.getImagen());*/
+		
+		BufferedImage img = ImageIO.read(new File(figuraTemp.getImagen()));
+		ImageIcon icon = new ImageIcon(img);
+        JLabel label = new JLabel(icon);
+        label.setAlignmentY(JLabel.TOP_ALIGNMENT);
+        
+        label.addMouseListener(new MouseListener() {
 
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
@@ -284,7 +317,7 @@ public class Application {
 				Application.figura = figuraTemp;
 			}
 		});
-		panel.add(panelImagen);
+		panel.add(label);
 
 		return panel;
 	}
