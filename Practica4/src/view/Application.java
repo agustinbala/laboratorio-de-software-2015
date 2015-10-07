@@ -2,6 +2,7 @@ package view;
 
 
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
@@ -30,7 +31,7 @@ public class Application {
 	static Nota nota;
 	static ArrayList<Nota> notas = new ArrayList<Nota>();
 	static ArrayList<Figura> figuras = new ArrayList<Figura>();
-	static JLabel labelNotas;
+	static JTextField labelNotas;
 
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws IOException {
@@ -63,7 +64,8 @@ public class Application {
 		JPanel panel2 = new JPanel();
 		panel2.setBorder(BorderFactory.createLineBorder(Color.black));
 		panel2.setLayout(new GridLayout(2,1));
-		labelNotas = new JLabel();
+		labelNotas = new JTextField();
+		labelNotas.setFocusable(true);
 		labelNotas.setBorder(BorderFactory.createLineBorder(Color.black));
 		panel2.add(labelNotas);
 		
@@ -235,7 +237,7 @@ public class Application {
 			nota = null;
 			figura = null;
 		} else {
-			System.out.println("No se eligi� nunca nota");
+			System.out.println("No se eligio nunca nota");
 
 		}
 	}
@@ -244,8 +246,8 @@ public class Application {
 			throws IOException {
 		JPanel panel = new JPanel();
 		panel.setLayout(new GridLayout(1, 3));
-		panel.add(new Label(figuraTemp.getNombre()));
-		panel.add(new Label("------------------------->"));
+		panel.add(new JLabel(figuraTemp.getNombre()));
+		panel.add(new JLabel("------------------------->"));
 
 		JPanelWithBackground panelImagen = new JPanelWithBackground(
 				figuraTemp.getImagen());
