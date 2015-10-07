@@ -2,17 +2,23 @@ package view;
 
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Label;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import org.jfugue.player.Player;
 
 import view.domain.Figura;
 import view.domain.Nota;
@@ -21,11 +27,11 @@ public class Application {
 	
 	static Figura figura;
 	static Nota nota;
-	static Label labelNotas;
+	static JLabel labelNotas;
 
 	@SuppressWarnings("deprecation")
 	public static void main(String[] args) throws IOException {
-		JFrame frame = new JFrame("Contenedor de Alto nivel");
+		final JFrame frame = new JFrame("Pentagrama");
 		frame.setSize(950, 450);
 		
 		
@@ -35,9 +41,10 @@ public class Application {
 		
 		JPanel panelIzquierdo = new JPanel();
 		panelIzquierdo.setLayout(new BoxLayout(panelIzquierdo, BoxLayout.Y_AXIS));
+		panelIzquierdo.setBorder(BorderFactory.createLineBorder(Color.black));
 		
 		JPanel panel1 = new JPanel();
-		panel1.setSize(225, 750);
+		
 		panel1.setLayout(new GridLayout(7, 1));		
 		panel1.add(createPanel(Figura.REDONDA));
 		panel1.add(createPanel(Figura.BLANCA));
@@ -49,17 +56,97 @@ public class Application {
 		panelIzquierdo.add(panel1);
 		
 		JPanel panel2 = new JPanel();
-		panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
-		panel2.setSize(225, 200);
-		labelNotas = new Label();
-		labelNotas.setSize(100, 100);
+		panel2.setBorder(BorderFactory.createLineBorder(Color.black));
+		panel2.setLayout(new GridLayout(2,1));
+		labelNotas = new JLabel();
+		labelNotas.setBorder(BorderFactory.createLineBorder(Color.black));
 		panel2.add(labelNotas);
+		
+		JButton button = new JButton("Reproducir");
+
+	
+		button.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+				
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				JDialog dialog = new JDialog(frame);
+				dialog.setSize(400, 100);
+				dialog.setAlwaysOnTop(true);
+				dialog.setModal(true);
+				dialog.setLayout(new GridLayout(1, 2) );
+				final JTextField textField = new JTextField();
+				dialog.add(textField);
+				JButton button = new JButton("Reproducir");
+				button.addMouseListener(new MouseListener() {
+					
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void mousePressed(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void mouseExited(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						 Player player = new Player();
+						 player.play(textField.getText());
+					}
+				});
+				dialog.add(button);
+				dialog.setVisible(true);
+			}
+		});
+		
+		panel2.add(button);
 		panelIzquierdo.add(panel2);
 		
 		contentpane.add(panelIzquierdo);
 		
 		
 		JPanelWithBackground panelImagen = new JPanelWithBackground("images/penta.png");
+		panelImagen.setBorder(BorderFactory.createLineBorder(Color.black));
 		panelImagen.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -96,7 +183,7 @@ public class Application {
 		});
 		contentpane.add(panelImagen);		
 
-		frame.show();
+		frame.setVisible(true);
 
 	}
 	
