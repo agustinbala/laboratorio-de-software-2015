@@ -9,6 +9,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 
 public class Application {
@@ -188,17 +189,18 @@ public class Application {
 
 	private static void setViewPanelInferior() {
 
-		JPanel container = new JPanel();
+		JTable container = new JTable();
 		container.setBackground(Color.WHITE);
+		container.setModel(new javax.swing.table.DefaultTableModel(
+	            new Object [][] {
+	                {"Fecha/Hora envio", "Contenido", "Contexto", "Categoria", "Niño", "Etiquetas"}
+	            },
+	            new String [] {
+	                "", "Col 1", "Col 2", "Col 3", "Col 4"
+	            }
+	        ));
+		
 
-		// Esta grilla va a ser dinamica, dependiendo de lo que trae en la BD.
-		container.setLayout(new GridLayout(6, 6));
-		container.add(new JLabel("Fecha/Hora envio"));
-		container.add(new JLabel("Contenido"));
-		container.add(new JLabel("Contexto"));
-		container.add(new JLabel("Categoria"));
-		container.add(new JLabel("Niño"));
-		container.add(new JLabel("Etiquetas"));
 
 		panelInferior.add(container);
 
