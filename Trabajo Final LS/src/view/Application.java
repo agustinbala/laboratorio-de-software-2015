@@ -2,6 +2,7 @@ package view;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -12,6 +13,12 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
+import db.DBHelper;
+import db.NotificationDAO;
+import db.NotificationDAOImpl;
+import domain.Notification;
+import parser.JSONParser;
+
 public class Application {
 
 	private static JFrame frame;
@@ -19,12 +26,19 @@ public class Application {
 	private static JPanel panelIzquierdo;
 	private static JPanel panelDerecho;
 	private static JPanel panelInferior;
+	private static DBHelper dbHelper = new DBHelper();
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		initialize();
+		NotificationDAO dao = new NotificationDAOImpl();
+		dbHelper.createDB();
+		List<Notification> notificaciones = new JSONParser().getNotificationList();
+		for (Notification notification : notificaciones) {
+			dao.saveNotification(notification);
+		}
 	}
 
 	/**
