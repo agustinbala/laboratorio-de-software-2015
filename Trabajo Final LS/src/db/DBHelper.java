@@ -22,7 +22,7 @@ public class DBHelper {
 		}
 	}
 	
-	private void closeConnection() throws SQLException {
+	public void closeConnection() throws SQLException {
 		try {
 			stmt.close();
 			connection.close();
@@ -54,7 +54,7 @@ public class DBHelper {
                  " CONTEXT            TEXT     NOT NULL, " + 
                  " CATEGORY        TEXT, " + 
                  " CHILD         TEXT,"+ 
-                 " DATE_SENT     DATE)"; 
+                 " DATE_SENT     DATE DEFAULT (datetime('now','localtime')))"; 
 		 stmt.executeUpdate(sqlNotification);
 		 String sqlLabel = "CREATE TABLE  LABEL "+
 				 "(ID INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -71,9 +71,7 @@ public class DBHelper {
 		ResultSet result = null;
 		try {
 			openConnection();
-			result= stmt.executeQuery(query);
-			closeConnection();
-			
+			result = stmt.executeQuery(query);			
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 		}

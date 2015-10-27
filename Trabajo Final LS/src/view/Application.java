@@ -2,6 +2,7 @@ package view;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -10,14 +11,16 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
+import parser.JSONParser;
 import db.DBHelper;
 import db.NotificationDAO;
 import db.NotificationDAOImpl;
 import domain.Notification;
-import parser.JSONParser;
 
 public class Application {
 
@@ -27,24 +30,28 @@ public class Application {
 	private static JPanel panelDerecho;
 	private static JPanel panelInferior;
 	private static DBHelper dbHelper = new DBHelper();
-
+	private static List<Notification> notificationList;
+	
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		initialize();
 		NotificationDAO dao = new NotificationDAOImpl();
 		dbHelper.createDB();
 		List<Notification> notificaciones = new JSONParser().getNotificationList();
 		for (Notification notification : notificaciones) {
 			dao.saveNotification(notification);
 		}
+		notificationList = dao.listNotifications();
+		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private static void initialize() {
+		
+		
 		frame = new JFrame("Hermes");
 		frame.setSize(950, 450);
 		frame.setLocationRelativeTo(null);
@@ -204,19 +211,28 @@ public class Application {
 	private static void setViewPanelInferior() {
 
 		JTable container = new JTable();
-		container.setBackground(Color.WHITE);
-		container.setModel(new javax.swing.table.DefaultTableModel(
-	            new Object [][] {
-	                {"Fecha/Hora envio", "Contenido", "Contexto", "Categoria", "Niño", "Etiquetas"}
-	            },
-	            new String [] {
-	                "", "Col 1", "Col 2", "Col 3", "Col 4"
-	            }
-	        ));
 		
-
-
-		panelInferior.add(container);
+		container.setBackground(Color.WHITE);
+		
+		
+		DefaultTableModel model = new DefaultTableModel();
+		model.setColumnIdentifiers(new String [] { "Fecha/Hora envio", "Contenido", "Contexto", "Categoria", "Niño", "Etiquetas"});
+		
+		for (Notification notification : notificationList) {
+			List<String> not = new ArrayList<String>();
+			not.add(notification.getDate().toString());
+			not.add(notification.getContent());
+			not.add(notification.getContext());
+			not.add(notification.getCategory());
+			not.add(notification.getChild());
+			//TODO
+			not.add("");
+			model.addRow(not.toArray());
+		}
+		
+		container.setModel(model);
+		JScrollPane scrollPane= new  JScrollPane(container);
+		panelInferior.add(scrollPane);
 
 	}
 
