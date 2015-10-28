@@ -16,40 +16,48 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import parser.JSONParser;
+import util.MockUtil;
 import db.DBHelper;
+import db.LabelDAO;
+import db.LabelDAOImpl;
 import db.NotificationDAO;
 import db.NotificationDAOImpl;
+import domain.Label;
 import domain.Notification;
 
 public class Application {
 
-	private static JFrame frame;
-	private static JPanel panelSuperior;
-	private static JPanel panelIzquierdo;
-	private static JPanel panelDerecho;
-	private static JPanel panelInferior;
-	private static DBHelper dbHelper = new DBHelper();
-	private static List<Notification> notificationList;
+	private JFrame frame;
+	private JPanel panelSuperior;
+	private JPanel panelIzquierdo;
+	private JPanel panelDerecho;
+	private JPanel panelInferior;
+	private DBHelper dbHelper = new DBHelper();
+	private List<Notification> notificationList;
+	private List<String> etiquetas = new ArrayList<String>();
+	private NotificationDAO notificationDao = new NotificationDAOImpl();
+	private LabelDAO labelDao = new LabelDAOImpl();
 	
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		NotificationDAO dao = new NotificationDAOImpl();
-		dbHelper.createDB();
-		List<Notification> notificaciones = new JSONParser().getNotificationList();
-		for (Notification notification : notificaciones) {
-			dao.saveNotification(notification);
-		}
-		notificationList = dao.listNotifications();
-		initialize();
+	public static void main(String[] args) {		
+		new Application().initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private static void initialize() {
+	public void initialize() {
+		Boolean isNewDB = dbHelper.createDB();
+		if(isNewDB){
+			MockUtil.initData();
+		}
+		
+		notificationList = notificationDao.listNotifications();		
+		for (Label label : labelDao.listLabels()) {
+			etiquetas.add(label.getName());
+		};
 		
 		
 		frame = new JFrame("Hermes");
@@ -92,7 +100,7 @@ public class Application {
 		frame.setVisible(true);
 	}
 
-	private static void setViewPanelIzquierdo() {
+	private void setViewPanelIzquierdo() {
 
 		JLabel titulo = new JLabel("Filtros");
 
@@ -142,13 +150,11 @@ public class Application {
 
 		container.add(fecha);
 
-		JPanel etiqueta = new JPanel();
-		etiqueta.setLayout(new GridLayout(1, 2));
-		etiqueta.add(new JLabel("Etiqueta"));
-		String[] etiquetas = { "Option1", "Option2", "Option3", "Option4",
-				"Option15" };
-		etiqueta.add(new JComboBox(etiquetas));
-		container.add(etiqueta);
+		JPanel etiquetaLabel = new JPanel();
+		etiquetaLabel.setLayout(new GridLayout(1, 2));
+		etiquetaLabel.add(new JLabel("Etiqueta"));		
+		etiquetaLabel.add(new JComboBox(etiquetas.toArray()));
+		container.add(etiquetaLabel);
 
 		JButton filtrar = new JButton("Filtrar");
 
@@ -158,14 +164,11 @@ public class Application {
 
 	}
 
-	private static void setViewPanelDerecho() {
+	private void setViewPanelDerecho() {
 
 		JLabel titulo = new JLabel("Etiquetas");
-
 		JPanel container = new JPanel();
-
 		container.setLayout(new GridLayout(5, 1));
-
 		JPanel crearEtiqueta = new JPanel();
 		crearEtiqueta.setLayout(new GridLayout(1, 3));
 		crearEtiqueta.add(new JLabel("Crear etiqueta"));
@@ -173,27 +176,24 @@ public class Application {
 		crearEtiqueta.add(new JButton("Crear"));
 		container.add(crearEtiqueta);
 
-		String[] etiquetas = { "Option1", "Option2", "Option3", "Option4",
-				"Option15" };
-
 		JPanel eliminarEtiqueta = new JPanel();
 		eliminarEtiqueta.setLayout(new GridLayout(1, 3));
 		eliminarEtiqueta.add(new JLabel("Eliminar etiqueta"));
-		eliminarEtiqueta.add(new JComboBox(etiquetas));
+		eliminarEtiqueta.add(new JComboBox(etiquetas.toArray()));
 		eliminarEtiqueta.add(new JButton("Eliminar"));
 		container.add(eliminarEtiqueta);
 
 		JPanel asignarEtiqueta = new JPanel();
 		asignarEtiqueta.setLayout(new GridLayout(1, 3));
 		asignarEtiqueta.add(new JLabel("Asignar etiqueta"));
-		asignarEtiqueta.add(new JComboBox(etiquetas));
+		asignarEtiqueta.add(new JComboBox(etiquetas.toArray()));
 		asignarEtiqueta.add(new JButton("Asignar"));
 		container.add(asignarEtiqueta);
 
 		JPanel renombrarEtiqueta = new JPanel();
 		renombrarEtiqueta.setLayout(new GridLayout(1, 2));
 		renombrarEtiqueta.add(new JLabel("Renombrar etiqueta"));
-		renombrarEtiqueta.add(new JComboBox(etiquetas));
+		renombrarEtiqueta.add(new JComboBox(etiquetas.toArray()));
 		container.add(renombrarEtiqueta);
 
 		JPanel nuevoNombreEtiqueta = new JPanel();
@@ -208,7 +208,7 @@ public class Application {
 
 	}
 
-	private static void setViewPanelInferior() {
+	private void setViewPanelInferior() {
 
 		JTable container = new JTable();
 		
@@ -219,15 +219,7 @@ public class Application {
 		model.setColumnIdentifiers(new String [] { "Fecha/Hora envio", "Contenido", "Contexto", "Categoria", "Niño", "Etiquetas"});
 		
 		for (Notification notification : notificationList) {
-			List<String> not = new ArrayList<String>();
-			not.add(notification.getDate().toString());
-			not.add(notification.getContent());
-			not.add(notification.getContext());
-			not.add(notification.getCategory());
-			not.add(notification.getChild());
-			//TODO
-			not.add("");
-			model.addRow(not.toArray());
+			model.addRow(notification.toArray());
 		}
 		
 		container.setModel(model);

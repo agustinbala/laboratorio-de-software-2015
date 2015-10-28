@@ -1,7 +1,11 @@
 package domain;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 
 public class Notification {
 
@@ -13,6 +17,7 @@ public class Notification {
 	private Date date;
 	private List<Label> labels;
 	
+	DateFormat df = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 	
 	
 	public Integer getId() {
@@ -57,8 +62,17 @@ public class Notification {
 	public void setLabels(List<Label> labels) {
 		this.labels = labels;
 	}
-	
-	
+	public Object[] toArray() {
+		List<String> not = new ArrayList<String>();
+		not.add(df.format(this.getDate()));
+		not.add(this.getContent());
+		not.add(this.getContext());
+		not.add(this.getCategory());
+		not.add(this.getChild());
+		//TODO
+		not.add("");
+		return not.toArray();
+	}
 	
 
 }

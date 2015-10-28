@@ -10,6 +10,7 @@ public class DBHelper {
 
 	private Connection connection = null;
 	private Statement stmt = null;
+
 	
 	private void openConnection() throws Exception{
 		try {
@@ -32,19 +33,22 @@ public class DBHelper {
 		}
 	}
 	
-	public void createDB() {		
+	public Boolean createDB() {	
+		Boolean isNewDB = false;
 		try {
 			openConnection();
 			ResultSet rs = stmt.executeQuery( "SELECT name FROM sqlite_master WHERE type='table';" );
-			if(!rs.next()){
-				initTables();
+			isNewDB = !rs.next();
+			if(isNewDB){
+				initTables();				
 			}			
 		    rs.close();
-		    closeConnection();
+		    closeConnection();		    
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 		}
 		System.out.println("Opened database successfully");
+		return isNewDB;
 	}
 	
 	private void initTables() throws SQLException{
@@ -56,10 +60,12 @@ public class DBHelper {
                  " CHILD         TEXT,"+ 
                  " DATE_SENT     DATE DEFAULT (datetime('now','localtime')))"; 
 		 stmt.executeUpdate(sqlNotification);
+		 
 		 String sqlLabel = "CREATE TABLE  LABEL "+
 				 "(ID INTEGER PRIMARY KEY AUTOINCREMENT," +
 				   "NAME TEXT NOT NULL)";
 		 stmt.executeUpdate(sqlLabel);
+		 
 		 String sqlRelationship = "CREATE TABLE  NOTIFICATION_LABEL "+
 				 "(ID_NOTIFICATION INT NOT NULL," +
 				   "ID_LABEL INT NOT NULL)";
