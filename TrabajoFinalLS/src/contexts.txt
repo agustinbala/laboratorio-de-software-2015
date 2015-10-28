@@ -1,0 +1,11 @@
+[
+	{
+	  "name": "Patio"
+	},
+	{
+	  "name": "Hogar"
+	},
+	{
+	  "name": "Establo"
+	}
+]

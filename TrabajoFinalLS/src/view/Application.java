@@ -16,12 +16,14 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
+import service.Service;
+import service.ServiceImpl;
 import util.MockUtil;
 import db.DBHelper;
-import db.LabelDAO;
-import db.LabelDAOImpl;
-import db.NotificationDAO;
-import db.NotificationDAOImpl;
+import domain.Category;
+import domain.Child;
+import domain.Content;
+import domain.Context;
 import domain.Label;
 import domain.Notification;
 
@@ -33,10 +35,14 @@ public class Application {
 	private JPanel panelDerecho;
 	private JPanel panelInferior;
 	private DBHelper dbHelper = new DBHelper();
-	private List<Notification> notificationList;
+
 	private List<String> etiquetas = new ArrayList<String>();
-	private NotificationDAO notificationDao = new NotificationDAOImpl();
-	private LabelDAO labelDao = new LabelDAOImpl();
+	private List<String> contexts = new ArrayList<String>();
+	private List<String> categories = new ArrayList<String>();
+	private List<String> childs = new ArrayList<String>();
+	private List<String> contents = new ArrayList<String>();
+	private Service service = new ServiceImpl();
+
 	
 	/**
 	 * Launch the application.
@@ -52,13 +58,9 @@ public class Application {
 		Boolean isNewDB = dbHelper.createDB();
 		if(isNewDB){
 			MockUtil.initData();
-		}
+		}				
 		
-		notificationList = notificationDao.listNotifications();		
-		for (Label label : labelDao.listLabels()) {
-			etiquetas.add(label.getName());
-		};
-		
+		initComboBoxList();
 		
 		frame = new JFrame("Hermes");
 		frame.setSize(950, 450);
@@ -100,6 +102,29 @@ public class Application {
 		frame.setVisible(true);
 	}
 
+	private void initComboBoxList() {
+		for (Label label : service.getLabelList()) {
+			etiquetas.add(label.getName());
+		};
+
+		for (Context context : service.getContextList()) {
+			contexts.add(context.getName());
+		};
+		
+		for (Category category : service.getCategoryList()) {
+			categories.add(category.getName());
+		};
+		
+		for (Child child : service.getChildList()) {
+			childs.add(child.getName());
+		};
+		
+		for (Content content : service.getContentList()) {
+			contents.add(content.getName());
+		};		
+		
+	}
+
 	private void setViewPanelIzquierdo() {
 
 		JLabel titulo = new JLabel("Filtros");
@@ -111,30 +136,25 @@ public class Application {
 		JPanel contenido = new JPanel();
 		contenido.setLayout(new GridLayout(1, 2));
 		contenido.add(new JLabel("Contenido"));
-		String[] options = { "Option1", "Option2", "Option3", "Option4",
-				"Option15" };
-		contenido.add(new JComboBox(options));
+		
+		contenido.add(new JComboBox(contents.toArray()));
 		container.add(contenido);
 
 		JPanel contexto = new JPanel();
 		contexto.setLayout(new GridLayout(1, 4));
 		contexto.add(new JLabel("Contexto"));
-		String[] contextos = { "Option1", "Option2", "Option3", "Option4",
-				"Option15" };
-		contexto.add(new JComboBox(contextos));
+		contexto.add(new JComboBox(contexts.toArray()));
+		
 		contexto.add(new JLabel("Categoria"));
-		String[] categorias = { "Option1", "Option2", "Option3", "Option4",
-				"Option15" };
-		contexto.add(new JComboBox(categorias));
+		contexto.add(new JComboBox(categories.toArray()));
 
 		container.add(contexto);
 
 		JPanel niño = new JPanel();
 		niño.setLayout(new GridLayout(1, 2));
 		niño.add(new JLabel("Niño"));
-		String[] niños = { "Option1", "Option2", "Option3", "Option4",
-				"Option15" };
-		niño.add(new JComboBox(niños));
+	
+		niño.add(new JComboBox(childs.toArray()));
 		container.add(niño);
 
 		JPanel fecha = new JPanel();
@@ -218,7 +238,7 @@ public class Application {
 		DefaultTableModel model = new DefaultTableModel();
 		model.setColumnIdentifiers(new String [] { "Fecha/Hora envio", "Contenido", "Contexto", "Categoria", "Niño", "Etiquetas"});
 		
-		for (Notification notification : notificationList) {
+		for (Notification notification : service.getNotificationList()) {
 			model.addRow(notification.toArray());
 		}
 		

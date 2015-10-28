@@ -54,10 +54,10 @@ public class DBHelper {
 	private void initTables() throws SQLException{
 		 String sqlNotification = "CREATE TABLE  NOTIFICATION " +
                  "(ID INTEGER PRIMARY KEY AUTOINCREMENT," +
-                 " CONTENT           TEXT    NOT NULL, " + 
-                 " CONTEXT            TEXT     NOT NULL, " + 
-                 " CATEGORY        TEXT, " + 
-                 " CHILD         TEXT,"+ 
+                 " CONTENT           INTEGER    NOT NULL, " + 
+                 " CONTEXT            INTEGER     NOT NULL, " + 
+                 " CATEGORY        INTEGER, " + 
+                 " CHILD         INTEGER,"+ 
                  " DATE_SENT     DATE DEFAULT (datetime('now','localtime')))"; 
 		 stmt.executeUpdate(sqlNotification);
 		 
@@ -70,6 +70,27 @@ public class DBHelper {
 				 "(ID_NOTIFICATION INT NOT NULL," +
 				   "ID_LABEL INT NOT NULL)";
 		 stmt.executeUpdate(sqlRelationship);
+		 
+		 String sqlCategory = "CREATE TABLE  CATEGORY"+
+				 "(ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+				   "NAME TEXT NOT NULL)";
+		 stmt.executeUpdate(sqlCategory);
+		 
+		 String sqlContext = "CREATE TABLE  CONTEXT"+
+				 "(ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+				   "NAME TEXT NOT NULL)";
+		 stmt.executeUpdate(sqlContext);
+		 
+		 String sqlChild = "CREATE TABLE  CHILD"+
+				 "(ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+				   "NAME TEXT NOT NULL)";
+		 stmt.executeUpdate(sqlChild);
+		 
+		 String sqlContent = "CREATE TABLE  CONTENT"+
+				 "(ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+				   "NAME TEXT NOT NULL)";
+		 stmt.executeUpdate(sqlContent);
+		
 		 System.out.println("Tables created successfully");
 	}
 	

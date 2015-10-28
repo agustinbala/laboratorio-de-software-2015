@@ -5,17 +5,16 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Vector;
 
 public class Notification {
 
 	private Integer id;
-	private String content;
-	private String category;
-	private String context;
-	private String child;
+	private Content content;
+	private Category category;
+	private Context context;
+	private Child child;
 	private Date date;
-	private List<Label> labels;
+	private List<Label> labels = new ArrayList<Label>();
 	
 	DateFormat df = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
 	
@@ -26,28 +25,29 @@ public class Notification {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getContent() {
+	
+	public Content getContent() {
 		return content;
 	}
-	public void setContent(String content) {
+	public void setContent(Content content) {
 		this.content = content;
 	}
-	public String getCategory() {
+	public Category getCategory() {
 		return category;
 	}
-	public void setCategory(String category) {
+	public void setCategory(Category category) {
 		this.category = category;
 	}
-	public String getContext() {
+	public Context getContext() {
 		return context;
 	}
-	public void setContext(String context) {
+	public void setContext(Context context) {
 		this.context = context;
 	}
-	public String getChild() {
+	public Child getChild() {
 		return child;
 	}
-	public void setChild(String child) {
+	public void setChild(Child child) {
 		this.child = child;
 	}
 	public Date getDate() {
@@ -65,12 +65,15 @@ public class Notification {
 	public Object[] toArray() {
 		List<String> not = new ArrayList<String>();
 		not.add(df.format(this.getDate()));
-		not.add(this.getContent());
-		not.add(this.getContext());
-		not.add(this.getCategory());
-		not.add(this.getChild());
-		//TODO
-		not.add("");
+		not.add(this.getContent().getName());
+		not.add(this.getContext().getName());
+		not.add(this.getCategory().getName());
+		not.add(this.getChild().getName());
+		String labels = "";
+		for (Label label : this.labels) {
+			labels += label.getName();
+		}
+		not.add(labels);
 		return not.toArray();
 	}
 	
