@@ -90,6 +90,11 @@ public class DBHelper {
 				 "(ID INTEGER PRIMARY KEY AUTOINCREMENT," +
 				   "NAME TEXT NOT NULL)";
 		 stmt.executeUpdate(sqlContent);
+		 
+		 String sqlLabelNotification = "CREATE TABLE  LABELNOTIFICATION"+
+				 "(ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+				   "IdLABEL int NOT NULL," + "IdNOTIFICATION int NOT NULL" +")";
+		 stmt.executeUpdate(sqlLabelNotification);
 		
 		 System.out.println("Tables created successfully");
 	}
@@ -114,5 +119,8 @@ public class DBHelper {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 		}
 	}
+	
+	
+
 
 }

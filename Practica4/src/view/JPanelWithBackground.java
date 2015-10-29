@@ -2,7 +2,6 @@ package view;
 
 import java.awt.Graphics;
 import java.awt.Image;
-import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -18,7 +17,7 @@ public class JPanelWithBackground extends JPanel {
 	  // Here, we use the constructor to load the image. This
 	  // can vary depending on the use case of the panel.
 	  public JPanelWithBackground(String fileName) throws IOException {	   
-		  backgroundImage = ImageIO.read(new File(fileName));	    
+		  backgroundImage = ImageIO.read(getClass().getResourceAsStream("/images/penta.png"));	    
 	  }
 
 	  public void paintComponent(Graphics g) {

@@ -11,4 +11,5 @@ public interface NotificationDAO {
 	public void saveNotification(Notification notificacion);
 	
 	public List<Notification> listNotifications();
+
 }

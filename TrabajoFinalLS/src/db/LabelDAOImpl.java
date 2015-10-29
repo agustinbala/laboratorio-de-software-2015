@@ -2,15 +2,10 @@ package db;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import domain.Label;
-import domain.Notification;
 
 public class LabelDAOImpl implements LabelDAO {
 
@@ -26,6 +21,23 @@ public class LabelDAOImpl implements LabelDAO {
 				label.setId(rs.getInt("id"));
 				label.setName(rs.getString("name"));				
 			}
+		} catch (Exception e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			return null;
+		}
+		return label;
+	}
+	
+	@Override
+	public Label getLabel(String name) {
+		ResultSet rs = dbHelper.executeQuery("select * from LABEL where name='"+name+"'");
+		Label label = null;
+		try {
+			
+				label = new Label();
+				label.setId(rs.getInt("id"));
+				label.setName(rs.getString("name"));				
+				dbHelper.closeConnection();
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			return null;
@@ -66,4 +78,28 @@ public class LabelDAOImpl implements LabelDAO {
 		return result;
 	}
 
+	@Override
+	public void deleteLabel(Label label) {
+		Label aux = getLabel(label.getName());
+		try {
+			String query = "DELETE FROM LABEL WHERE LABEL.id=" + aux.getId();
+			dbHelper.executeUpdate(query);			
+		} catch (Exception e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+		}	
+	}
+
+	@Override
+	public void updateLabel(Label label, String name) {
+		Label aux = getLabel(label.getName());
+		try {
+			String query = "UPDATE LABEL SET name='"+name+"' WHERE id="+aux.getId();
+			dbHelper.executeUpdate(query);				
+		} catch (Exception e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+		}	
+		
+	}
+
+	
 }

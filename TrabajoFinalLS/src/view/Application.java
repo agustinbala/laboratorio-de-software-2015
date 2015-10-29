@@ -2,12 +2,15 @@ package view;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -192,35 +195,227 @@ public class Application {
 		JPanel crearEtiqueta = new JPanel();
 		crearEtiqueta.setLayout(new GridLayout(1, 3));
 		crearEtiqueta.add(new JLabel("Crear etiqueta"));
-		crearEtiqueta.add(new JTextField());
-		crearEtiqueta.add(new JButton("Crear"));
+		final JTextField labelName = new JTextField();
+		crearEtiqueta.add(labelName);
+		JButton crear = new JButton("Crear");
+		crear.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+				
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				 Label newLabel = new Label(labelName.getText());
+				 service.CreateLabel(newLabel);
+				 for (Label label : service.getLabelList()) {
+						etiquetas.add(label.getName());
+				};				
+
+			}
+		});
+		crearEtiqueta.add(crear);
 		container.add(crearEtiqueta);
 
 		JPanel eliminarEtiqueta = new JPanel();
 		eliminarEtiqueta.setLayout(new GridLayout(1, 3));
 		eliminarEtiqueta.add(new JLabel("Eliminar etiqueta"));
-		eliminarEtiqueta.add(new JComboBox(etiquetas.toArray()));
-		eliminarEtiqueta.add(new JButton("Eliminar"));
+		final JComboBox labels = new JComboBox(etiquetas.toArray());
+		eliminarEtiqueta.add(labels);
+		JButton eliminar = new JButton("Eliminar");
+		eliminar.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+				
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Label label = new Label((String) labels.getSelectedItem());
+				service.DeleteLabel(label);
+				 for (Label aux : service.getLabelList()) {
+						etiquetas.add(aux.getName());
+				};
+
+			}
+		});
+		eliminarEtiqueta.add(eliminar);
 		container.add(eliminarEtiqueta);
 
 		JPanel asignarEtiqueta = new JPanel();
 		asignarEtiqueta.setLayout(new GridLayout(1, 3));
 		asignarEtiqueta.add(new JLabel("Asignar etiqueta"));
-		asignarEtiqueta.add(new JComboBox(etiquetas.toArray()));
-		asignarEtiqueta.add(new JButton("Asignar"));
+		final JComboBox asignarEtiquetas = new JComboBox(etiquetas.toArray());
+		asignarEtiqueta.add(asignarEtiquetas);
+		JButton asignar = new JButton("Asignar");
+		asignar.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+            }
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+				
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				 JDialog dialog = new JDialog();
+				 dialog.setSize(400, 400);
+				 dialog.add(new JTextField("Notificaciones"));
+				 List<Notification> notificaciones = new ArrayList<Notification>();
+				 
+				 for (Notification noti : service.getNotificationList()) {
+						notificaciones.add(noti);
+					};
+				 final JComboBox notificacionesBox = new JComboBox(notificaciones.toArray());
+				 JButton button = new JButton("Aceptar");
+				 button.addMouseListener(new MouseListener() {
+						
+						@Override
+						public void mouseReleased(MouseEvent e) {
+							// TODO Auto-generated method stub
+							
+			            }
+						@Override
+						public void mousePressed(MouseEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+						@Override
+						public void mouseExited(MouseEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+						@Override
+						public void mouseEntered(MouseEvent e) {
+							// TODO Auto-generated method stub
+							
+						}
+							
+						@Override
+						public void mouseClicked(MouseEvent e) {
+							Notification noti = new Notification();
+							noti = (Notification)notificacionesBox.getSelectedItem();
+							Label label = service.getLabel(asignarEtiquetas.getSelectedItem().toString());
+							service.asingLabel(noti.getId(), label.getId());
+							
+						}});
+		         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		         dialog.setVisible(true);		
+
+			}
+		});
+		asignarEtiqueta.add(asignar);
 		container.add(asignarEtiqueta);
 
 		JPanel renombrarEtiqueta = new JPanel();
 		renombrarEtiqueta.setLayout(new GridLayout(1, 2));
 		renombrarEtiqueta.add(new JLabel("Renombrar etiqueta"));
-		renombrarEtiqueta.add(new JComboBox(etiquetas.toArray()));
+		final JComboBox labelsUpdate = new JComboBox(etiquetas.toArray());
+		renombrarEtiqueta.add(labelsUpdate);
 		container.add(renombrarEtiqueta);
 
 		JPanel nuevoNombreEtiqueta = new JPanel();
 		nuevoNombreEtiqueta.setLayout(new GridLayout(1, 3));
 		nuevoNombreEtiqueta.add(new JLabel("Nuevo nombre"));
-		nuevoNombreEtiqueta.add(new JTextField());
-		nuevoNombreEtiqueta.add(new JButton("Renombrar"));
+		final JTextField newLabel = new JTextField();
+		nuevoNombreEtiqueta.add(newLabel); 
+		JButton renombrar = new JButton("Renombrar");
+		renombrar.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+				
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Label label = new Label((String) labelsUpdate.getSelectedItem());
+				service.updateLabel(label, newLabel.getText());
+				 for (Label aux : service.getLabelList()) {
+						etiquetas.add(aux.getName());
+				};
+
+			}
+		});
+		nuevoNombreEtiqueta.add(renombrar);
 		container.add(nuevoNombreEtiqueta);
 
 		panelDerecho.add(titulo);

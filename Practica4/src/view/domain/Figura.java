@@ -2,13 +2,13 @@ package view.domain;
 
 public enum Figura {
 
-	REDONDA("Redonda","W", "images/redonda.png"),
-	BLANCA("Blanca","H", "images/blanca.png"),
-	NEGRA("Negra","Q", "images/negra.png"),
-	CORCHEA("Corchea","I", "images/corchea.png"),
-	SEMICORCHEA("Semicorchea","S", "images/semicorchea.png"),
-	FUSA("Fusa","T", "images/fusa.png"),
-	SEMIFUSA("Semifusa","X", "images/semifusa.png");
+	REDONDA("Redonda","/1", "/images/redonda.png"),
+	BLANCA("Blanca","/0.5", "/images/blanca.png"),
+	NEGRA("Negra","/0.25", "/images/negra.png"),
+	CORCHEA("Corchea","/0.125", "/images/corchea.png"),
+	SEMICORCHEA("Semicorchea","/0.0625", "/images/semicorchea.png"),
+	FUSA("Fusa","/0.03125", "/images/fusa.png"),
+	SEMIFUSA("Semifusa","/0.015625", "/images/semifusa.png");
 	
 
 	private String descripcion;

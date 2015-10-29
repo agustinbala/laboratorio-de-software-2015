@@ -1,9 +1,7 @@
 package db;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,16 +13,19 @@ import domain.Content;
 import domain.Context;
 import domain.Notification;
 
-public class NotificationDAOImpl implements NotificationDAO{
+public class NotificationDAOImpl implements NotificationDAO {
 
 	private DBHelper dbHelper = new DBHelper();
-	
+
 	@Override
 	public Notification getNotification(Integer id) {
-		ResultSet rs = dbHelper.executeQuery("select N.id as id, CA.id as categoryId, CA.name as categoryName, CH.id as childId, CH.name as childName,"
-									+ "	N.content as content, CO.id as contextId,  CO.name as contextName, CONT.id as contentId, CONT.name as contentName, N.date_sent as date_sent"
-									+ " from NOTIFICATION as N, CONTENT as CONT, CATEGORY as CA, CONTEXT as CO, CHILD as CH where N.id="+id+" "
-											+ "and CA.id =  N.category and CONT.id = n.content and CO.id = N.context and CH.id= N.child");
+		ResultSet rs = dbHelper
+				.executeQuery("select N.id as id, CA.id as categoryId, CA.name as categoryName, CH.id as childId, CH.name as childName,"
+						+ "	N.content as content, CO.id as contextId,  CO.name as contextName, CONT.id as contentId, CONT.name as contentName, N.date_sent as date_sent"
+						+ " from NOTIFICATION as N, CONTENT as CONT, CATEGORY as CA, CONTEXT as CO, CHILD as CH where N.id="
+						+ id
+						+ " "
+						+ "and CA.id =  N.category and CONT.id = n.content and CO.id = N.context and CH.id= N.child");
 		Notification notification = null;
 		try {
 			while (rs.first()) {
@@ -51,7 +52,7 @@ public class NotificationDAOImpl implements NotificationDAO{
 
 				Date today = df.parse(rs.getString("date_sent"));
 				notification.setDate(today);
-				
+
 			}
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -63,13 +64,16 @@ public class NotificationDAOImpl implements NotificationDAO{
 	@Override
 	public void saveNotification(Notification notificacion) {
 		try {
-			String query = "INSERT INTO NOTIFICATION (CONTENT,CONTEXT,CATEGORY,CHILD)" +
-				"VALUES ('"+ 
-				notificacion.getContent().getId()+"','"+
-				notificacion.getContext().getId()+"','"+
-				notificacion.getCategory().getId()+"','"+
-				notificacion.getChild().getId()+"')";
-			dbHelper.executeUpdate(query);			
+			String query = "INSERT INTO NOTIFICATION (CONTENT,CONTEXT,CATEGORY,CHILD)"
+					+ "VALUES ('"
+					+ notificacion.getContent().getId()
+					+ "','"
+					+ notificacion.getContext().getId()
+					+ "','"
+					+ notificacion.getCategory().getId()
+					+ "','"
+					+ notificacion.getChild().getId() + "')";
+			dbHelper.executeUpdate(query);
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 		}
@@ -77,13 +81,14 @@ public class NotificationDAOImpl implements NotificationDAO{
 
 	@Override
 	public List<Notification> listNotifications() {
-		List<Notification> result =  new ArrayList<Notification>();
-		ResultSet rs = dbHelper.executeQuery("select N.id as id, CA.id as categoryId, CA.name as categoryName, CH.id as childId, CH.name as childName,"
-				+ "	N.content as content, CO.id as contextId,  CO.name as contextName, CONT.id as contentId, CONT.name as contentName, N.date_sent as date_sent"
-				+ " from NOTIFICATION as N, CONTENT as CONT, CATEGORY as CA, CONTEXT as CO, CHILD as CH where "
+		List<Notification> result = new ArrayList<Notification>();
+		ResultSet rs = dbHelper
+				.executeQuery("select N.id as id, CA.id as categoryId, CA.name as categoryName, CH.id as childId, CH.name as childName,"
+						+ "	N.content as content, CO.id as contextId,  CO.name as contextName, CONT.id as contentId, CONT.name as contentName, N.date_sent as date_sent"
+						+ " from NOTIFICATION as N, CONTENT as CONT, CATEGORY as CA, CONTEXT as CO, CHILD as CH where "
 						+ " CA.id =  N.category and CONT.id = N.content and CO.id = N.context and CH.id= N.child");
 		try {
-			while (rs.next() ) {
+			while (rs.next()) {
 				Notification notification = new Notification();
 
 				notification.setId(rs.getInt("id"));
@@ -109,7 +114,7 @@ public class NotificationDAOImpl implements NotificationDAO{
 				notification.setDate(today);
 				result.add(notification);
 
-			  }
+			}
 			dbHelper.closeConnection();
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -117,5 +122,4 @@ public class NotificationDAOImpl implements NotificationDAO{
 		return result;
 	}
 
-	
 }

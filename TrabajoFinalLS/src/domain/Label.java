@@ -5,6 +5,13 @@ public class Label {
 	private Integer id;
 	private String name;
 	
+	public Label (){
+		
+	} 
+	public Label (String name){
+		this.name = name;
+	}
+	
 	public Integer getId() {
 		return id;
 	}

@@ -22,4 +22,14 @@ public interface Service {
 	List<Child> getChildList();
 	
 	List<Content> getContentList();
+	
+	void CreateLabel(Label label);
+	
+	void DeleteLabel(Label label);
+	
+	void updateLabel(Label label, String name);
+
+	void asingLabel(int idNotification, int idLabel);
+	
+	Label getLabel(String name);
 }

@@ -14,6 +14,8 @@ import db.LabelDAO;
 import db.LabelDAOImpl;
 import db.NotificationDAO;
 import db.NotificationDAOImpl;
+import db.NotificationLabelDAO;
+import db.NotificationLabelDAOImpl;
 import domain.Category;
 import domain.Child;
 import domain.Content;
@@ -25,6 +27,7 @@ public class ServiceImpl implements Service {
 
 	LabelDAO labelDAO = new LabelDAOImpl();
 	NotificationDAO notificationDAO = new NotificationDAOImpl();
+	NotificationLabelDAO notificationLabelDAO = new NotificationLabelDAOImpl();
 	ChildDAO childDAO = new ChildDAOImpl();
 	ContextDAO contextDAO = new ContextDAOImpl();
 	CategoryDAO categoryDAO = new CategoryDAOImpl();
@@ -52,5 +55,35 @@ public class ServiceImpl implements Service {
 	
 	public  List<Content> getContentList(){
 		return contentDAO.listContents();
+	}
+
+	@Override
+	public void CreateLabel(Label label) {
+		labelDAO.saveLabel(label);
+		
+	}
+
+	@Override
+	public void DeleteLabel(Label label) {
+		labelDAO.deleteLabel(label);
+		
+	}
+
+	@Override
+	public void updateLabel(Label label, String name) {
+		labelDAO.updateLabel(label, name);
+		
+	}
+
+	@Override
+	public void asingLabel(int idNotification, int idLabel) {
+		notificationLabelDAO.asignLabel(idNotification, idLabel);
+		
+	}
+
+	@Override
+	public Label getLabel(String name) {
+	
+		return labelDAO.getLabel(name);
 	}
 }
