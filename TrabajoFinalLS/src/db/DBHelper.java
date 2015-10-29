@@ -66,11 +66,6 @@ public class DBHelper {
 				   "NAME TEXT NOT NULL)";
 		 stmt.executeUpdate(sqlLabel);
 		 
-		 String sqlRelationship = "CREATE TABLE  NOTIFICATION_LABEL "+
-				 "(ID_NOTIFICATION INT NOT NULL," +
-				   "ID_LABEL INT NOT NULL)";
-		 stmt.executeUpdate(sqlRelationship);
-		 
 		 String sqlCategory = "CREATE TABLE  CATEGORY"+
 				 "(ID INTEGER PRIMARY KEY AUTOINCREMENT," +
 				   "NAME TEXT NOT NULL)";
@@ -93,7 +88,7 @@ public class DBHelper {
 		 
 		 String sqlLabelNotification = "CREATE TABLE  LABELNOTIFICATION"+
 				 "(ID INTEGER PRIMARY KEY AUTOINCREMENT," +
-				   "IdLABEL int NOT NULL," + "IdNOTIFICATION int NOT NULL" +")";
+				   "ID_LABEL int NOT NULL," + "ID_NOTIFICATION int NOT NULL" +")";
 		 stmt.executeUpdate(sqlLabelNotification);
 		
 		 System.out.println("Tables created successfully");

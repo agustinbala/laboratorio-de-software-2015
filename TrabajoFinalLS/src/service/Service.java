@@ -23,13 +23,12 @@ public interface Service {
 	
 	List<Content> getContentList();
 	
-	void CreateLabel(Label label);
+	void createLabel(Label label);
 	
-	void DeleteLabel(Label label);
+	void deleteLabel(Label label);
 	
 	void updateLabel(Label label, String name);
 
-	void asingLabel(int idNotification, int idLabel);
+	void asignLabel(int idNotification, int idLabel);
 	
-	Label getLabel(String name);
 }

@@ -27,23 +27,6 @@ public class LabelDAOImpl implements LabelDAO {
 		}
 		return label;
 	}
-	
-	@Override
-	public Label getLabel(String name) {
-		ResultSet rs = dbHelper.executeQuery("select * from LABEL where name='"+name+"'");
-		Label label = null;
-		try {
-			
-				label = new Label();
-				label.setId(rs.getInt("id"));
-				label.setName(rs.getString("name"));				
-				dbHelper.closeConnection();
-		} catch (Exception e) {
-			System.err.println(e.getClass().getName() + ": " + e.getMessage());
-			return null;
-		}
-		return label;
-	}
 
 	@Override
 	public void saveLabel(Label label) {
@@ -79,10 +62,9 @@ public class LabelDAOImpl implements LabelDAO {
 	}
 
 	@Override
-	public void deleteLabel(Label label) {
-		Label aux = getLabel(label.getName());
+	public void deleteLabel(Integer id) {
 		try {
-			String query = "DELETE FROM LABEL WHERE LABEL.id=" + aux.getId();
+			String query = "DELETE FROM LABEL WHERE LABEL.id=" + id.toString();
 			dbHelper.executeUpdate(query);			
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -91,9 +73,8 @@ public class LabelDAOImpl implements LabelDAO {
 
 	@Override
 	public void updateLabel(Label label, String name) {
-		Label aux = getLabel(label.getName());
 		try {
-			String query = "UPDATE LABEL SET name='"+name+"' WHERE id="+aux.getId();
+			String query = "UPDATE LABEL SET name='"+name+"' WHERE id="+label.getId();
 			dbHelper.executeUpdate(query);				
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -101,5 +82,4 @@ public class LabelDAOImpl implements LabelDAO {
 		
 	}
 
-	
 }

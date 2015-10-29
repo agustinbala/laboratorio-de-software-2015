@@ -15,6 +15,8 @@ import db.LabelDAO;
 import db.LabelDAOImpl;
 import db.NotificationDAO;
 import db.NotificationDAOImpl;
+import db.NotificationLabelDAO;
+import db.NotificationLabelDAOImpl;
 import domain.Category;
 import domain.Child;
 import domain.Content;
@@ -31,16 +33,19 @@ public class MockUtil {
 		ContextDAO contextDAO = new ContextDAOImpl();
 		CategoryDAO categoryDAO = new CategoryDAOImpl();
 		ContentDAO contentDAO = new ContentDAOImpl();
-		
-		
-		List<Notification> notificaciones = JSONParser.getNotificationList(FileUtil.getFile("src/notifications.txt"));
-		for (Notification notification : notificaciones) {
-			notificationDAO.saveNotification(notification);
-		}
+		NotificationLabelDAO notificationLabelDAO = new NotificationLabelDAOImpl();
 		
 		List<Label> labels = JSONParser.getLabelList(FileUtil.getFile("src/labels.txt"));
 		for (Label label : labels) {
 			labelDAO.saveLabel(label);
+		}
+		
+
+		List<Notification> notificaciones = JSONParser.getNotificationList(FileUtil.getFile("src/notifications.txt"));
+		
+		for (Notification notification : notificaciones) {
+			notificationDAO.saveNotification(notification);
+			
 		}
 		
 		List<Category> categories = JSONParser.getCategoryList(FileUtil.getFile("src/categories.txt"));
@@ -62,5 +67,20 @@ public class MockUtil {
 		for (Content content : contents) {
 			contentDAO.saveContent(content);
 		}
-	}
+		
+		List<Label> labelsFromDB = labelDAO.listLabels();
+		List<Notification> notificacionesFromDB = notificationDAO.listNotifications();
+		for (Notification notificationFromBD : notificacionesFromDB) {
+			for (Label label : labelsFromDB) {
+				notificationLabelDAO.asignLabel(notificationFromBD.getId(), label.getId());
+			}			
+		}
+		
+//		for (Label label : labelsFromDB) {
+//			labelDAO.updateLabel(label,"ACTUALIZADO");
+//		}
+//		
+//		labelDAO.deleteLabel(labelsFromDB.get(0).getId());
+		
+	}	
 }

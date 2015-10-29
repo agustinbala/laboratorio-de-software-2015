@@ -71,7 +71,10 @@ public class Notification {
 		not.add(this.getChild().getName());
 		String labels = "";
 		for (Label label : this.labels) {
-			labels += label.getName();
+			labels += label.getName()+", ";
+		}
+		if(labels != ""){
+			labels = labels.substring(0,labels.length()-2);
 		}
 		not.add(labels);
 		return not.toArray();

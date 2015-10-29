@@ -58,14 +58,14 @@ public class ServiceImpl implements Service {
 	}
 
 	@Override
-	public void CreateLabel(Label label) {
+	public void createLabel(Label label) {
 		labelDAO.saveLabel(label);
 		
 	}
 
 	@Override
-	public void DeleteLabel(Label label) {
-		labelDAO.deleteLabel(label);
+	public void deleteLabel(Label label) {
+		labelDAO.deleteLabel(label.getId());
 		
 	}
 
@@ -76,14 +76,9 @@ public class ServiceImpl implements Service {
 	}
 
 	@Override
-	public void asingLabel(int idNotification, int idLabel) {
+	public void asignLabel(int idNotification, int idLabel) {
 		notificationLabelDAO.asignLabel(idNotification, idLabel);
 		
 	}
 
-	@Override
-	public Label getLabel(String name) {
-	
-		return labelDAO.getLabel(name);
-	}
 }

@@ -37,9 +37,16 @@ public class Application {
 	private JPanel panelIzquierdo;
 	private JPanel panelDerecho;
 	private JPanel panelInferior;
+	private JTable grid;
+	private JComboBox asignarEtiquetas; 
+	private JComboBox labels;
+	private JComboBox labelsUpdate;
+	private JComboBox etiquetasComboBox;
+	
+	
 	private DBHelper dbHelper = new DBHelper();
 
-	private List<String> etiquetas = new ArrayList<String>();
+	private List<Label> etiquetas = new ArrayList<Label>();
 	private List<String> contexts = new ArrayList<String>();
 	private List<String> categories = new ArrayList<String>();
 	private List<String> childs = new ArrayList<String>();
@@ -107,7 +114,7 @@ public class Application {
 
 	private void initComboBoxList() {
 		for (Label label : service.getLabelList()) {
-			etiquetas.add(label.getName());
+			etiquetas.add(label);
 		};
 
 		for (Context context : service.getContextList()) {
@@ -175,8 +182,9 @@ public class Application {
 
 		JPanel etiquetaLabel = new JPanel();
 		etiquetaLabel.setLayout(new GridLayout(1, 2));
-		etiquetaLabel.add(new JLabel("Etiqueta"));		
-		etiquetaLabel.add(new JComboBox(etiquetas.toArray()));
+		etiquetaLabel.add(new JLabel("Etiqueta"));
+		etiquetasComboBox =new JComboBox(etiquetas.toArray());
+		etiquetaLabel.add(etiquetasComboBox);
 		container.add(etiquetaLabel);
 
 		JButton filtrar = new JButton("Filtrar");
@@ -227,11 +235,14 @@ public class Application {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				 Label newLabel = new Label(labelName.getText());
-				 service.CreateLabel(newLabel);
+				 service.createLabel(newLabel);
+				 labelName.setText("");
+				 etiquetas.clear();
 				 for (Label label : service.getLabelList()) {
-						etiquetas.add(label.getName());
+					 	etiquetas.add(label);
 				};				
-
+				updateEtiquetaComboBox();
+				reloadGrid();
 			}
 		});
 		crearEtiqueta.add(crear);
@@ -240,7 +251,7 @@ public class Application {
 		JPanel eliminarEtiqueta = new JPanel();
 		eliminarEtiqueta.setLayout(new GridLayout(1, 3));
 		eliminarEtiqueta.add(new JLabel("Eliminar etiqueta"));
-		final JComboBox labels = new JComboBox(etiquetas.toArray());
+		labels = new JComboBox(etiquetas.toArray());
 		eliminarEtiqueta.add(labels);
 		JButton eliminar = new JButton("Eliminar");
 		eliminar.addMouseListener(new MouseListener() {
@@ -271,12 +282,14 @@ public class Application {
 				
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Label label = new Label((String) labels.getSelectedItem());
-				service.DeleteLabel(label);
+				Label label =(Label) labels.getSelectedItem();
+				service.deleteLabel(label);
+				etiquetas.clear();
 				 for (Label aux : service.getLabelList()) {
-						etiquetas.add(aux.getName());
+					 	etiquetas.add(aux);					 	
 				};
-
+				updateEtiquetaComboBox();
+				reloadGrid();
 			}
 		});
 		eliminarEtiqueta.add(eliminar);
@@ -285,7 +298,7 @@ public class Application {
 		JPanel asignarEtiqueta = new JPanel();
 		asignarEtiqueta.setLayout(new GridLayout(1, 3));
 		asignarEtiqueta.add(new JLabel("Asignar etiqueta"));
-		final JComboBox asignarEtiquetas = new JComboBox(etiquetas.toArray());
+		asignarEtiquetas = new JComboBox(etiquetas.toArray());
 		asignarEtiqueta.add(asignarEtiquetas);
 		JButton asignar = new JButton("Asignar");
 		asignar.addMouseListener(new MouseListener() {
@@ -354,8 +367,9 @@ public class Application {
 						public void mouseClicked(MouseEvent e) {
 							Notification noti = new Notification();
 							noti = (Notification)notificacionesBox.getSelectedItem();
-							Label label = service.getLabel(asignarEtiquetas.getSelectedItem().toString());
-							service.asingLabel(noti.getId(), label.getId());
+							Label label = (Label)asignarEtiquetas.getSelectedItem();
+							service.asignLabel(noti.getId(), label.getId());
+							reloadGrid();
 							
 						}});
 		         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -369,7 +383,7 @@ public class Application {
 		JPanel renombrarEtiqueta = new JPanel();
 		renombrarEtiqueta.setLayout(new GridLayout(1, 2));
 		renombrarEtiqueta.add(new JLabel("Renombrar etiqueta"));
-		final JComboBox labelsUpdate = new JComboBox(etiquetas.toArray());
+		labelsUpdate = new JComboBox(etiquetas.toArray());
 		renombrarEtiqueta.add(labelsUpdate);
 		container.add(renombrarEtiqueta);
 
@@ -407,12 +421,14 @@ public class Application {
 				
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Label label = new Label((String) labelsUpdate.getSelectedItem());
+				Label label =(Label) labels.getSelectedItem();
 				service.updateLabel(label, newLabel.getText());
-				 for (Label aux : service.getLabelList()) {
-						etiquetas.add(aux.getName());
+				etiquetas.clear(); 
+				for (Label aux : service.getLabelList()) {
+					 	etiquetas.add(aux);
 				};
-
+				updateEtiquetaComboBox();
+				reloadGrid();
 			}
 		});
 		nuevoNombreEtiqueta.add(renombrar);
@@ -425,11 +441,11 @@ public class Application {
 
 	private void setViewPanelInferior() {
 
-		JTable container = new JTable();
 		
-		container.setBackground(Color.WHITE);
+		grid = new JTable();
+		grid.setBackground(Color.WHITE);
 		
-		
+			
 		DefaultTableModel model = new DefaultTableModel();
 		model.setColumnIdentifiers(new String [] { "Fecha/Hora envio", "Contenido", "Contexto", "Categoria", "Niño", "Etiquetas"});
 		
@@ -437,10 +453,27 @@ public class Application {
 			model.addRow(notification.toArray());
 		}
 		
-		container.setModel(model);
-		JScrollPane scrollPane= new  JScrollPane(container);
+		grid.setModel(model);
+		JScrollPane scrollPane= new  JScrollPane(grid);
 		panelInferior.add(scrollPane);
 
 	}
-
+	
+	private void reloadGrid(){
+		DefaultTableModel model = new DefaultTableModel();
+		model.setColumnIdentifiers(new String [] { "Fecha/Hora envio", "Contenido", "Contexto", "Categoria", "Niño", "Etiquetas"});
+		
+		for (Notification notification : service.getNotificationList()) {
+			model.addRow(notification.toArray());
+		}
+		
+		grid.setModel(model);
+	}
+	
+	private void updateEtiquetaComboBox(){
+		asignarEtiquetas.setModel(new javax.swing.DefaultComboBoxModel(etiquetas.toArray()));
+		labels.setModel(new javax.swing.DefaultComboBoxModel(etiquetas.toArray()));
+		labelsUpdate.setModel(new javax.swing.DefaultComboBoxModel(etiquetas.toArray()));
+		etiquetasComboBox.setModel(new javax.swing.DefaultComboBoxModel(etiquetas.toArray()));
+	}
 }
