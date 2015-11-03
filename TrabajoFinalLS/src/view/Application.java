@@ -424,6 +424,7 @@ public class Application {
 	       
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
+				if(grid.getSelectedRow() != -1){
 				int valueSelected = Integer.valueOf((String) grid.getValueAt(grid.getSelectedRow(), 0));				
 					for (Notification notification : service.getNotificationList()) {
 						if(notification.getId().equals(valueSelected)){
@@ -431,10 +432,7 @@ public class Application {
 						}
 						
 					}
-					
-					//TODO:Ver como hacer para que no quede mas el foco
-					
-				
+				}
 			}
 	    });
 		
@@ -445,9 +443,12 @@ public class Application {
 	}
 	
 	private void reloadGrid(){
-		DefaultTableModel model = new DefaultTableModel();
-		model.setColumnIdentifiers(new String [] { "N°","Fecha/Hora envio", "Contenido", "Contexto", "Categoria", "Niño", "Etiquetas"});
-		
+		DefaultTableModel model = (DefaultTableModel) grid.getModel();
+		if (model.getRowCount() > 0) {
+		    for (int i = model.getRowCount() - 1; i > -1; i--) {
+		    	model.removeRow(i);
+		    }
+		}
 		for (Notification notification : service.getNotificationList()) {
 			model.addRow(notification.toArray());
 		}
