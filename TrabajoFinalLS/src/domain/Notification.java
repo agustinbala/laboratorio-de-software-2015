@@ -64,6 +64,7 @@ public class Notification {
 	}
 	public Object[] toArray() {
 		List<String> not = new ArrayList<String>();
+		not.add(getId().toString());
 		not.add(df.format(this.getDate()));
 		not.add(this.getContent().getName());
 		not.add(this.getContext().getName());

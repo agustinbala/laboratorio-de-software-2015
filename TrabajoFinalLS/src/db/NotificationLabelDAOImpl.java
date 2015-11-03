@@ -14,7 +14,7 @@ public class NotificationLabelDAOImpl implements NotificationLabelDAO{
 	@Override
 	public void asignLabel(int idNotification, int idLabel) {
 		try {
-			String query = "INSERT INTO LABELNOTIFICATION (ID_LABEL, ID_NOTIFICATION)" +
+			String query = "INSERT INTO LABELNOTIFICATION (LABEL, NOTIFICATION)" +
 				"VALUES ("+idLabel+","+idNotification+")";
 			dbHelper.executeUpdate(query);			
 		} catch (Exception e) {
@@ -24,7 +24,7 @@ public class NotificationLabelDAOImpl implements NotificationLabelDAO{
 	
 	public List<Label> getLabelsByNotification(Integer notificationId){
 		List<Label> result = new ArrayList<Label>();
-		ResultSet rs = dbHelper.executeQuery("select L.id as id, L.name as name from LABELNOTIFICATION as N, LABEL as L where L.id = N.ID_LABEL and ID_NOTIFICATION="+notificationId);
+		ResultSet rs = dbHelper.executeQuery("select L.id as id, L.name as name from LABELNOTIFICATION as N, LABEL as L where L.id = N.LABEL and NOTIFICATION="+notificationId);
 		Label label = null;
 		try {
 			while (rs.next()) {

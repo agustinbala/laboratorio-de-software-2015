@@ -1,22 +1,27 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import service.Service;
@@ -38,10 +43,15 @@ public class Application {
 	private JPanel panelDerecho;
 	private JPanel panelInferior;
 	private JTable grid;
+	@SuppressWarnings("rawtypes")
 	private JComboBox asignarEtiquetas; 
+	@SuppressWarnings("rawtypes")
 	private JComboBox labels;
+	@SuppressWarnings("rawtypes")
 	private JComboBox labelsUpdate;
+	@SuppressWarnings("rawtypes")
 	private JComboBox etiquetasComboBox;
+	private Notification notificationSelected;
 	
 	
 	private DBHelper dbHelper = new DBHelper();
@@ -73,7 +83,7 @@ public class Application {
 		initComboBoxList();
 		
 		frame = new JFrame("Hermes");
-		frame.setSize(950, 450);
+		frame.setSize(950, 700);
 		frame.setLocationRelativeTo(null);
 		frame.getContentPane().setLayout(new GridLayout(2, 1));
 
@@ -84,16 +94,17 @@ public class Application {
 		panelSuperior.setLayout(new GridLayout(1, 2));
 
 		panelIzquierdo = new JPanel();
-		panelIzquierdo.setSize(450, 250);
+		panelIzquierdo.setSize(450, 500);
 		panelIzquierdo
-				.setLayout(new BoxLayout(panelIzquierdo, BoxLayout.Y_AXIS));
+				.setLayout(new FlowLayout(FlowLayout.LEFT));
+		panelIzquierdo.setBorder(BorderFactory.createTitledBorder("Filtros"));		
 		panelSuperior.add(panelIzquierdo);
 
 		setViewPanelIzquierdo();
 		panelDerecho = new JPanel();
-		panelDerecho.setLayout(new BoxLayout(panelDerecho, BoxLayout.Y_AXIS));
-		panelDerecho.setSize(450, 250);
-
+		panelDerecho.setLayout(new FlowLayout(FlowLayout.LEFT));
+		panelDerecho.setSize(450, 300);
+		panelDerecho.setBorder(BorderFactory.createTitledBorder("Etiquetas"));	
 		panelSuperior.add(panelDerecho);
 
 		setViewPanelDerecho();
@@ -135,9 +146,8 @@ public class Application {
 		
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void setViewPanelIzquierdo() {
-
-		JLabel titulo = new JLabel("Filtros");
 
 		JPanel container = new JPanel();
 
@@ -146,8 +156,8 @@ public class Application {
 		JPanel contenido = new JPanel();
 		contenido.setLayout(new GridLayout(1, 2));
 		contenido.add(new JLabel("Contenido"));
-		
-		contenido.add(new JComboBox(contents.toArray()));
+		JComboBox contentsCombo = new JComboBox(contents.toArray());
+		contenido.add(contentsCombo);
 		container.add(contenido);
 
 		JPanel contexto = new JPanel();
@@ -188,17 +198,18 @@ public class Application {
 		container.add(etiquetaLabel);
 
 		JButton filtrar = new JButton("Filtrar");
+		filtrar.setPreferredSize(new Dimension(450, 30));
 
-		panelIzquierdo.add(titulo);
 		panelIzquierdo.add(container);
 		panelIzquierdo.add(filtrar);
 
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void setViewPanelDerecho() {
 
-		JLabel titulo = new JLabel("Etiquetas");
 		JPanel container = new JPanel();
+		
 		container.setLayout(new GridLayout(5, 1));
 		JPanel crearEtiqueta = new JPanel();
 		crearEtiqueta.setLayout(new GridLayout(1, 3));
@@ -327,56 +338,13 @@ public class Application {
 			}
 				
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				 JDialog dialog = new JDialog();
-				 dialog.setSize(400, 400);
-				 dialog.add(new JTextField("Notificaciones"));
-				 List<Notification> notificaciones = new ArrayList<Notification>();
-				 
-				 for (Notification noti : service.getNotificationList()) {
-						notificaciones.add(noti);
-					};
-				 final JComboBox notificacionesBox = new JComboBox(notificaciones.toArray());
-				 JButton button = new JButton("Aceptar");
-				 button.addMouseListener(new MouseListener() {
-						
-						@Override
-						public void mouseReleased(MouseEvent e) {
-							// TODO Auto-generated method stub
-							
-			            }
-						@Override
-						public void mousePressed(MouseEvent e) {
-							// TODO Auto-generated method stub
-							
-						}
-						
-						@Override
-						public void mouseExited(MouseEvent e) {
-							// TODO Auto-generated method stub
-							
-						}
-						
-						@Override
-						public void mouseEntered(MouseEvent e) {
-							// TODO Auto-generated method stub
-							
-						}
-							
-						@Override
-						public void mouseClicked(MouseEvent e) {
-							Notification noti = new Notification();
-							noti = (Notification)notificacionesBox.getSelectedItem();
-							Label label = (Label)asignarEtiquetas.getSelectedItem();
-							service.asignLabel(noti.getId(), label.getId());
-							reloadGrid();
-							
-						}});
-		         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		         dialog.setVisible(true);		
-
-			}
-		});
+			public void mouseClicked(MouseEvent e) {				
+				Label label = (Label)asignarEtiquetas.getSelectedItem();
+				service.asignLabel(notificationSelected.getId(), label.getId());
+				reloadGrid();
+				
+			}});
+		       
 		asignarEtiqueta.add(asignar);
 		container.add(asignarEtiqueta);
 
@@ -434,7 +402,6 @@ public class Application {
 		nuevoNombreEtiqueta.add(renombrar);
 		container.add(nuevoNombreEtiqueta);
 
-		panelDerecho.add(titulo);
 		panelDerecho.add(container);
 
 	}
@@ -447,11 +414,29 @@ public class Application {
 		
 			
 		DefaultTableModel model = new DefaultTableModel();
-		model.setColumnIdentifiers(new String [] { "Fecha/Hora envio", "Contenido", "Contexto", "Categoria", "Niño", "Etiquetas"});
+		model.setColumnIdentifiers(new String [] {"N°", "Fecha/Hora envio", "Contenido", "Contexto", "Categoria", "Niño", "Etiquetas"});
 		
 		for (Notification notification : service.getNotificationList()) {
 			model.addRow(notification.toArray());
 		}
+		
+		grid.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+	       
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				int valueSelected = Integer.valueOf((String) grid.getValueAt(grid.getSelectedRow(), 0));				
+					for (Notification notification : service.getNotificationList()) {
+						if(notification.getId().equals(valueSelected)){
+							notificationSelected = notification;
+						}
+						
+					}
+					
+					//TODO:Ver como hacer para que no quede mas el foco
+					
+				
+			}
+	    });
 		
 		grid.setModel(model);
 		JScrollPane scrollPane= new  JScrollPane(grid);
@@ -461,7 +446,7 @@ public class Application {
 	
 	private void reloadGrid(){
 		DefaultTableModel model = new DefaultTableModel();
-		model.setColumnIdentifiers(new String [] { "Fecha/Hora envio", "Contenido", "Contexto", "Categoria", "Niño", "Etiquetas"});
+		model.setColumnIdentifiers(new String [] { "N°","Fecha/Hora envio", "Contenido", "Contexto", "Categoria", "Niño", "Etiquetas"});
 		
 		for (Notification notification : service.getNotificationList()) {
 			model.addRow(notification.toArray());
@@ -470,6 +455,7 @@ public class Application {
 		grid.setModel(model);
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void updateEtiquetaComboBox(){
 		asignarEtiquetas.setModel(new javax.swing.DefaultComboBoxModel(etiquetas.toArray()));
 		labels.setModel(new javax.swing.DefaultComboBoxModel(etiquetas.toArray()));
