@@ -389,8 +389,9 @@ public class Application {
 				
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Label label =(Label) labels.getSelectedItem();
+				Label label =(Label) labelsUpdate.getSelectedItem();
 				service.updateLabel(label, newLabel.getText());
+				newLabel.setText("");
 				etiquetas.clear(); 
 				for (Label aux : service.getLabelList()) {
 					 	etiquetas.add(aux);
@@ -414,6 +415,7 @@ public class Application {
 		
 			
 		DefaultTableModel model = new DefaultTableModel();
+		grid.setEnabled(false);
 		model.setColumnIdentifiers(new String [] {"N°", "Fecha/Hora envio", "Contenido", "Contexto", "Categoria", "Niño", "Etiquetas"});
 		
 		for (Notification notification : service.getNotificationList()) {
