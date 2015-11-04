@@ -30,30 +30,7 @@ public class NotificationDAOImpl implements NotificationDAO {
 		Notification notification = null;
 		try {
 			while (rs.first()) {
-				notification = new Notification();
-
-				notification.setId(rs.getInt("id"));
-				Category category = new Category();
-				category.setId(rs.getInt("categoryId"));
-				category.setName(rs.getString("categoryName"));
-				notification.setCategory(category);
-				Child child = new Child();
-				child.setId(rs.getInt("childId"));
-				child.setName(rs.getString("childName"));
-				notification.setChild(child);
-				Context context = new Context();
-				context.setId(rs.getInt("contextId"));
-				context.setName(rs.getString("contextName"));
-				notification.setContext(context);
-				Content content = new Content();
-				content.setId(rs.getInt("contentId"));
-				content.setName(rs.getString("contentName"));
-				notification.setContent(content);
-
-				Date today = df.parse(rs.getString("date_sent"));
-				notification.setLabels(notificationLabelDAO.getLabelsByNotification(notification.getId()));
-				notification.setDate(today);
-				
+				notification = convertToDomain(rs);
 			}
 			dbHelper.closeConnection();
 		} catch (Exception e) {
@@ -87,32 +64,7 @@ public class NotificationDAOImpl implements NotificationDAO {
 						+ " CA.id =  N.category and CONT.id = N.content and CO.id = N.context and CH.id= N.child");
 		try {
 			while (rs.next() ) {
-				Notification notification = new Notification();
-
-				notification.setId(rs.getInt("id"));
-				Category category = new Category();
-				category.setId(rs.getInt("categoryId"));
-				category.setName(rs.getString("categoryName"));
-				notification.setCategory(category);
-				Child child = new Child();
-				child.setId(rs.getInt("childId"));
-				child.setName(rs.getString("childName"));
-				notification.setChild(child);
-				Context context = new Context();
-				context.setId(rs.getInt("contextId"));
-				context.setName(rs.getString("contextName"));
-				notification.setContext(context);
-				Content content = new Content();
-				content.setId(rs.getInt("contentId"));
-				content.setName(rs.getString("contentName"));
-				notification.setContent(content);
-
-				Date today = df.parse(rs.getString("date_sent"));
-				notification.setDate(today);
-				
-				notification.setLabels(notificationLabelDAO.getLabelsByNotification(notification.getId()));
-				result.add(notification);
-
+				result.add(convertToDomain(rs));
 			  }
 			dbHelper.closeConnection();
 		} catch (Exception e) {
@@ -161,40 +113,45 @@ public class NotificationDAOImpl implements NotificationDAO {
 						+ " CA.id =  N.category and CONT.id = N.content and CO.id = N.context and CH.id= N.child "+filter);
 		try {
 			while (rs.next() ) {
-				Notification notification = new Notification();
-
-				notification.setId(rs.getInt("id"));
-				Category category = new Category();
-				category.setId(rs.getInt("categoryId"));
-				category.setName(rs.getString("categoryName"));
-				notification.setCategory(category);
-				Child child = new Child();
-				child.setId(rs.getInt("childId"));
-				child.setName(rs.getString("childName"));
-				notification.setChild(child);
-				Context context = new Context();
-				context.setId(rs.getInt("contextId"));
-				context.setName(rs.getString("contextName"));
-				notification.setContext(context);
-				Content content = new Content();
-				content.setId(rs.getInt("contentId"));
-				content.setName(rs.getString("contentName"));
-				notification.setContent(content);
-				
-
-				Date today = df.parse(rs.getString("date_sent"));
-				notification.setDate(today);
-				
-				notification.setLabels(notificationLabelDAO.getLabelsByNotification(notification.getId()));
-				result.add(notification);
-
-			  }
+				result.add(convertToDomain(rs));
+			 }
 			dbHelper.closeConnection();
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 		}
 		return result;
 	}
+	
+	private Notification convertToDomain(ResultSet rs) throws Exception{
+		
+		Notification notification = new Notification();
+
+		notification.setId(rs.getInt("id"));
+		Category category = new Category();
+		category.setId(rs.getInt("categoryId"));
+		category.setName(rs.getString("categoryName"));
+		notification.setCategory(category);
+		Child child = new Child();
+		child.setId(rs.getInt("childId"));
+		child.setName(rs.getString("childName"));
+		notification.setChild(child);
+		Context context = new Context();
+		context.setId(rs.getInt("contextId"));
+		context.setName(rs.getString("contextName"));
+		notification.setContext(context);
+		Content content = new Content();
+		content.setId(rs.getInt("contentId"));
+		content.setName(rs.getString("contentName"));
+		notification.setContent(content);
+		
+
+		Date today = df.parse(rs.getString("date_sent"));
+		notification.setDate(today);
+		
+		notification.setLabels(notificationLabelDAO.getLabelsByNotification(notification.getId()));
+		return notification;
+	}
+	
 
 
 }
