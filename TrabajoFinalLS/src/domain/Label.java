@@ -6,8 +6,9 @@ public class Label {
 	private String name;
 	
 	public Label (){
-		
-	} 
+	}
+	
+	
 	public Label (String name){
 		this.name = name;
 	}

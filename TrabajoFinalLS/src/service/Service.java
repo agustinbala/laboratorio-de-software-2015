@@ -13,6 +13,9 @@ public interface Service {
 
 	List<Notification> getNotificationList();
 	
+	List<Notification> getNotificationListByFilter(Category cat, Context context, Content cont,
+													Child child, Label label, String dateFrom, String dateTo);
+	
 	List<Label> getLabelList();
 	
 	List<Category> getCategoryList();
