@@ -172,10 +172,15 @@ public class Application {
 		c.gridy = 0;
 		c.insets = new Insets(10, 0, 0, 0);
 		container.add(contenido, c);
-		contentsFilterComboBox = new JComboBox(contents.toArray());
 		
+		contentsFilterComboBox = new JComboBox(contents.toArray());
+		c.weightx = 0.5;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridy = 0;
+		c.insets = new Insets(10, 0, 0, 0);
 
-		container.add(contentsFilterComboBox , c);
+		container.add(contentsFilterComboBox,c );
 
 		JLabel contexto = new JLabel("Contexto:");
 		c.weightx = 0.5;
@@ -559,13 +564,13 @@ public class Application {
 		d.insets = new Insets(10, 10, 0, 0);
 		container.add(asignarEtiqueta, d);
 
-		asignarEtiquetas = new JComboBox(etiquetas.toArray());
+		labelsAsign = new JComboBox(etiquetas.toArray());
 		d.weightx = 0.5;
 		d.fill = GridBagConstraints.HORIZONTAL;
 		d.gridx = 1;
 		d.gridy = 2;
 		d.insets = new Insets(10, 10, 0, 0);
-		container.add(asignarEtiquetas, d);
+		container.add(labelsAsign, d);
 
 		JButton asignar = new JButton("Asignar");
 		asignar.addMouseListener(new MouseListener() {
