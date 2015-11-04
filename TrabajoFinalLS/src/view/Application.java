@@ -1,15 +1,15 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,7 +33,6 @@ import service.Service;
 import service.ServiceImpl;
 import util.MockUtil;
 
-import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 
 import db.DBHelper;
@@ -95,12 +94,12 @@ public class Application {
 		initComboBoxList();
 		
 		frame = new JFrame("Hermes");
-		frame.setSize(950, 700);
+		frame.setSize(1200, 800);				
 		frame.setLocationRelativeTo(null);
 		frame.getContentPane().setLayout(new GridLayout(2, 1));
 
 		panelSuperior = new JPanel();
-		panelSuperior.setSize(950, 250);
+		panelSuperior.setSize(950, 350);
 		panelSuperior.setBackground(new Color(102, 255, 102));
 
 		panelSuperior.setLayout(new GridLayout(1, 2));
@@ -123,7 +122,7 @@ public class Application {
 
 		panelInferior = new JPanel();
 		panelInferior.setBackground(Color.WHITE);
-		panelInferior.setSize(950, 200);
+		panelInferior.setSize(950, 300);
 		panelInferior.setAlignmentY(JPanel.BOTTOM_ALIGNMENT);
 		panelInferior.setLayout(new BoxLayout(panelInferior, BoxLayout.Y_AXIS));
 
@@ -335,7 +334,13 @@ public class Application {
 				Label lab = (Label) labelFilterComboBox.getSelectedItem();
 				Child child = (Child) childsFilterComboBox.getSelectedItem();
 				Date dateFrom = dateFromFilter.getDate();
+				dateFrom.setHours(0);
+				dateFrom.setMinutes(0);
+				dateFrom.setSeconds(0);
 				Date dateTo = dateToFilter.getDate();
+				dateTo.setHours(11);
+				dateTo.setMinutes(59);
+				dateTo.setSeconds(59);
 				List<Notification> list = service.getNotificationListByFilter(cat, context, cont, child, lab, dateFrom, dateTo);
 				reloadGrid(list);
 			}
