@@ -20,7 +20,7 @@ public class NotificationDAOImpl implements NotificationDAO {
 	private DBHelper dbHelper = new DBHelper();
 	private NotificationLabelDAO notificationLabelDAO = new NotificationLabelDAOImpl();
 	DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-
+	
 
 	@Override
 	public Notification getNotification(Integer id) {
@@ -81,8 +81,6 @@ public class NotificationDAOImpl implements NotificationDAO {
 			Date dateFrom, Date dateTo) {
 		List<Notification> result =  new ArrayList<Notification>();
 		
-		Date dateFromDate = null;
-		Date dateToDate = null;
 		String filter = "";
 		String labelNotificationAlias = "";
 		if(cat != null && cat.getId() != null){
@@ -102,21 +100,6 @@ public class NotificationDAOImpl implements NotificationDAO {
 			labelNotificationAlias = ", LABELNOTIFICATION as LB";
 		}
 		
-		if(dateFrom != null && !dateFrom.equals("")){
-			try {
-				dateFromDate = df.parse(dateFrom);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}
-		if(dateTo != null && !dateTo.equals("")){
-			try {
-				dateToDate = df.parse(dateTo);
-			} catch (ParseException e) {
-				e.printStackTrace();
-			}
-		}
-		
 			
 		ResultSet rs = dbHelper.executeQuery("select DISTINCT N.id as id, CA.id as categoryId, CA.name as categoryName, CH.id as childId, CH.name as childName,"
 				+ "	N.content as content, CO.id as contextId,  CO.name as contextName, CONT.id as contentId, CONT.name as contentName, N.date_sent as date_sent, N.DATE_RECEIVED as date_received "
@@ -132,11 +115,10 @@ public class NotificationDAOImpl implements NotificationDAO {
 		}
 		
 		
-		filterByDate(result, dateToDate, dateFromDate);
-		return result;
+		return filterByDate(result, dateTo, dateFrom);
 	}
 	
-	private void filterByDate(List<Notification> result,Date dateToDate, Date dateFromDate){
+	private List<Notification> filterByDate(List<Notification> result,Date dateToDate, Date dateFromDate){
 		List<Notification> toRemove;
 		if(dateFromDate != null){
 			 toRemove = new ArrayList<Notification>();
@@ -151,11 +133,12 @@ public class NotificationDAOImpl implements NotificationDAO {
 			toRemove = new ArrayList<Notification>();
 			for (Notification notification : result) {
 				if(notification.getDate().after(dateToDate)){
-					toRemove.remove(notification);
+					toRemove.add(notification);
 				}
 			}
 			result.removeAll(toRemove);
 		}
+		return result;
 	}
 	
 	private Notification convertToDomain(ResultSet rs) throws Exception{
@@ -180,7 +163,7 @@ public class NotificationDAOImpl implements NotificationDAO {
 		content.setName(rs.getString("contentName"));
 		notification.setContent(content);
 		
-
+		//DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 		Date today = df.parse(rs.getString("date_sent"));
 		notification.setDate(today);
 		Date dateReceived = df.parse(rs.getString("date_received"));
