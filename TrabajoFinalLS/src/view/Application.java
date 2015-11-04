@@ -334,13 +334,17 @@ public class Application {
 				Label lab = (Label) labelFilterComboBox.getSelectedItem();
 				Child child = (Child) childsFilterComboBox.getSelectedItem();
 				Date dateFrom = dateFromFilter.getDate();
-				dateFrom.setHours(0);
-				dateFrom.setMinutes(0);
-				dateFrom.setSeconds(0);
+				if (dateFrom != null) {
+					dateFrom.setHours(0);
+					dateFrom.setMinutes(0);
+					dateFrom.setSeconds(0);
+				}
 				Date dateTo = dateToFilter.getDate();
-				dateTo.setHours(11);
-				dateTo.setMinutes(59);
-				dateTo.setSeconds(59);
+				if (dateTo != null) {
+					dateTo.setHours(11);
+					dateTo.setMinutes(59);
+					dateTo.setSeconds(59);
+				}
 				List<Notification> list = service.getNotificationListByFilter(cat, context, cont, child, lab, dateFrom, dateTo);
 				reloadGrid(list);
 			}
