@@ -87,7 +87,7 @@ public class DBHelper {
 		 stmt.executeUpdate(sqlContent);
 		 
 		 String sqlLabelNotification = "CREATE TABLE  LABELNOTIFICATION"+
-				 "(ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+				 "(ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				   "LABEL INTEGER NOT NULL," + "NOTIFICATION INTEGER NOT NULL" +")";
 		 stmt.executeUpdate(sqlLabelNotification);
 		

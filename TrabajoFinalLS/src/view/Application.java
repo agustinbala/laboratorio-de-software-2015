@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -21,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -44,29 +46,34 @@ public class Application {
 	private JPanel panelDerecho;
 	private JPanel panelInferior;
 	private JTable grid;
-	@SuppressWarnings("rawtypes")
-	private JComboBox asignarEtiquetas;
-	@SuppressWarnings("rawtypes")
-	private JComboBox labels;
-	@SuppressWarnings("rawtypes")
-	private JComboBox labelsUpdate;
-	@SuppressWarnings("rawtypes")
-	private JComboBox etiquetasComboBox;
+	private JComboBox<Label> labelsAsign;
+	private JComboBox<Label> labels;
+	private JComboBox<Label> labelsUpdate;
+	
+	private JComboBox<Content> contentsFilterComboBox;
+	private JComboBox<Label> labelFilterComboBox;
+	private JComboBox<Category> categoriesFilterComboBox;
+	private JComboBox<Context> contextsFilterComboBox;
+	private JComboBox<Child> childsFilterComboBox;
+	private JTextField dateFromFilter;
+	private JTextField dateToFilter;
 	private Notification notificationSelected;
-
+	
+	
 	private DBHelper dbHelper = new DBHelper();
 
 	private List<Label> etiquetas = new ArrayList<Label>();
-	private List<String> contexts = new ArrayList<String>();
-	private List<String> categories = new ArrayList<String>();
-	private List<String> childs = new ArrayList<String>();
-	private List<String> contents = new ArrayList<String>();
+	private List<Context> contexts = new ArrayList<Context>();
+	private List<Category> categories = new ArrayList<Category>();
+	private List<Child> childs = new ArrayList<Child>();
+	private List<Content> contents = new ArrayList<Content>();
 	private Service service = new ServiceImpl();
 
+	
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) {		
 		new Application().initialize();
 	}
 
@@ -75,12 +82,12 @@ public class Application {
 	 */
 	public void initialize() {
 		Boolean isNewDB = dbHelper.createDB();
-		if (isNewDB) {
+		if(isNewDB){
 			MockUtil.initData();
-		}
-
+		}				
+		
 		initComboBoxList();
-
+		
 		frame = new JFrame("Hermes");
 		frame.setSize(950, 700);
 		frame.setLocationRelativeTo(null);
@@ -94,15 +101,16 @@ public class Application {
 
 		panelIzquierdo = new JPanel();
 		panelIzquierdo.setSize(450, 500);
-		panelIzquierdo.setLayout(new FlowLayout(FlowLayout.LEFT));
-		panelIzquierdo.setBorder(BorderFactory.createTitledBorder("Filtros"));
+		panelIzquierdo
+				.setLayout(new FlowLayout(FlowLayout.LEFT));
+		panelIzquierdo.setBorder(BorderFactory.createTitledBorder("Filtros"));		
 		panelSuperior.add(panelIzquierdo);
 
 		setViewPanelIzquierdo();
 		panelDerecho = new JPanel();
 		panelDerecho.setLayout(new FlowLayout(FlowLayout.LEFT));
 		panelDerecho.setSize(450, 300);
-		panelDerecho.setBorder(BorderFactory.createTitledBorder("Etiquetas"));
+		panelDerecho.setBorder(BorderFactory.createTitledBorder("Etiquetas"));	
 		panelSuperior.add(panelDerecho);
 
 		setViewPanelDerecho();
@@ -122,31 +130,32 @@ public class Application {
 	}
 
 	private void initComboBoxList() {
+
+		etiquetas.add(new Label());
 		for (Label label : service.getLabelList()) {
 			etiquetas.add(label);
-		}
-		;
+		};
 
+		contexts.add(new Context());
 		for (Context context : service.getContextList()) {
-			contexts.add(context.getName());
-		}
-		;
+			contexts.add(context);
+		};
 
+		categories.add(new Category());
 		for (Category category : service.getCategoryList()) {
-			categories.add(category.getName());
-		}
-		;
-
+			categories.add(category);
+		};
+		
+		childs.add(new Child());
 		for (Child child : service.getChildList()) {
-			childs.add(child.getName());
-		}
-		;
-
+			childs.add(child);
+		};
+		
+		contents.add(new Content());
 		for (Content content : service.getContentList()) {
-			contents.add(content.getName());
-		}
-		;
-
+			contents.add(content);
+		};
+		
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -163,14 +172,10 @@ public class Application {
 		c.gridy = 0;
 		c.insets = new Insets(10, 0, 0, 0);
 		container.add(contenido, c);
-		JComboBox contentsCombo = new JComboBox(contents.toArray());
-		c.weightx = 0.5;
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 1;
-		c.gridy = 0;
-		c.insets = new Insets(10, 0, 0, 0);
+		contentsFilterComboBox = new JComboBox(contents.toArray());
+		
 
-		container.add(contentsCombo, c);
+		container.add(contentsFilterComboBox , c);
 
 		JLabel contexto = new JLabel("Contexto:");
 		c.weightx = 0.5;
@@ -179,14 +184,14 @@ public class Application {
 		c.gridy = 1;
 		c.insets = new Insets(10, 0, 0, 0);
 		container.add(contexto, c);
-		JComboBox contextsCombo = new JComboBox(contexts.toArray());
+		contextsFilterComboBox = new JComboBox(contexts.toArray());
 
 		c.weightx = 0.5;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 1;
 		c.insets = new Insets(10, 0, 0, 0);
-		container.add(contextsCombo, c);
+		container.add(contextsFilterComboBox, c);
 
 		JLabel categoria = new JLabel("Categoria:");
 		c.weightx = 0.5;
@@ -196,14 +201,14 @@ public class Application {
 		c.insets = new Insets(10, 0, 0, 0);
 		container.add(categoria, c);
 
-		JComboBox categoiasCombo = new JComboBox(categories.toArray());
+		categoriesFilterComboBox =new JComboBox(categories.toArray());
 		c.weightx = 0.5;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 2;
 		c.insets = new Insets(10, 0, 0, 0);
 
-		container.add(categoiasCombo, c);
+		container.add(categoriesFilterComboBox, c);
 
 		JLabel niño = new JLabel("Niñ@:");
 		c.weightx = 0.5;
@@ -214,14 +219,14 @@ public class Application {
 
 		container.add(niño, c);
 
-		JComboBox niños = new JComboBox(childs.toArray());
+		childsFilterComboBox = new JComboBox(childs.toArray()); 
 		c.weightx = 0.5;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 3;
 		c.insets = new Insets(10, 0, 0, 0);
 
-		container.add(niños, c);
+		container.add(childsFilterComboBox, c);
 
 		JLabel fecha = new JLabel("Fecha/Hora:");
 		c.weightx = 0.5;
@@ -238,11 +243,11 @@ public class Application {
 		c.gridy = 4;
 		container.add(fechaDesde, c);
 
-		JTextField fechaDesdeText = new JTextField(10);
+		dateFromFilter= new JTextField(10);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
 		c.gridy = 4;
-		container.add(fechaDesdeText, c);
+		container.add(dateFromFilter, c);
 
 		JLabel fechaHasta = new JLabel("hasta:");
 		c.weightx = 0.5;
@@ -251,11 +256,11 @@ public class Application {
 		c.gridy = 5;
 		container.add(fechaHasta, c);
 
-		JTextField fechaHastaText = new JTextField(10);
+		dateToFilter = new JTextField(10);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 2;
 		c.gridy = 5;
-		container.add(fechaHastaText, c);
+		container.add(dateToFilter, c);
 
 		JLabel etiquetaLabel = new JLabel("Etiqueta:");
 		c.weightx = 0.5;
@@ -266,14 +271,14 @@ public class Application {
 
 		container.add(etiquetaLabel, c);
 
-		etiquetasComboBox = new JComboBox(etiquetas.toArray());
+		labelFilterComboBox = new JComboBox(etiquetas.toArray());
 		c.weightx = 0.5;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
 		c.gridy = 6;
 		c.insets = new Insets(10, 0, 0, 0);
 
-		container.add(etiquetasComboBox, c);
+		container.add(labelFilterComboBox, c);
 
 		JButton filtrar = new JButton("Filtrar");
 		c.weightx = 0.5;
@@ -283,7 +288,48 @@ public class Application {
 		c.gridy = 9;
 		container.add(filtrar, c);
 
+        filtrar.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Category cat = (Category) categoriesFilterComboBox.getSelectedItem();
+				Content cont = (Content) contentsFilterComboBox.getSelectedItem();
+				Context context = (Context) contextsFilterComboBox.getSelectedItem();
+				Label lab = (Label) labelFilterComboBox.getSelectedItem();
+				Child child = (Child) childsFilterComboBox.getSelectedItem();
+				String dateFrom = dateFromFilter.getText();
+				String dateTo = dateToFilter.getText();
+				List<Notification> list = service.getNotificationListByFilter(cat, context, cont, child, lab, dateFrom, dateTo);
+				reloadGrid(list);
+			}
+		});
+
 		panelIzquierdo.add(container);
+
 
 	}
 
@@ -310,45 +356,49 @@ public class Application {
 		container.add(labelName, d);
 		JButton crear = new JButton("Crear");
 		crear.addMouseListener(new MouseListener() {
-
+			
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-
+				
 			}
-
+			
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-
+				
 			}
-
+			
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-
+				
 			}
-
+			
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
-
+				
 			}
-
+				
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Label newLabel = new Label(labelName.getText());
-				service.createLabel(newLabel);
-				labelName.setText("");
-				etiquetas.clear();
-				for (Label label : service.getLabelList()) {
-					etiquetas.add(label);
+				if (!newLabel.getName().equals("")) {
+					service.createLabel(newLabel);
+					labelName.setText("");
+					etiquetas.clear();
+					etiquetas.add(new Label());
+					for (Label label : service.getLabelList()) {
+						etiquetas.add(label);
+					}
+					;
+					updateEtiquetaComboBox();
+					reloadGrid();
 				}
-				;
-				updateEtiquetaComboBox();
-				reloadGrid();
 			}
 		});
+		
 
 		d.weightx = 0.5;
 		d.fill = GridBagConstraints.HORIZONTAL;
@@ -375,44 +425,47 @@ public class Application {
 
 		JButton eliminar = new JButton("Eliminar");
 		eliminar.addMouseListener(new MouseListener() {
-
+			
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-
+				
 			}
-
+			
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-
+				
 			}
-
+			
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-
+				
 			}
-
+			
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
-
+				
 			}
-
+				
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Label label = (Label) labels.getSelectedItem();
-				service.deleteLabel(label);
-				etiquetas.clear();
-				for (Label aux : service.getLabelList()) {
-					etiquetas.add(aux);
+				if (label != null && label.getId() != null) {
+					service.deleteLabel(label);
+					etiquetas.clear();
+					etiquetas.add(new Label());
+					for (Label aux : service.getLabelList()) {
+						etiquetas.add(aux);
+					}
+					updateEtiquetaComboBox();
+					reloadGrid();
 				}
-				;
-				updateEtiquetaComboBox();
-				reloadGrid();
 			}
 		});
+		
 
 		d.weightx = 0.5;
 		d.fill = GridBagConstraints.HORIZONTAL;
@@ -459,38 +512,35 @@ public class Application {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-
-			}
-
+				
+            }
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-
+				
 			}
-
+			
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-
+				
 			}
-
+			
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
-
+				
 			}
-
+				
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Label label = (Label) labels.getSelectedItem();
-				service.updateLabel(label, newLabel.getText());
-				etiquetas.clear();
-				for (Label aux : service.getLabelList()) {
-					etiquetas.add(aux);
+				Label label = (Label) labelsAsign.getSelectedItem();
+				if (label != null && label.getId() != null) {
+					service.asignLabel(notificationSelected.getId(),
+							label.getId());
+					reloadGrid();
 				}
-				;
-				updateEtiquetaComboBox();
-				reloadGrid();
+
 			}
 		});
 
@@ -523,33 +573,41 @@ public class Application {
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-
+				
 			}
-
+			
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-
+				
 			}
-
+			
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-
+				
 			}
-
+			
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
-
+				
 			}
-
+				
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Label label = (Label) asignarEtiquetas.getSelectedItem();
-				service.asignLabel(notificationSelected.getId(), label.getId());
-				reloadGrid();
-
+				Label label = (Label) labelsUpdate.getSelectedItem();
+				if (label != null && label.getId() != null && !newLabel.getText().equals("")) {
+					service.updateLabel(label, newLabel.getText());
+					newLabel.setText("");
+					etiquetas.clear();
+					etiquetas.add(new Label());
+					for (Label aux : service.getLabelList()) {
+						etiquetas.add(aux);
+					};
+					updateEtiquetaComboBox();
+					reloadGrid();
+				}
 			}
 		});
 
@@ -566,10 +624,19 @@ public class Application {
 
 	private void setViewPanelInferior() {
 
+		
 		grid = new JTable();
 		grid.setBackground(Color.WHITE);
+		
+		DefaultTableModel model = new DefaultTableModel() {
 
-		DefaultTableModel model = new DefaultTableModel();
+		    @Override
+		    public boolean isCellEditable(int row, int column) {
+		       //all cells false
+		       return false;
+		    }
+		};
+		
 		model.setColumnIdentifiers(new String[] { "N°", "Fecha/Hora envio",
 				"Contenido", "Contexto", "Categoria", "Niño", "Etiquetas" });
 
@@ -582,33 +649,51 @@ public class Application {
 
 					@Override
 					public void valueChanged(ListSelectionEvent e) {
-						int valueSelected = Integer.valueOf((String) grid
-								.getValueAt(grid.getSelectedRow(), 0));
-						for (Notification notification : service
-								.getNotificationList()) {
-							if (notification.getId().equals(valueSelected)) {
-								notificationSelected = notification;
+						if (grid.getSelectedRow() != -1) {
+							int valueSelected = Integer.valueOf((String) grid
+									.getValueAt(grid.getSelectedRow(), 0));
+							for (Notification notification : service
+									.getNotificationList()) {
+								if (notification.getId().equals(valueSelected)) {
+									notificationSelected = notification;
+								}
+
 							}
-
 						}
-
-						// TODO:Ver como hacer para que no quede mas el foco
-
+						
 					}
-				});
-
+					
+					
+	    });
+		
 		grid.setModel(model);
-		JScrollPane scrollPane = new JScrollPane(grid);
+		JScrollPane scrollPane= new  JScrollPane(grid);
 		panelInferior.add(scrollPane);
 
 	}
 
 	private void reloadGrid() {
-		DefaultTableModel model = new DefaultTableModel();
-		model.setColumnIdentifiers(new String[] { "N°", "Fecha/Hora envio",
-				"Contenido", "Contexto", "Categoria", "Niño", "Etiquetas" });
-
+		DefaultTableModel model = (DefaultTableModel) grid.getModel();
+		if (model.getRowCount() > 0) {
+			for (int i = model.getRowCount() - 1; i > -1; i--) {
+				model.removeRow(i);
+			}
+		}
 		for (Notification notification : service.getNotificationList()) {
+			model.addRow(notification.toArray());
+		}
+		
+		grid.setModel(model);
+	}
+	
+	private void reloadGrid(List<Notification> list) {
+		DefaultTableModel model = (DefaultTableModel) grid.getModel();
+		if (model.getRowCount() > 0) {
+			for (int i = model.getRowCount() - 1; i > -1; i--) {
+				model.removeRow(i);
+			}
+		}
+		for (Notification notification : list) {
 			model.addRow(notification.toArray());
 		}
 
@@ -617,13 +702,13 @@ public class Application {
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void updateEtiquetaComboBox() {
-		asignarEtiquetas.setModel(new javax.swing.DefaultComboBoxModel(
+		labelsAsign.setModel(new javax.swing.DefaultComboBoxModel(
 				etiquetas.toArray()));
 		labels.setModel(new javax.swing.DefaultComboBoxModel(etiquetas
 				.toArray()));
 		labelsUpdate.setModel(new javax.swing.DefaultComboBoxModel(etiquetas
 				.toArray()));
-		etiquetasComboBox.setModel(new javax.swing.DefaultComboBoxModel(
+		labelFilterComboBox.setModel(new javax.swing.DefaultComboBoxModel(
 				etiquetas.toArray()));
 	}
 }

@@ -16,7 +16,7 @@ public class Notification {
 	private Date date;
 	private List<Label> labels = new ArrayList<Label>();
 	
-	DateFormat df = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+	DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 	
 	
 	public Integer getId() {

@@ -18,6 +18,7 @@ public class NotificationDAOImpl implements NotificationDAO {
 
 	private DBHelper dbHelper = new DBHelper();
 	private NotificationLabelDAO notificationLabelDAO = new NotificationLabelDAOImpl();
+	DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
 
 	@Override
@@ -29,31 +30,7 @@ public class NotificationDAOImpl implements NotificationDAO {
 		Notification notification = null;
 		try {
 			while (rs.first()) {
-				notification = new Notification();
-
-				notification.setId(rs.getInt("id"));
-				Category category = new Category();
-				category.setId(rs.getInt("categoryId"));
-				category.setName(rs.getString("categoryName"));
-				notification.setCategory(category);
-				Child child = new Child();
-				child.setId(rs.getInt("childId"));
-				child.setName(rs.getString("childName"));
-				notification.setChild(child);
-				Context context = new Context();
-				context.setId(rs.getInt("contextId"));
-				context.setName(rs.getString("contextName"));
-				notification.setContext(context);
-				Content content = new Content();
-				content.setId(rs.getInt("contentId"));
-				content.setName(rs.getString("contentName"));
-				notification.setContent(content);
-				DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-
-				Date today = df.parse(rs.getString("date_sent"));
-				notification.setLabels(notificationLabelDAO.getLabelsByNotification(notification.getId()));
-				notification.setDate(today);
-				
+				notification = convertToDomain(rs);
 			}
 			dbHelper.closeConnection();
 		} catch (Exception e) {
@@ -87,33 +64,7 @@ public class NotificationDAOImpl implements NotificationDAO {
 						+ " CA.id =  N.category and CONT.id = N.content and CO.id = N.context and CH.id= N.child");
 		try {
 			while (rs.next() ) {
-				Notification notification = new Notification();
-
-				notification.setId(rs.getInt("id"));
-				Category category = new Category();
-				category.setId(rs.getInt("categoryId"));
-				category.setName(rs.getString("categoryName"));
-				notification.setCategory(category);
-				Child child = new Child();
-				child.setId(rs.getInt("childId"));
-				child.setName(rs.getString("childName"));
-				notification.setChild(child);
-				Context context = new Context();
-				context.setId(rs.getInt("contextId"));
-				context.setName(rs.getString("contextName"));
-				notification.setContext(context);
-				Content content = new Content();
-				content.setId(rs.getInt("contentId"));
-				content.setName(rs.getString("contentName"));
-				notification.setContent(content);
-				DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-
-				Date today = df.parse(rs.getString("date_sent"));
-				notification.setDate(today);
-				
-				notification.setLabels(notificationLabelDAO.getLabelsByNotification(notification.getId()));
-				result.add(notification);
-
+				result.add(convertToDomain(rs));
 			  }
 			dbHelper.closeConnection();
 		} catch (Exception e) {
@@ -121,6 +72,86 @@ public class NotificationDAOImpl implements NotificationDAO {
 		}
 		return result;
 	}
+
+	@Override
+	public List<Notification> getNotificationListByFilter(Category cat,
+			Context contextParam, Content cont, Child childParam, Label label,
+			String dateFrom, String dateTo) {
+		List<Notification> result =  new ArrayList<Notification>();
+		
+		String filter = "";
+		String labelNotificationAlias = "";
+		if(cat != null && cat.getId() != null){
+			filter += " and N.category="+cat.getId();
+		}
+		if(contextParam != null && contextParam.getId() != null){
+			filter += " and N.context="+contextParam.getId();
+		}
+		if(cont != null && cont.getId() != null){
+			filter += " and N.content="+cont.getId();
+		}
+		if(childParam != null && childParam.getId() != null){
+			filter += " and N.child="+childParam.getId();
+		}
+		if(label != null && label.getId() != null){
+			filter += " and LB.NOTIFICATION = N.id and LB.LABEL ="+label.getId();
+			labelNotificationAlias = ", LABELNOTIFICATION as LB";
+		}
+		if(dateFrom != null && !dateFrom.equals("")){
+			filter += " and N.date_sent >="+dateFrom;
+		}
+		if(dateTo != null && !dateTo.equals("")){
+			filter += " and N.date_sent <="+dateTo;
+		}
+		
+		
+	
+		
+		ResultSet rs = dbHelper.executeQuery("select DISTINCT N.id as id, CA.id as categoryId, CA.name as categoryName, CH.id as childId, CH.name as childName,"
+				+ "	N.content as content, CO.id as contextId,  CO.name as contextName, CONT.id as contentId, CONT.name as contentName, N.date_sent as date_sent"
+				+ " from NOTIFICATION as N, CONTENT as CONT, CATEGORY as CA, CONTEXT as CO, CHILD as CH "+labelNotificationAlias+" where"
+						+ " CA.id =  N.category and CONT.id = N.content and CO.id = N.context and CH.id= N.child "+filter);
+		try {
+			while (rs.next() ) {
+				result.add(convertToDomain(rs));
+			 }
+			dbHelper.closeConnection();
+		} catch (Exception e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+		}
+		return result;
+	}
+	
+	private Notification convertToDomain(ResultSet rs) throws Exception{
+		
+		Notification notification = new Notification();
+
+		notification.setId(rs.getInt("id"));
+		Category category = new Category();
+		category.setId(rs.getInt("categoryId"));
+		category.setName(rs.getString("categoryName"));
+		notification.setCategory(category);
+		Child child = new Child();
+		child.setId(rs.getInt("childId"));
+		child.setName(rs.getString("childName"));
+		notification.setChild(child);
+		Context context = new Context();
+		context.setId(rs.getInt("contextId"));
+		context.setName(rs.getString("contextName"));
+		notification.setContext(context);
+		Content content = new Content();
+		content.setId(rs.getInt("contentId"));
+		content.setName(rs.getString("contentName"));
+		notification.setContent(content);
+		
+
+		Date today = df.parse(rs.getString("date_sent"));
+		notification.setDate(today);
+		
+		notification.setLabels(notificationLabelDAO.getLabelsByNotification(notification.getId()));
+		return notification;
+	}
+	
 
 
 }

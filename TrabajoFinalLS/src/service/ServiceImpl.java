@@ -81,4 +81,11 @@ public class ServiceImpl implements Service {
 		
 	}
 
+	@Override
+	public List<Notification> getNotificationListByFilter(Category cat,
+			Context context, Content cont, Child child, Label label,
+			String dateFrom, String dateTo) {
+		return notificationDAO.getNotificationListByFilter(cat, context, cont, child, label, dateFrom, dateTo);
+	}
+
 }

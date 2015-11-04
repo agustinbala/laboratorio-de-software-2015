@@ -15,7 +15,7 @@ public class NotificationLabelDAOImpl implements NotificationLabelDAO{
 	public void asignLabel(int idNotification, int idLabel) {
 		try {
 			String query = "INSERT INTO LABELNOTIFICATION (LABEL, NOTIFICATION)" +
-				"VALUES ("+idLabel+","+idNotification+")";
+				" VALUES ("+idLabel+","+idNotification+")";
 			dbHelper.executeUpdate(query);			
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());

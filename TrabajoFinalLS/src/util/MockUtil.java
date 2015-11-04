@@ -72,7 +72,7 @@ public class MockUtil {
 		List<Notification> notificacionesFromDB = notificationDAO.listNotifications();
 		for (Notification notificationFromBD : notificacionesFromDB) {
 			for (Label label : labelsFromDB) {
-				notificationLabelDAO.asignLabel(notificationFromBD.getId(), label.getId());
+				//notificationLabelDAO.asignLabel(notificationFromBD.getId(), label.getId());
 			}			
 		}
 		
