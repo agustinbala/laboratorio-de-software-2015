@@ -76,7 +76,7 @@ public class NotificationDAOImpl implements NotificationDAO {
 	@Override
 	public List<Notification> getNotificationListByFilter(Category cat,
 			Context contextParam, Content cont, Child childParam, Label label,
-			String dateFrom, String dateTo) {
+			Date dateFrom, Date dateTo) {
 		List<Notification> result =  new ArrayList<Notification>();
 		
 		String filter = "";

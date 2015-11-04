@@ -1,5 +1,6 @@
 package db;
 
+import java.util.Date;
 import java.util.List;
 
 import domain.Category;
@@ -18,6 +19,6 @@ public interface NotificationDAO {
 	public List<Notification> listNotifications();
 	
 	public List<Notification> getNotificationListByFilter(Category cat, Context context, Content cont,
-			Child child, Label label, String dateFrom, String dateTo);
+			Child child, Label label, Date dateFrom, Date dateTo);
 
 }

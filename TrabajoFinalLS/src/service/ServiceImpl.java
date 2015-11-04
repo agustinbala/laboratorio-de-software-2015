@@ -1,5 +1,6 @@
 package service;
 
+import java.util.Date;
 import java.util.List;
 
 import db.CategoryDAO;
@@ -84,7 +85,7 @@ public class ServiceImpl implements Service {
 	@Override
 	public List<Notification> getNotificationListByFilter(Category cat,
 			Context context, Content cont, Child child, Label label,
-			String dateFrom, String dateTo) {
+			Date dateFrom, Date dateTo) {
 		return notificationDAO.getNotificationListByFilter(cat, context, cont, child, label, dateFrom, dateTo);
 	}
 
