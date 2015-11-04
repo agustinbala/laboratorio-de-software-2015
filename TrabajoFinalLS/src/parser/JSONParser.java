@@ -1,6 +1,7 @@
 package parser;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.List;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -17,7 +18,7 @@ public class JSONParser {
 	
 	private static ObjectMapper objectMapper = new ObjectMapper();
     
-	public static List<Notification> getNotificationList(File file){
+	public static List<Notification> getNotificationList(InputStream file){
 		List<Notification> result = null;
         try {
         	 result = objectMapper.readValue(file, new TypeReference<List<Notification>>() { });
@@ -27,7 +28,7 @@ public class JSONParser {
 		return result;
 	}	
 	
-	public static List<Label> getLabelList(File file){
+	public static List<Label> getLabelList(InputStream file){
 		List<Label> result = null;
         try {
         	 result = objectMapper.readValue(file, new TypeReference<List<Label>>() { });
@@ -37,7 +38,7 @@ public class JSONParser {
 		return result;
 	}
 	
-	public static List<Category> getCategoryList(File file){
+	public static List<Category> getCategoryList(InputStream file){
 		List<Category> result = null;
         try {
         	 result = objectMapper.readValue(file, new TypeReference<List<Category>>() { });
@@ -47,7 +48,7 @@ public class JSONParser {
 		return result;
 	}
 	
-	public static List<Context> getContextList(File file){
+	public static List<Context> getContextList(InputStream file){
 		List<Context> result = null;
         try {
         	 result = objectMapper.readValue(file, new TypeReference<List<Context>>() { });
@@ -57,7 +58,7 @@ public class JSONParser {
 		return result;
 	}
 	
-	public static List<Child> getChildList(File file){
+	public static List<Child> getChildList(InputStream file){
 		List<Child> result = null;
         try {
         	 result = objectMapper.readValue(file, new TypeReference<List<Child>>() { });
@@ -67,7 +68,7 @@ public class JSONParser {
 		return result;
 	}
 
-	public static List<Content> getContentList(File file) {
+	public static List<Content> getContentList(InputStream file) {
 		List<Content> result = null;
         try {
         	 result = objectMapper.readValue(file, new TypeReference<List<Content>>() { });

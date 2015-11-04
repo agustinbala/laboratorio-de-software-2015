@@ -34,36 +34,37 @@ public class MockUtil {
 		CategoryDAO categoryDAO = new CategoryDAOImpl();
 		ContentDAO contentDAO = new ContentDAOImpl();
 		NotificationLabelDAO notificationLabelDAO = new NotificationLabelDAOImpl();
+		FileUtil fileUtil = new FileUtil();
 		
-		List<Label> labels = JSONParser.getLabelList(FileUtil.getFile("src/labels.txt"));
+		List<Label> labels = JSONParser.getLabelList(fileUtil.getFile("/labels.txt"));
 		for (Label label : labels) {
 			labelDAO.saveLabel(label);
 		}
 		
 
-		List<Notification> notificaciones = JSONParser.getNotificationList(FileUtil.getFile("src/notifications.txt"));
+		List<Notification> notificaciones = JSONParser.getNotificationList(fileUtil.getFile("/notifications.txt"));
 		
 		for (Notification notification : notificaciones) {
 			notificationDAO.saveNotification(notification);
 			
 		}
 		
-		List<Category> categories = JSONParser.getCategoryList(FileUtil.getFile("src/categories.txt"));
+		List<Category> categories = JSONParser.getCategoryList(fileUtil.getFile("/categories.txt"));
 		for (Category cat : categories) {
 			categoryDAO.saveCategory(cat);
 		}
 		
-		List<Child> childs = JSONParser.getChildList(FileUtil.getFile("src/child.txt"));
+		List<Child> childs = JSONParser.getChildList(fileUtil.getFile("/child.txt"));
 		for (Child child : childs) {
 			childDAO.saveChild(child);
 		}
 		
-		List<Context> contexts = JSONParser.getContextList(FileUtil.getFile("src/contexts.txt"));
+		List<Context> contexts = JSONParser.getContextList(fileUtil.getFile("/contexts.txt"));
 		for (Context context : contexts) {
 			contextDAO.saveContext(context);
 		}
 		
-		List<Content> contents = JSONParser.getContentList(FileUtil.getFile("src/contents.txt"));
+		List<Content> contents = JSONParser.getContentList(fileUtil.getFile("/contents.txt"));
 		for (Content content : contents) {
 			contentDAO.saveContent(content);
 		}
