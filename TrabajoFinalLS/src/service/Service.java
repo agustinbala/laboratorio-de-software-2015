@@ -1,5 +1,6 @@
 package service;
 
+import java.util.Date;
 import java.util.List;
 
 import domain.Category;
@@ -14,7 +15,7 @@ public interface Service {
 	List<Notification> getNotificationList();
 	
 	List<Notification> getNotificationListByFilter(Category cat, Context context, Content cont,
-													Child child, Label label, String dateFrom, String dateTo);
+													Child child, Label label, Date dateFrom, Date dateTo);
 	
 	List<Label> getLabelList();
 	

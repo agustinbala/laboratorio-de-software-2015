@@ -8,7 +8,10 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -29,6 +32,10 @@ import javax.swing.table.DefaultTableModel;
 import service.Service;
 import service.ServiceImpl;
 import util.MockUtil;
+
+import com.toedter.calendar.JCalendar;
+import com.toedter.calendar.JDateChooser;
+
 import db.DBHelper;
 import domain.Category;
 import domain.Child;
@@ -54,8 +61,8 @@ public class Application {
 	private JComboBox<Category> categoriesFilterComboBox;
 	private JComboBox<Context> contextsFilterComboBox;
 	private JComboBox<Child> childsFilterComboBox;
-	private JTextField dateFromFilter;
-	private JTextField dateToFilter;
+	private JDateChooser dateFromFilter;
+	private JDateChooser dateToFilter;
 	private Notification notificationSelected;
 	
 	
@@ -247,30 +254,32 @@ public class Application {
 		c.gridy = 4;
 		container.add(fechaDesde, c);
 
-		dateFromFilter= new JTextField(10);
+		dateFromFilter= new JDateChooser();
+		c.weightx = 0.5;
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 2;
-		c.gridy = 4;
+		c.gridx = 1;
+		c.gridy = 5;		
 		container.add(dateFromFilter, c);
 
 		JLabel fechaHasta = new JLabel("hasta:");
 		c.weightx = 0.5;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
-		c.gridy = 5;
+		c.gridy = 6;
 		container.add(fechaHasta, c);
 
-		dateToFilter = new JTextField(10);
+		dateToFilter = new JDateChooser();
+		c.weightx =0.5;
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 2;
-		c.gridy = 5;
+		c.gridx = 1;
+		c.gridy = 7;			
 		container.add(dateToFilter, c);
 
 		JLabel etiquetaLabel = new JLabel("Etiqueta:");
 		c.weightx = 0.5;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
-		c.gridy = 6;
+		c.gridy = 8;
 		c.insets = new Insets(10, 0, 0, 0);
 
 		container.add(etiquetaLabel, c);
@@ -279,7 +288,7 @@ public class Application {
 		c.weightx = 0.5;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 1;
-		c.gridy = 6;
+		c.gridy = 8;
 		c.insets = new Insets(10, 0, 0, 0);
 
 		container.add(labelFilterComboBox, c);
@@ -289,7 +298,7 @@ public class Application {
 		c.insets = new Insets(20, 50, 0, 0);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
-		c.gridy = 9;
+		c.gridy = 10;
 		container.add(filtrar, c);
 
         filtrar.addMouseListener(new MouseListener() {
@@ -325,8 +334,8 @@ public class Application {
 				Context context = (Context) contextsFilterComboBox.getSelectedItem();
 				Label lab = (Label) labelFilterComboBox.getSelectedItem();
 				Child child = (Child) childsFilterComboBox.getSelectedItem();
-				String dateFrom = dateFromFilter.getText();
-				String dateTo = dateToFilter.getText();
+				Date dateFrom = dateFromFilter.getDate();
+				Date dateTo = dateToFilter.getDate();
 				List<Notification> list = service.getNotificationListByFilter(cat, context, cont, child, lab, dateFrom, dateTo);
 				reloadGrid(list);
 			}
