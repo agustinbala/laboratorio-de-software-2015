@@ -18,7 +18,7 @@ public class NotificationDAOImpl implements NotificationDAO {
 
 	private DBHelper dbHelper = new DBHelper();
 	private NotificationLabelDAO notificationLabelDAO = new NotificationLabelDAOImpl();
-	DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+	DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
 
 	@Override
@@ -98,10 +98,10 @@ public class NotificationDAOImpl implements NotificationDAO {
 			labelNotificationAlias = ", LABELNOTIFICATION as LB";
 		}
 		if(dateFrom != null && !dateFrom.equals("")){
-			
+			filter += " and N.date_sent >="+dateFrom;
 		}
 		if(dateTo != null && !dateTo.equals("")){
-			
+			filter += " and N.date_sent <="+dateTo;
 		}
 		
 		
