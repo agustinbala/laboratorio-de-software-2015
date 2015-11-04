@@ -58,7 +58,8 @@ public class DBHelper {
                  " CONTEXT            INTEGER     NOT NULL, " + 
                  " CATEGORY        INTEGER, " + 
                  " CHILD         INTEGER,"+ 
-                 " DATE_SENT     DATE DEFAULT (datetime('now','localtime')))"; 
+                 " DATE_RECEIVED   DATE DEFAULT (datetime('now','localtime')),"+ 
+                 " DATE_SENT     DATE)"; 
 		 stmt.executeUpdate(sqlNotification);
 		 
 		 String sqlLabel = "CREATE TABLE  LABEL "+

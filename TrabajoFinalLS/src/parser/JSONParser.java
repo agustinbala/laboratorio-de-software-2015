@@ -1,7 +1,8 @@
 package parser;
 
-import java.io.File;
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -19,6 +20,8 @@ public class JSONParser {
 	private static ObjectMapper objectMapper = new ObjectMapper();
     
 	public static List<Notification> getNotificationList(InputStream file){
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		objectMapper.setDateFormat(df);
 		List<Notification> result = null;
         try {
         	 result = objectMapper.readValue(file, new TypeReference<List<Notification>>() { });

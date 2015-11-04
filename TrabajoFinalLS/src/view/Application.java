@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -18,11 +17,11 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
@@ -47,7 +46,7 @@ public class Application {
 	private JPanel panelInferior;
 	private JTable grid;
 	private JComboBox<Label> labelsAsign;
-	private JComboBox<Label> labels;
+	private JComboBox<Label> labelsDelete;
 	private JComboBox<Label> labelsUpdate;
 	
 	private JComboBox<Content> contentsFilterComboBox;
@@ -400,6 +399,7 @@ public class Application {
 					;
 					updateEtiquetaComboBox();
 					reloadGrid();
+					showDialog("Etiqueta creada", "Se creo la etiqueta correctamente");
 				}
 			}
 		});
@@ -420,13 +420,13 @@ public class Application {
 		d.insets = new Insets(10, 10, 0, 0);
 		container.add(eliminarEtiqueta, d);
 
-		labels = new JComboBox(etiquetas.toArray());
+		labelsDelete = new JComboBox(etiquetas.toArray());
 		d.weightx = 0.5;
 		d.fill = GridBagConstraints.HORIZONTAL;
 		d.gridx = 1;
 		d.gridy = 1;
 		d.insets = new Insets(10, 10, 0, 0);
-		container.add(labels, d);
+		container.add(labelsDelete, d);
 
 		JButton eliminar = new JButton("Eliminar");
 		eliminar.addMouseListener(new MouseListener() {
@@ -457,7 +457,7 @@ public class Application {
 				
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Label label = (Label) labels.getSelectedItem();
+				Label label = (Label) labelsDelete.getSelectedItem();
 				if (label != null && label.getId() != null) {
 					service.deleteLabel(label);
 					etiquetas.clear();
@@ -467,6 +467,7 @@ public class Application {
 					}
 					updateEtiquetaComboBox();
 					reloadGrid();
+					showDialog("Etiqueta eliminada", "Se elimino la etiqueta correctamente");
 				}
 			}
 		});
@@ -539,13 +540,20 @@ public class Application {
 				
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Label label = (Label) labelsAsign.getSelectedItem();
-				if (label != null && label.getId() != null) {
-					service.asignLabel(notificationSelected.getId(),
-							label.getId());
+				Label label = (Label) labelsUpdate.getSelectedItem();
+				if (label != null && label.getId() != null && !newLabel.getText().equals("")) {
+					service.updateLabel(label, newLabel.getText());
+					newLabel.setText("");
+					etiquetas.clear();
+					etiquetas.add(new Label());
+					for (Label aux : service.getLabelList()) {
+						etiquetas.add(aux);
+					};
+					updateEtiquetaComboBox();
 					reloadGrid();
-				}
-
+					showDialog("Etiqueta actualizada", "Se actualizo la etiqueta correctamente");
+				}	
+				
 			}
 		});
 
@@ -601,18 +609,14 @@ public class Application {
 				
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Label label = (Label) labelsUpdate.getSelectedItem();
-				if (label != null && label.getId() != null && !newLabel.getText().equals("")) {
-					service.updateLabel(label, newLabel.getText());
-					newLabel.setText("");
-					etiquetas.clear();
-					etiquetas.add(new Label());
-					for (Label aux : service.getLabelList()) {
-						etiquetas.add(aux);
-					};
-					updateEtiquetaComboBox();
+				Label label = (Label) labelsAsign.getSelectedItem();
+				if (label != null && label.getId() != null) {
+					service.asignLabel(notificationSelected.getId(),
+							label.getId());
 					reloadGrid();
+					showDialog("Etiqueta asignada", "Se asigno la etiqueta correctamente");
 				}
+
 			}
 		});
 
@@ -642,7 +646,7 @@ public class Application {
 		    }
 		};
 		
-		model.setColumnIdentifiers(new String[] { "N°", "Fecha/Hora envio",
+		model.setColumnIdentifiers(new String[] { "N°", "Fecha/Hora envio",  "Fecha/Hora recibido",
 				"Contenido", "Contexto", "Categoria", "Niño", "Etiquetas" });
 
 		for (Notification notification : service.getNotificationList()) {
@@ -709,11 +713,18 @@ public class Application {
 	private void updateEtiquetaComboBox() {
 		labelsAsign.setModel(new javax.swing.DefaultComboBoxModel(
 				etiquetas.toArray()));
-		labels.setModel(new javax.swing.DefaultComboBoxModel(etiquetas
+		labelsDelete.setModel(new javax.swing.DefaultComboBoxModel(etiquetas
 				.toArray()));
 		labelsUpdate.setModel(new javax.swing.DefaultComboBoxModel(etiquetas
 				.toArray()));
 		labelFilterComboBox.setModel(new javax.swing.DefaultComboBoxModel(
 				etiquetas.toArray()));
+	}
+	
+	private void showDialog(String title, String message){
+		JOptionPane.showMessageDialog(frame,
+			    title,
+			    message,
+			    JOptionPane.PLAIN_MESSAGE);
 	}
 }

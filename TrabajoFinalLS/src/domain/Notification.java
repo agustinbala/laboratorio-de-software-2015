@@ -14,9 +14,10 @@ public class Notification {
 	private Context context;
 	private Child child;
 	private Date date;
+	private Date dateReceived;
 	private List<Label> labels = new ArrayList<Label>();
 	
-	DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+	DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 	
 	
 	public Integer getId() {
@@ -62,10 +63,18 @@ public class Notification {
 	public void setLabels(List<Label> labels) {
 		this.labels = labels;
 	}
+	
+	public Date getDateReceived() {
+		return dateReceived;
+	}
+	public void setDateReceived(Date dateReceived) {
+		this.dateReceived = dateReceived;
+	}
 	public Object[] toArray() {
 		List<String> not = new ArrayList<String>();
 		not.add(getId().toString());
 		not.add(df.format(this.getDate()));
+		not.add(df.format(this.getDateReceived()));
 		not.add(this.getContent().getName());
 		not.add(this.getContext().getName());
 		not.add(this.getCategory().getName());

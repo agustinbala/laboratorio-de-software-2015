@@ -2,6 +2,7 @@ package db;
 
 import java.sql.ResultSet;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,13 +19,13 @@ public class NotificationDAOImpl implements NotificationDAO {
 
 	private DBHelper dbHelper = new DBHelper();
 	private NotificationLabelDAO notificationLabelDAO = new NotificationLabelDAOImpl();
-	DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+	DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
 
 	@Override
 	public Notification getNotification(Integer id) {
 		ResultSet rs = dbHelper.executeQuery("select N.id as id, CA.id as categoryId, CA.name as categoryName, CH.id as childId, CH.name as childName,"
-									+ "	N.content as content, CO.id as contextId,  CO.name as contextName, CONT.id as contentId, CONT.name as contentName, N.date_sent as date_sent"
+									+ "	N.content as content, CO.id as contextId,  CO.name as contextName, CONT.id as contentId, CONT.name as contentName, N.date_sent as date_sent, N.DATE_RECEIVED as date_received"
 									+ " from NOTIFICATION as N, CONTENT as CONT, CATEGORY as CA, CONTEXT as CO, CHILD as CH where N.id="+id+" "
 											+ "and CA.id =  N.category and CONT.id = n.content and CO.id = N.context and CH.id= N.child");
 		Notification notification = null;
@@ -43,12 +44,13 @@ public class NotificationDAOImpl implements NotificationDAO {
 	@Override
 	public void saveNotification(Notification notificacion) {
 		try {
-			String query = "INSERT INTO NOTIFICATION (CONTENT,CONTEXT,CATEGORY,CHILD)" +
+			String query = "INSERT INTO NOTIFICATION (CONTENT,CONTEXT,CATEGORY,CHILD,DATE_SENT)" +
 				"VALUES ('"+ 
 				notificacion.getContent().getId()+"','"+
 				notificacion.getContext().getId()+"','"+
 				notificacion.getCategory().getId()+"','"+
-				notificacion.getChild().getId()+"')";
+				notificacion.getChild().getId()+"','"+
+				df.format(notificacion.getDateReceived())+"')";
 			dbHelper.executeUpdate(query);			
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -59,7 +61,7 @@ public class NotificationDAOImpl implements NotificationDAO {
 	public List<Notification> listNotifications() {
 		List<Notification> result =  new ArrayList<Notification>();
 		ResultSet rs = dbHelper.executeQuery("select N.id as id, CA.id as categoryId, CA.name as categoryName, CH.id as childId, CH.name as childName,"
-				+ "	N.content as content, CO.id as contextId,  CO.name as contextName, CONT.id as contentId, CONT.name as contentName, N.date_sent as date_sent"
+				+ "	N.content as content, CO.id as contextId,  CO.name as contextName, CONT.id as contentId, CONT.name as contentName, N.date_sent as date_sent , N.DATE_RECEIVED as date_received"
 				+ " from NOTIFICATION as N, CONTENT as CONT, CATEGORY as CA, CONTEXT as CO, CHILD as CH where "
 						+ " CA.id =  N.category and CONT.id = N.content and CO.id = N.context and CH.id= N.child");
 		try {
@@ -79,6 +81,8 @@ public class NotificationDAOImpl implements NotificationDAO {
 			String dateFrom, String dateTo) {
 		List<Notification> result =  new ArrayList<Notification>();
 		
+		Date dateFromDate = null;
+		Date dateToDate = null;
 		String filter = "";
 		String labelNotificationAlias = "";
 		if(cat != null && cat.getId() != null){
@@ -97,18 +101,25 @@ public class NotificationDAOImpl implements NotificationDAO {
 			filter += " and LB.NOTIFICATION = N.id and LB.LABEL ="+label.getId();
 			labelNotificationAlias = ", LABELNOTIFICATION as LB";
 		}
+		
 		if(dateFrom != null && !dateFrom.equals("")){
-			filter += " and N.date_sent >="+dateFrom;
+			try {
+				dateFromDate = df.parse(dateFrom);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 		}
 		if(dateTo != null && !dateTo.equals("")){
-			filter += " and N.date_sent <="+dateTo;
+			try {
+				dateToDate = df.parse(dateTo);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
 		}
 		
-		
-	
-		
+			
 		ResultSet rs = dbHelper.executeQuery("select DISTINCT N.id as id, CA.id as categoryId, CA.name as categoryName, CH.id as childId, CH.name as childName,"
-				+ "	N.content as content, CO.id as contextId,  CO.name as contextName, CONT.id as contentId, CONT.name as contentName, N.date_sent as date_sent"
+				+ "	N.content as content, CO.id as contextId,  CO.name as contextName, CONT.id as contentId, CONT.name as contentName, N.date_sent as date_sent, N.DATE_RECEIVED as date_received "
 				+ " from NOTIFICATION as N, CONTENT as CONT, CATEGORY as CA, CONTEXT as CO, CHILD as CH "+labelNotificationAlias+" where"
 						+ " CA.id =  N.category and CONT.id = N.content and CO.id = N.context and CH.id= N.child "+filter);
 		try {
@@ -119,7 +130,32 @@ public class NotificationDAOImpl implements NotificationDAO {
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 		}
+		
+		
+		filterByDate(result, dateToDate, dateFromDate);
 		return result;
+	}
+	
+	private void filterByDate(List<Notification> result,Date dateToDate, Date dateFromDate){
+		List<Notification> toRemove;
+		if(dateFromDate != null){
+			 toRemove = new ArrayList<Notification>();
+			for (Notification notification : result) {
+				if(notification.getDate().before(dateFromDate)){
+					toRemove.add(notification);
+				}
+			}
+			result.removeAll(toRemove);
+		}
+		if(dateToDate != null){
+			toRemove = new ArrayList<Notification>();
+			for (Notification notification : result) {
+				if(notification.getDate().after(dateToDate)){
+					toRemove.remove(notification);
+				}
+			}
+			result.removeAll(toRemove);
+		}
 	}
 	
 	private Notification convertToDomain(ResultSet rs) throws Exception{
@@ -147,6 +183,9 @@ public class NotificationDAOImpl implements NotificationDAO {
 
 		Date today = df.parse(rs.getString("date_sent"));
 		notification.setDate(today);
+		Date dateReceived = df.parse(rs.getString("date_received"));
+		notification.setDateReceived(dateReceived);
+		
 		
 		notification.setLabels(notificationLabelDAO.getLabelsByNotification(notification.getId()));
 		return notification;
