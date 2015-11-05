@@ -654,6 +654,7 @@ public class Application {
 		
 		grid = new JTable();
 		grid.setBackground(Color.WHITE);
+		grid.setAutoCreateRowSorter(true);
 		
 		DefaultTableModel model = new DefaultTableModel() {
 
