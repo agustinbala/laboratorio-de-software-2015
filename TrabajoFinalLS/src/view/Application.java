@@ -1,13 +1,11 @@
 package view;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -29,10 +27,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
-import service.Service;
-import service.ServiceImpl;
-import util.MockUtil;
-
 import com.toedter.calendar.JDateChooser;
 
 import db.DBHelper;
@@ -42,9 +36,14 @@ import domain.Content;
 import domain.Context;
 import domain.Label;
 import domain.Notification;
+import server.HTTPServer;
+import service.Service;
+import service.ServiceImpl;
+import util.MockUtil;
 
-public class Application {
+public class Application implements OnNotificationReceived {
 
+	private Boolean isFilterOn = false;
 	private JFrame frame;
 	private JPanel panelSuperior;
 	private JPanel panelIzquierdo;
@@ -79,7 +78,9 @@ public class Application {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {		
-		new Application().initialize();
+		Application app = new Application();
+		app.initialize();
+		new HTTPServer().start();
 	}
 
 	/**
@@ -292,13 +293,15 @@ public class Application {
 
 		container.add(labelFilterComboBox, c);
 
+		JPanel buttonsContainer = new JPanel();
+		buttonsContainer.setLayout(new GridBagLayout());
 		JButton filtrar = new JButton("Filtrar");
 		c.weightx = 0.5;
 		c.insets = new Insets(20, 50, 0, 0);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 10;
-		container.add(filtrar, c);
+		buttonsContainer.add(filtrar, c);
 
         filtrar.addMouseListener(new MouseListener() {
 			
@@ -326,6 +329,7 @@ public class Application {
 				
 			}
 			
+			@SuppressWarnings("deprecation")
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				Category cat = (Category) categoriesFilterComboBox.getSelectedItem();
@@ -345,10 +349,63 @@ public class Application {
 					dateTo.setMinutes(59);
 					dateTo.setSeconds(59);
 				}
+				isFilterOn = true;
 				List<Notification> list = service.getNotificationListByFilter(cat, context, cont, child, lab, dateFrom, dateTo);
 				reloadGrid(list);
 			}
 		});
+        
+        JButton mostrarTodoButton = new JButton("Mostrar Todo");
+		c.weightx = 0.5;
+		c.insets = new Insets(20, 50, 0, 0);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridy = 10;
+		buttonsContainer.add(mostrarTodoButton, c);
+		
+		
+		container.add(buttonsContainer);
+		mostrarTodoButton.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				categoriesFilterComboBox.setSelectedIndex(0);
+				contentsFilterComboBox.setSelectedIndex(0);
+				contextsFilterComboBox.setSelectedIndex(0);
+				labelFilterComboBox.setSelectedIndex(0);
+				childsFilterComboBox.setSelectedIndex(0);
+				dateFromFilter.cleanup();
+				dateToFilter.cleanup();
+				isFilterOn = false;
+				List<Notification> list = service.getNotificationList();
+				reloadGrid(list);
+			}
+		});
+
 
 		panelIzquierdo.add(container);
 
@@ -658,7 +715,12 @@ public class Application {
 		
 		DefaultTableModel model = new DefaultTableModel() {
 
-		    @Override
+		    /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
 		    public boolean isCellEditable(int row, int column) {
 		       //all cells false
 		       return false;
@@ -745,5 +807,15 @@ public class Application {
 			    title,
 			    message,
 			    JOptionPane.PLAIN_MESSAGE);
+	}
+
+	@Override
+	public void onNotification() {
+		if(!isFilterOn) {
+			List<Notification> list = service.getNotificationList();
+			reloadGrid(list);
+		} else {
+			
+		}
 	}
 }

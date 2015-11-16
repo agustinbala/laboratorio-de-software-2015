@@ -27,6 +27,8 @@ public interface Service {
 	
 	List<Content> getContentList();
 	
+	Integer createNotification(Notification notification);
+	
 	void createLabel(Label label);
 	
 	void deleteLabel(Label label);

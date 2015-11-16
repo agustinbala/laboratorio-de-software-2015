@@ -89,4 +89,9 @@ public class ServiceImpl implements Service {
 		return notificationDAO.getNotificationListByFilter(cat, context, cont, child, label, dateFrom, dateTo);
 	}
 
+	@Override
+	public Integer createNotification(Notification notification) {
+		return notificationDAO.saveNotification(notification);
+	}
+
 }

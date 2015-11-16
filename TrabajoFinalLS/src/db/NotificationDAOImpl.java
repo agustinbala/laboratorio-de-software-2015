@@ -42,7 +42,7 @@ public class NotificationDAOImpl implements NotificationDAO {
 	}
 
 	@Override
-	public void saveNotification(Notification notificacion) {
+	public Integer saveNotification(Notification notificacion) {
 		try {
 			String query = "INSERT INTO NOTIFICATION (CONTENT,CONTEXT,CATEGORY,CHILD,DATE_SENT)" +
 				"VALUES ('"+ 
@@ -51,10 +51,11 @@ public class NotificationDAOImpl implements NotificationDAO {
 				notificacion.getCategory().getId()+"','"+
 				notificacion.getChild().getId()+"','"+
 				df.format(notificacion.getDateReceived())+"')";
-			dbHelper.executeUpdate(query);			
+			return dbHelper.executeUpdate(query);			
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 		}
+		return null;
 	}
 
 	@Override

@@ -31,6 +31,18 @@ public class JSONParser {
 		return result;
 	}	
 	
+	public static List<Notification> getNotificationList(String notificationList){
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		objectMapper.setDateFormat(df);
+		List<Notification> result = null;
+        try {
+        	 result = objectMapper.readValue(notificationList, new TypeReference<List<Notification>>() { });
+        } catch (Exception e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+		}
+		return result;
+	}	
+	
 	public static List<Label> getLabelList(InputStream file){
 		List<Label> result = null;
         try {

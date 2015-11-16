@@ -3,6 +3,7 @@ package db;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -106,14 +107,19 @@ public class DBHelper {
 		return result;
 	}
 	
-	public void executeUpdate(String query) throws Exception{
+	public Integer executeUpdate(String query) throws Exception{
 		try {
 			openConnection();
 			stmt.executeUpdate(query);
+			ResultSet resultset=stmt.getGeneratedKeys(); 
+			ResultSetMetaData meta=resultset.getMetaData(); 
+			Integer id = resultset.getInt("last_insert_rowid()");
 			closeConnection();
+			return id;
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 		}
+		return null;
 	}
 	
 	
