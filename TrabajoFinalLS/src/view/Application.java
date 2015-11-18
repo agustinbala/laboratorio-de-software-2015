@@ -50,6 +50,7 @@ public class Application implements OnNotificationReceived {
 	private JPanel panelDerecho;
 	private JPanel panelInferior;
 	private JTable grid;
+	private JLabel labelNewNotification;
 	private JComboBox<Label> labelsAsign;
 	private JComboBox<Label> labelsDelete;
 	private JComboBox<Label> labelsUpdate;
@@ -80,7 +81,7 @@ public class Application implements OnNotificationReceived {
 	public static void main(String[] args) {		
 		Application app = new Application();
 		app.initialize();
-		new HTTPServer().start();
+		new HTTPServer().start(app);
 	}
 
 	/**
@@ -293,16 +294,13 @@ public class Application implements OnNotificationReceived {
 
 		container.add(labelFilterComboBox, c);
 
-		JPanel buttonsContainer = new JPanel();
-		buttonsContainer.setLayout(new GridBagLayout());
 		JButton filtrar = new JButton("Filtrar");
 		c.weightx = 0.5;
 		c.insets = new Insets(20, 50, 0, 0);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridy = 10;
-		buttonsContainer.add(filtrar, c);
-
+		container.add(filtrar,c);
         filtrar.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -352,6 +350,7 @@ public class Application implements OnNotificationReceived {
 				isFilterOn = true;
 				List<Notification> list = service.getNotificationListByFilter(cat, context, cont, child, lab, dateFrom, dateTo);
 				reloadGrid(list);
+				labelNewNotification.setVisible(false);	
 			}
 		});
         
@@ -359,12 +358,10 @@ public class Application implements OnNotificationReceived {
 		c.weightx = 0.5;
 		c.insets = new Insets(20, 50, 0, 0);
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.gridx = 0;
+		c.gridx = 1;
 		c.gridy = 10;
-		buttonsContainer.add(mostrarTodoButton, c);
 		
-		
-		container.add(buttonsContainer);
+		container.add(mostrarTodoButton,c);
 		mostrarTodoButton.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -403,10 +400,19 @@ public class Application implements OnNotificationReceived {
 				isFilterOn = false;
 				List<Notification> list = service.getNotificationList();
 				reloadGrid(list);
+				labelNewNotification.setVisible(false);	
 			}
 		});
 
 
+		labelNewNotification = new JLabel("Hay nuevas notificaciones");
+		c.weightx = 0.5;
+		c.insets = new Insets(20, 50, 0, 0);
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 2;
+		c.gridy = 10;
+		labelNewNotification.setVisible(false);
+		container.add(labelNewNotification,c);
 		panelIzquierdo.add(container);
 
 
@@ -815,7 +821,7 @@ public class Application implements OnNotificationReceived {
 			List<Notification> list = service.getNotificationList();
 			reloadGrid(list);
 		} else {
-			
+			labelNewNotification.setVisible(true);	
 		}
 	}
 }

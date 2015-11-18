@@ -11,15 +11,16 @@ import java.util.concurrent.Executors;
 import com.sun.net.httpserver.HttpServer;
 
 import util.FileUtil;
+import view.OnNotificationReceived;
 
 public class HTTPServer {
 	
-	public void start() {
+	public void start(OnNotificationReceived onNotificationReceived) {
 		HttpServer server;
 		try {
 			Properties prop = loadProperties();	
 			server = HttpServer.create(new InetSocketAddress(Integer.parseInt(prop.getProperty("port"))), 0);
-			server.createContext("/notification", new NotificationHandler());
+			server.createContext("/notification", new NotificationHandler(onNotificationReceived));
 			ExecutorService cachedPool = Executors.newCachedThreadPool();
 			server.setExecutor(cachedPool);
 			server.start();

@@ -14,11 +14,20 @@ import domain.Notification;
 import parser.JSONParser;
 import service.Service;
 import service.ServiceImpl;
+import view.OnNotificationReceived;
 
 public class NotificationHandler  implements HttpHandler {
 
 	private Service service = new ServiceImpl();
+	private OnNotificationReceived onNotificationReceived;
 	
+	
+	
+	public NotificationHandler(OnNotificationReceived onNotificationReceived) {
+		super();
+		this.onNotificationReceived = onNotificationReceived;
+	}
+
 	@Override
 	public void handle(HttpExchange t) throws IOException {
 		String body = "";
@@ -32,7 +41,8 @@ public class NotificationHandler  implements HttpHandler {
 					service.asignLabel(notId, label.getId());
 				}
 			}
-			String response = "Notificacion recibida correctamente ";
+			onNotificationReceived.onNotification();
+			String response = "Notificacion recibida correctamente";
 			t.sendResponseHeaders(200, response.length());
 			OutputStream os = t.getResponseBody();
 			os.write(response.getBytes());
