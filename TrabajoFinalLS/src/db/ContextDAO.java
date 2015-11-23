@@ -10,5 +10,7 @@ public interface ContextDAO {
 	
 	public void saveContext(Context context);
 	
+	public Integer saveContext(String contextName);
+	
 	public List<Context> listContexts();
 }

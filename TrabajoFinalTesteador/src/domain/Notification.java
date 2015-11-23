@@ -20,7 +20,7 @@ public class Notification {
 	private Child child;
 	
 	@MockTodayAttribute()
-	private Date date;
+	private Date dateReceived;
 
 	DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -57,12 +57,12 @@ public class Notification {
 		this.child = child;
 	}
 
-	public Date getDate() {
-		return date;
+	public Date getDateReceived() {
+		return dateReceived;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setDateReceived(Date dateReceived) {
+		this.dateReceived = dateReceived;
 	}
 
 }

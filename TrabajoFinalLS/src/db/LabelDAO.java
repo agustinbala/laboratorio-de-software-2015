@@ -10,6 +10,8 @@ public interface LabelDAO {
 	
 	public void saveLabel(Label label);
 	
+	public Integer saveLabel(String labelName);
+	
 	public List<Label> listLabels();
 	
 	public void deleteLabel (Integer id);

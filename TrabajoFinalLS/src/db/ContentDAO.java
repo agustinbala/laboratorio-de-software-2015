@@ -10,5 +10,7 @@ public interface ContentDAO {
 	
 	public void saveContent(Content content);
 	
+	public Integer saveContent(String contentName);
+	
 	public List<Content> listContents();
 }

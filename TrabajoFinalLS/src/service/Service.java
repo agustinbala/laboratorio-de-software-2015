@@ -37,4 +37,16 @@ public interface Service {
 
 	void asignLabel(int idNotification, int idLabel);
 	
+	void removeLabel(int idNotification, int idLabel);
+	
+	Integer createLabel(String labelName);
+	
+	Integer createContent(String contentName);
+	
+	Integer createContext(String contextName);
+	
+	Integer createCategory(String categoryName);
+	
+	Integer createChild(String childName);
+	
 }

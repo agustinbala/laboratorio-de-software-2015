@@ -10,5 +10,7 @@ public interface CategoryDAO {
 	
 	public void saveCategory(Category category);
 	
+	public Integer saveCategory(String categoryName);
+	
 	public List<Category> listCategories();
 }

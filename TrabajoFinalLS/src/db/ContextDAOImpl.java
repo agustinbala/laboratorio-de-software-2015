@@ -28,6 +28,22 @@ public class ContextDAOImpl implements ContextDAO {
 		}
 		return context;
 	}
+	
+	private Context getContext(String contextName) {
+		ResultSet rs = dbHelper.executeQuery("select * from CONTEXT where name='"+contextName+"'");
+		Context context = null;
+		try {
+			while (rs.next()) {
+				context = new Context();
+				context.setId(rs.getInt("id"));
+				context.setName(rs.getString("name"));				
+			}
+		} catch (Exception e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			return null;
+		}
+		return context;
+	}
 
 	@Override
 	public void saveContext(Context context) {
@@ -60,6 +76,23 @@ public class ContextDAOImpl implements ContextDAO {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 		}
 		return result;
+	}
+
+	@Override
+	public Integer saveContext(String contextName) {
+		try {
+			Context context = this.getContext(contextName);
+			if(context == null) {
+				String query = "INSERT INTO CONTEXT (NAME)" +
+					"VALUES ('"+contextName+"')";
+				return dbHelper.executeUpdate(query);	
+			} else {
+				return context.getId();
+			}
+		} catch (Exception e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+		}
+		return null;		
 	}
 
 }

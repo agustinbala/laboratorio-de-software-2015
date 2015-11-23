@@ -3,7 +3,7 @@ package mock;
 import java.util.ArrayList;
 import java.util.List;
 
-import server.HTTPServer;
+import server.HTTPConnector;
 import domain.Notification;
 
 
@@ -17,7 +17,7 @@ public class TestGenerator {
 		
 		notifications = MockGenerator.createMockInstances(Notification.class, 40);
 		json = JsonGenerator.createJson(notifications);
-		HTTPServer httpserver = new HTTPServer();
+		HTTPConnector httpserver = new HTTPConnector();
 		httpserver.send(json);
 		
 	}

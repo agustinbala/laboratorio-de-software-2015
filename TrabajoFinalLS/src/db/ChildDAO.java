@@ -10,5 +10,7 @@ public interface ChildDAO {
 	
 	public void saveChild(Child child);
 	
+	public Integer saveChild(String childName);
+	
 	public List<Child> listChilds();
 }

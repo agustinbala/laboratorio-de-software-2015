@@ -9,6 +9,7 @@ import java.util.List;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
+import domain.Category;
 import domain.Label;
 import domain.Notification;
 import parser.JSONParser;
@@ -36,11 +37,9 @@ public class NotificationHandler  implements HttpHandler {
 			List<Notification> notificaciones = JSONParser.getNotificationList(body);
 
 			for (Notification notification : notificaciones) {
-				Integer notId = service.createNotification(notification);
-				for (Label label : notification.getLabels()) {
-					service.asignLabel(notId, label.getId());
-				}
+				saveNotification(notification);
 			}
+			
 			onNotificationReceived.onNotification();
 			String response = "Notificacion recibida correctamente";
 			t.sendResponseHeaders(200, response.length());
@@ -49,6 +48,21 @@ public class NotificationHandler  implements HttpHandler {
 			os.close();
 		}
 	}
+	
+	private void saveNotification(Notification notification) {
+		notification.getCategory().setId(service.createCategory(notification.getCategory().getName()));
+		notification.getChild().setId(service.createChild(notification.getChild().getName()));
+		notification.getContent().setId(service.createContent(notification.getContent().getName()));
+		notification.getContext().setId(service.createContext(notification.getContext().getName()));
+		Integer notId = service.createNotification(notification);
+		for (Label label : notification.getLabels()) {
+			Integer labelId = service.createLabel(label.getName());
+			service.asignLabel(notId, labelId);
+		}
+		
+	}
+
+	
 
 	private String readBody(HttpExchange t) {
 		InputStreamReader isr;

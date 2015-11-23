@@ -54,6 +54,7 @@ public class Application implements OnNotificationReceived {
 	private JComboBox<Label> labelsAsign;
 	private JComboBox<Label> labelsDelete;
 	private JComboBox<Label> labelsUpdate;
+	private JComboBox<Label> labelsRemoveFromNotification;
 	
 	private JComboBox<Content> contentsFilterComboBox;
 	private JComboBox<Label> labelFilterComboBox;
@@ -89,9 +90,9 @@ public class Application implements OnNotificationReceived {
 	 */
 	public void initialize() {
 		Boolean isNewDB = dbHelper.createDB();
-		if(isNewDB){
-			MockUtil.initData();
-		}				
+//		if(isNewDB){
+//			MockUtil.initData();
+//		}				
 		
 		initComboBoxList();
 		
@@ -707,7 +708,67 @@ public class Application implements OnNotificationReceived {
 		d.gridy = 2;
 		d.insets = new Insets(10, 10, 0, 0);
 		container.add(asignar, d);
+		
+		d.weightx = 0.5;
+		d.fill = GridBagConstraints.HORIZONTAL;
+		d.gridx = 0;
+		d.gridy = 5;
+		d.insets = new Insets(10, 10, 0, 0);
+		container.add(new JLabel("Desasignar Etiqueta:"), d);
+		
+		labelsRemoveFromNotification = new JComboBox(new ArrayList<>().toArray());
+		d.weightx = 0.5;
+		d.fill = GridBagConstraints.HORIZONTAL;
+		d.gridx = 1;
+		d.gridy = 5;
+		d.insets = new Insets(10, 10, 0, 0);
+		container.add(labelsRemoveFromNotification, d);
+		
+		JButton desasignar = new JButton("Desasignar");
+		desasignar.addMouseListener(new MouseListener() {
 
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+				
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				Label label = (Label) labelsRemoveFromNotification.getSelectedItem();
+				if(label != null) {
+					service.removeLabel(notificationSelected.getId(), label.getId());
+					reloadGrid();
+					showDialog("Etiqueta desasignada", "Se desasigno la etiqueta correctamente");
+				}
+
+			}
+		});
+
+		d.weightx = 0.5;
+		d.fill = GridBagConstraints.HORIZONTAL;
+		d.gridx = 2;
+		d.gridy = 5;
+		d.insets = new Insets(10, 10, 0, 0);
+		container.add(desasignar, d);
 		panelDerecho.add(container);
 
 	}
@@ -752,9 +813,14 @@ public class Application implements OnNotificationReceived {
 									.getNotificationList()) {
 								if (notification.getId().equals(valueSelected)) {
 									notificationSelected = notification;
+									labelsRemoveFromNotification.setModel(new javax.swing.DefaultComboBoxModel(
+											notification.getLabels().toArray()));
 								}
 
 							}
+						} else {
+							labelsRemoveFromNotification.setModel(new javax.swing.DefaultComboBoxModel(
+									new ArrayList<>().toArray()));
 						}
 						
 					}

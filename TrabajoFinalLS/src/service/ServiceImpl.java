@@ -94,4 +94,35 @@ public class ServiceImpl implements Service {
 		return notificationDAO.saveNotification(notification);
 	}
 
+	@Override
+	public Integer createLabel(String labelName) {
+		return labelDAO.saveLabel(labelName);
+	}
+
+	@Override
+	public Integer createContent(String contentName) {
+		return contentDAO.saveContent(contentName);
+	}
+
+	@Override
+	public Integer createContext(String contextName) {
+		return contextDAO.saveContext(contextName);
+	}
+
+	@Override
+	public Integer createCategory(String categoryName) {
+		return categoryDAO.saveCategory(categoryName);
+	}
+
+	@Override
+	public Integer createChild(String childName) {
+		return childDAO.saveChild(childName);
+	}
+
+	@Override
+	public void removeLabel(int idNotification, int idLabel) {
+		notificationLabelDAO.removeLabel(idNotification, idLabel);
+		
+	}
+
 }

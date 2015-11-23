@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import domain.Category;
 import domain.Content;
 
 public class ContentDAOImpl implements ContentDAO {
@@ -28,6 +27,23 @@ public class ContentDAOImpl implements ContentDAO {
 		}
 		return content;
 	}
+	
+	private Content getContent(String contentName) {
+		ResultSet rs = dbHelper.executeQuery("select * from CONTENT where name='"+contentName+"'");
+		Content content = null;
+		try {
+			while (rs.next()) {
+				content = new Content();
+				content.setId(rs.getInt("id"));
+				content.setName(rs.getString("name"));				
+			}
+		} catch (Exception e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			return null;
+		}
+		return content;
+	}
+
 
 	@Override
 	public void saveContent(Content content) {
@@ -60,6 +76,24 @@ public class ContentDAOImpl implements ContentDAO {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 		}
 		return result;
+	}
+
+	@Override
+	public Integer saveContent(String contentName) {
+		try {
+			Content content =  this.getContent(contentName);
+			if(content == null){
+				String query = "INSERT INTO CONTENT (NAME)" +
+					"VALUES ('"+contentName+"')";
+				return dbHelper.executeUpdate(query);	
+			} 
+			else {
+				return content.getId();
+			}
+		} catch (Exception e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+		}
+		return null;	
 	}
 
 }

@@ -27,6 +27,22 @@ public class LabelDAOImpl implements LabelDAO {
 		}
 		return label;
 	}
+	
+	private Label getLabel(String labelName) {
+		ResultSet rs = dbHelper.executeQuery("select * from LABEL where name='"+labelName+"'");
+		Label label = null;
+		try {
+			while (rs.next()) {
+				label = new Label();
+				label.setId(rs.getInt("id"));
+				label.setName(rs.getString("name"));				
+			}
+		} catch (Exception e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			return null;
+		}
+		return label;
+	}
 
 	@Override
 	public void saveLabel(Label label) {
@@ -80,6 +96,23 @@ public class LabelDAOImpl implements LabelDAO {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 		}	
 		
+	}
+
+	@Override
+	public Integer saveLabel(String labelName) {
+		try {
+			Label label = this.getLabel(labelName);
+			if(label == null){
+				String query = "INSERT INTO LABEL (NAME)" +
+					"VALUES ('"+labelName+"')";
+				return dbHelper.executeUpdate(query);
+			} else {
+				return label.getId();
+			}
+		} catch (Exception e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+		}
+		return null;		
 	}
 
 }

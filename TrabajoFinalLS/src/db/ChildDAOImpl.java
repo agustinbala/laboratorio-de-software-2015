@@ -27,6 +27,22 @@ public class ChildDAOImpl implements ChildDAO {
 		}
 		return child;
 	}
+	
+	private Child getChild(String childName) {
+		ResultSet rs = dbHelper.executeQuery("select * from CHILD where name='"+childName+"'");
+		Child child = null;
+		try {
+			while (rs.next()) {
+				child = new Child();
+				child.setId(rs.getInt("id"));
+				child.setName(rs.getString("name"));				
+			}
+		} catch (Exception e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			return null;
+		}
+		return child;
+	}
 
 	@Override
 	public void saveChild(Child child) {
@@ -59,6 +75,23 @@ public class ChildDAOImpl implements ChildDAO {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 		}
 		return result;
+	}
+
+	@Override
+	public Integer saveChild(String childName) {
+		try {
+			Child child = this.getChild(childName);
+			if(child == null) {
+				String query = "INSERT INTO CHILD (NAME)" +
+				"VALUES ('"+childName+"')";
+				return dbHelper.executeUpdate(query);
+			} else  {
+				return child.getId();
+			} 	
+		} catch (Exception e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+		}
+		return null;		
 	}
 
 }

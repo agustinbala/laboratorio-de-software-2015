@@ -42,4 +42,15 @@ public class NotificationLabelDAOImpl implements NotificationLabelDAO{
 	
 	}
 
+	@Override
+	public void removeLabel(int idNotification, int idLabel) {
+			try {
+				String query = "DELETE FROM LABELNOTIFICATION WHERE LABEL=" + idLabel +  " and NOTIFICATION="+idNotification;
+				dbHelper.executeUpdate(query);			
+			} catch (Exception e) {
+				System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			}	
+		
+	}
+
 }

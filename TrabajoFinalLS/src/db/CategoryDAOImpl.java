@@ -27,6 +27,22 @@ public class CategoryDAOImpl implements CategoryDAO {
 		}
 		return category;
 	}
+	
+	private Category getCategory(String categoryName) {
+		ResultSet rs = dbHelper.executeQuery("select * from CATEGORY where name='"+categoryName+"'");
+		Category category = null;
+		try {
+			while (rs.next()) {
+				category = new Category();
+				category.setId(rs.getInt("id"));
+				category.setName(rs.getString("name"));				
+			}
+		} catch (Exception e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+			return null;
+		}
+		return category;
+	}
 
 	@Override
 	public void saveCategory(Category category) {
@@ -59,6 +75,23 @@ public class CategoryDAOImpl implements CategoryDAO {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 		}
 		return result;
+	}
+
+	@Override
+	public Integer saveCategory(String categoryName) {
+		try {
+			Category category = this.getCategory(categoryName);
+			if(category == null) {
+				String query = "INSERT INTO CATEGORY (NAME)" +
+					"VALUES ('"+categoryName+"')";
+				return dbHelper.executeUpdate(query);
+			} else {
+				return category.getId();
+			}
+		} catch (Exception e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+		}
+		return null;	
 	}
 
 }
