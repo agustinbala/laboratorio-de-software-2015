@@ -27,6 +27,10 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
+import server.HTTPServer;
+import service.Service;
+import service.ServiceImpl;
+
 import com.toedter.calendar.JDateChooser;
 
 import db.DBHelper;
@@ -36,10 +40,6 @@ import domain.Content;
 import domain.Context;
 import domain.Label;
 import domain.Notification;
-import server.HTTPServer;
-import service.Service;
-import service.ServiceImpl;
-import util.MockUtil;
 
 public class Application implements OnNotificationReceived {
 
@@ -139,26 +139,31 @@ public class Application implements OnNotificationReceived {
 
 	private void initComboBoxList() {
 
+		etiquetas.clear();
 		etiquetas.add(new Label());
 		for (Label label : service.getLabelList()) {
 			etiquetas.add(label);
 		};
 
+		contexts.clear();
 		contexts.add(new Context());
 		for (Context context : service.getContextList()) {
 			contexts.add(context);
 		};
 
+		categories.clear();
 		categories.add(new Category());
 		for (Category category : service.getCategoryList()) {
 			categories.add(category);
 		};
 		
+		childs.clear();
 		childs.add(new Child());
 		for (Child child : service.getChildList()) {
 			childs.add(child);
 		};
 		
+		contents.clear();
 		contents.add(new Content());
 		for (Content content : service.getContentList()) {
 			contents.add(content);
@@ -886,8 +891,19 @@ public class Application implements OnNotificationReceived {
 		if(!isFilterOn) {
 			List<Notification> list = service.getNotificationList();
 			reloadGrid(list);
+			initComboBoxList();				
+			realoadCombosBox();
 		} else {
 			labelNewNotification.setVisible(true);	
 		}
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private void realoadCombosBox() {
+		contentsFilterComboBox.setModel(new javax.swing.DefaultComboBoxModel(
+				contents.toArray())); 
+		contextsFilterComboBox.setModel(new javax.swing.DefaultComboBoxModel((contexts.toArray())));
+		categoriesFilterComboBox.setModel(new javax.swing.DefaultComboBoxModel((categories.toArray())));
+	    childsFilterComboBox.setModel(new javax.swing.DefaultComboBoxModel(childs.toArray())); 
 	}
 }
