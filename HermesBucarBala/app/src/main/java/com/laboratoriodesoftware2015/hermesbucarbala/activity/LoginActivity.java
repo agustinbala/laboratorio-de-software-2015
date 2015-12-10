@@ -1,4 +1,4 @@
-package com.laboratoriodesoftware2015.hermesbucarbala;
+package com.laboratoriodesoftware2015.hermesbucarbala.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,11 +9,20 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class LoginActivity extends AppCompatActivity {
+import com.laboratoriodesoftware2015.hermesbucarbala.R;
+import com.laboratoriodesoftware2015.hermesbucarbala.presenter.LoginPresenter;
+import com.laboratoriodesoftware2015.hermesbucarbala.view.LoginView;
+
+public class LoginActivity extends AppCompatActivity implements LoginView {
+
+    private LoginPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        presenter = new LoginPresenter(this);
+
         setContentView(R.layout.activity_login);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
