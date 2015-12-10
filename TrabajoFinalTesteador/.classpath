@@ -6,8 +6,8 @@
 			<accessrule kind="accessible" pattern="com/sun/net/httpserver/**"/>
 		</accessrules>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Trabajo Final LS/lib/jackson-annotations-2.6.3.jar"/>
-	<classpathentry kind="lib" path="/Trabajo Final LS/lib/jackson-core-2.6.3.jar"/>
-	<classpathentry kind="lib" path="/Trabajo Final LS/lib/jackson-databind-2.6.3.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-annotations-2.6.3.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-core-2.6.3.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-databind-2.6.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -79,10 +79,17 @@ public class Application implements OnNotificationReceived {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {		
-		Application app = new Application();
+	public static void main(String[] args) {				
+		final Application app = new Application();
 		app.initialize();
-		new HTTPServer().start(app);
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				new HTTPServer().start(app);
+				
+			}
+		}).run();
 	}
 
 	/**
