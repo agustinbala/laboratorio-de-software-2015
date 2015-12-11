@@ -21,4 +21,7 @@ public abstract class BaseDAO<T> {
 
     abstract void delete(T object);
 
+    abstract T get();
+
+
 }
