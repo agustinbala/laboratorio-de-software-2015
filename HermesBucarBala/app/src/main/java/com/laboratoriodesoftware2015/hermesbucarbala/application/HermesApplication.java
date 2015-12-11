@@ -18,4 +18,5 @@ public class HermesApplication extends Application {
         super.onCreate();
         this.sqLiteOpenHelper = new HermesSQLiteOpenHelper(getApplicationContext());
     }
+
 }

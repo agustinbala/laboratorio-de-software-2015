@@ -89,7 +89,7 @@ public class Application implements OnNotificationReceived {
 				new HTTPServer().start(app);
 				
 			}
-		}).run();
+		}).start();
 	}
 
 	/**

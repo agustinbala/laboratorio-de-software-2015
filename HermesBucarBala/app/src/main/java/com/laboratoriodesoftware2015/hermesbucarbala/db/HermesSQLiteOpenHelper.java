@@ -23,12 +23,12 @@ public class HermesSQLiteOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE "+ Alumn.TABLE_NAME+" ( "+ Alumn.COLUMN_ID+" INT  PRIMARY KEY NOT NULL, "+ Alumn.COLUMN_NAME+" TEXT NOT NULL, "+ Alumn.COLUMN_LASTNAME+" TEXT NOT NULL, "+ Alumn.COLUMN_GENDER+"  CHAR(1) NOT NULL, "+ Alumn.COLUMN_SIZE+" TEXT )");
-        db.execSQL("CREATE TABLE "+Tab.TABLE_NAME+" ( "+Tab.COLUMN_ID+" INT PRIMARY KEY NOT NULL, "+Tab.COLUMN_NAME+" TEXT NOT NULL )");
+        db.execSQL("CREATE TABLE "+ Alumn.TABLE_NAME+" ( "+ Alumn.COLUMN_ID+" INTEGER  PRIMARY KEY autoincrement, "+ Alumn.COLUMN_NAME+" TEXT NOT NULL, "+ Alumn.COLUMN_LASTNAME+" TEXT NOT NULL, "+ Alumn.COLUMN_GENDER+"  CHAR(1) , "+ Alumn.COLUMN_SIZE+" TEXT )");
+        db.execSQL("CREATE TABLE "+Tab.TABLE_NAME+" ( "+Tab.COLUMN_ID+" INTEGER PRIMARY KEY autoincrement, "+Tab.COLUMN_NAME+" TEXT NOT NULL )");
         db.execSQL("CREATE TABLE "+ Alumn.ALUMN_TAB_TABLE_NAME+" ( "+ Alumn.ALUMN_TAB_COLUMN_ALUMN_ID+" INT NOT NULL, "+ Alumn.ALUMN_TAB_COLUMN_TAB_ID+" INT KEY NOT NULL )");
-        db.execSQL("CREATE TABLE "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_ID+" INT PRIMARY KEY NOT NULL, "+Pictogram.COLUMN_NAME+" TEXT NOT NULL, "+Pictogram.COLUMN_FOLDER+" TEXT NOT NULL )");
+        db.execSQL("CREATE TABLE "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_ID+" INTEGER PRIMARY KEY autoincrement, "+Pictogram.COLUMN_NAME+" TEXT NOT NULL, "+Pictogram.COLUMN_FOLDER+" TEXT NOT NULL )");
         db.execSQL("CREATE TABLE "+ Alumn.ALUMN_PICTOGRAM_TABLE_NAME+" ( "+ Alumn.ALUMN_PICTOGRAM_COLUMN_ALUMN_ID+" INT NOT NULL, "+ Alumn.ALUMN_PICTOGRAM_COLUMN_PICTOGRAM_ID+" INT NOT NULL)");
-        db.execSQL("CREATE TABLE "+Configuration.TABLE_NAME+" ( "+Configuration.COLUMN_ID+" INT PRIMARY KEY NOT NULL, "+Configuration.COLUMN_SERVER+" TEXT NOT NULL, "+Configuration.COLUMN_PORT+" TEXT NOT NULL )");
+        db.execSQL("CREATE TABLE "+Configuration.TABLE_NAME+" ( "+Configuration.COLUMN_ID+" INTEGER PRIMARY KEY autoincrement, "+Configuration.COLUMN_SERVER+" TEXT NOT NULL, "+Configuration.COLUMN_PORT+" TEXT NOT NULL )");
     }
 
     @Override
