@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name">HermesBucarBala</string>
     <string name="action_settings">Settings</string>
+    <string name="delete_student">Eliminar Alumn@</string>
+    <string name="add_student">Nuevo Alumn@</string>
+    <string name="title_student">Alumn@</string>
+    <string name="student_name_title">Nombre</string>
+    <string name="student_last_name_title">Apellido</string>
+    <string name="student_fame_title">Sexo</string>
+    <string name="student_picture_title">Tamaño de pictograma</string>
+    <string name="student_category_title">Habilitar Categorias</string>
+    <string name="title_configuration">Configuración Personal</string>
+    <string name="configuration_ip_title">Dirección IP del Monitor</string>
+    <string name="configuration_port_title">Puerto del Monitor</string>
+
 </resources>

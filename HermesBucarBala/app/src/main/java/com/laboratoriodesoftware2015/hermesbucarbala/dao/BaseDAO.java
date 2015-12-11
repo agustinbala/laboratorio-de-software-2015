@@ -14,7 +14,6 @@ import java.util.List;
 public abstract class BaseDAO<T> {
 
     protected SQLiteDatabase database;
-    protected SQLiteOpenHelper dbHelper;
 
     public BaseDAO(){
         this.dbHelper = HermesApplication.sqLiteOpenHelper;
@@ -35,5 +34,8 @@ public abstract class BaseDAO<T> {
     abstract void delete(T object);
 
     abstract List<T> listAll();
+
+    abstract T get();
+
 
 }

@@ -7,5 +7,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/jackson-databind-2.6.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/sqlite-jdbc-3.8.11.2.jar"/>
 	<classpathentry kind="lib" path="lib/jcalendar-1.4.jar"/>
+	<classpathentry kind="lib" path="lib/http-20070405.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
