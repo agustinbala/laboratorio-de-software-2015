@@ -57,4 +57,9 @@ public class AlumnDAO extends BaseDAO<Alumn> {
         cursor.close();
         return alumns;
     }
+
+    @Override
+    Alumn get() {
+        return null;
+    }
 }

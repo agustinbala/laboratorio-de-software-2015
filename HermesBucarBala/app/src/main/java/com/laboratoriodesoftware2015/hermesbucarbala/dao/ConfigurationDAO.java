@@ -5,6 +5,8 @@ import android.content.ContentValues;
 
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.Configuration;
 
+import java.util.List;
+
 /**
  * Created by natalia on 10/12/15.
  */
@@ -22,6 +24,11 @@ public class ConfigurationDAO extends BaseDAO<Configuration> {
     @Override
     void delete(Configuration object) {
 
+    }
+
+    @Override
+    List<Configuration> listAll() {
+        return null;
     }
 
     @Override

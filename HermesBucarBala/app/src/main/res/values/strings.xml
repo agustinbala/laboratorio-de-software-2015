@@ -12,5 +12,7 @@
     <string name="title_configuration">Configuración Personal</string>
     <string name="configuration_ip_title">Dirección IP del Monitor</string>
     <string name="configuration_port_title">Puerto del Monitor</string>
+    <string name="title_activity_tab">TabActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
 
 </resources>

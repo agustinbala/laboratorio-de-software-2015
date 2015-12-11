@@ -14,6 +14,7 @@ import java.util.List;
 public abstract class BaseDAO<T> {
 
     protected SQLiteDatabase database;
+    protected SQLiteOpenHelper dbHelper;
 
     public BaseDAO(){
         this.dbHelper = HermesApplication.sqLiteOpenHelper;

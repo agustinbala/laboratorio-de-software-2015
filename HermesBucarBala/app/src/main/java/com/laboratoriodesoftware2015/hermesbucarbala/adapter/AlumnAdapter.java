@@ -1,5 +1,7 @@
 package com.laboratoriodesoftware2015.hermesbucarbala.adapter;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.laboratoriodesoftware2015.hermesbucarbala.R;
+import com.laboratoriodesoftware2015.hermesbucarbala.activity.ConfigurationActivity;
+import com.laboratoriodesoftware2015.hermesbucarbala.activity.TabActivity;
+import com.laboratoriodesoftware2015.hermesbucarbala.application.HermesApplication;
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.Alumn;
 
 import java.util.List;
@@ -17,9 +22,11 @@ import java.util.List;
 public class AlumnAdapter extends RecyclerView.Adapter<AlumnAdapter.AlumnViewHolder>{
 
     List<Alumn> alumns;
+    Activity context;
 
-    public AlumnAdapter(List<Alumn> alumnList){
+    public AlumnAdapter(List<Alumn> alumnList, Activity context){
         this.alumns = alumnList;
+        this.context = context;
     }
     @Override
     public AlumnViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -50,6 +57,13 @@ public class AlumnAdapter extends RecyclerView.Adapter<AlumnAdapter.AlumnViewHol
         public AlumnViewHolder(View itemView) {
             super(itemView);
             tvName = (TextView) itemView.findViewById(R.id.tvName);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent= new Intent(AlumnAdapter.this.context, TabActivity.class);
+                    AlumnAdapter.this.context.startActivity(intent);
+                }
+            });
         }
     }
 }

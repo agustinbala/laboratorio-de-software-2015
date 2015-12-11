@@ -20,7 +20,7 @@
             android:paddingTop="50dp"
             android:paddingLeft="50dp"
             android:paddingRight="50dp"
-            android:paddingBottom="100dp"
+            android:paddingBottom="250dp"
             android:layout_weight="1"/>
 
         <LinearLayout
@@ -54,13 +54,30 @@
                 android:id="@+id/rv"
                 />
 
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/fab"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="bottom|center_horizontal"
-                android:layout_margin="@dimen/fab_margin"
-                android:src="@drawable/add" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom|center_horizontal">
+
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/fab"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="@dimen/fab_margin"
+                    android:src="@drawable/add" />
+
+
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/new_student"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="@dimen/fab_margin"
+                    android:src="@drawable/settings" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

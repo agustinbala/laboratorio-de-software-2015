@@ -29,8 +29,9 @@ public class LoginPresenter {
 
     public void saveAlumn(String name, String lastname){
         alumnDAO.open();
-        alumnDAO.save(new Alumn(name,lastname));
+        alumnDAO.save(new Alumn(name, lastname));
         alumnDAO.close();
+        callback.onCreatedAlumn();
     }
 
 }
