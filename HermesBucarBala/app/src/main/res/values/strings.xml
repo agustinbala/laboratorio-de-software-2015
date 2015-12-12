@@ -14,5 +14,8 @@
     <string name="configuration_port_title">Puerto del Monitor</string>
     <string name="title_activity_tab">TabActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
-
+	<string name="pista">pista</string>
+    <string name="establo">establo</string>
+    <string name="necesidades">necesidades</string>
+    <string name="emociones">emociones</string>
 </resources>

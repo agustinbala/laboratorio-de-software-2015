@@ -1,33 +1,57 @@
 package com.laboratoriodesoftware2015.hermesbucarbala.presenter;
 
+import com.laboratoriodesoftware2015.hermesbucarbala.dao.AlumnDAO;
+import com.laboratoriodesoftware2015.hermesbucarbala.dao.ConfigurationDAO;
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.Alumn;
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.Configuration;
+import com.laboratoriodesoftware2015.hermesbucarbala.view.ConfigurationView;
 
 /**
  * Created by natalia on 10/12/15.
  */
 public class ConfigurationPresenter {
 
-    private Alumn alumn;
-    private Configuration configuration;
+    private AlumnDAO alumnDAO;
+    private ConfigurationDAO configurationDAO;
+    private ConfigurationView callback;
 
-    public ConfigurationPresenter(){
-         alumn = new Alumn();
-        alumn.setName("Agustin");
-        alumn.setLastname("Bala");
-        alumn.setGender('M');
-        alumn.setSize("Mediano");
-        configuration = new Configuration();
-        configuration.setPort("800");
-        configuration.setServer("http://localhost");
+    public ConfigurationPresenter(ConfigurationView activity){
+        this.callback = activity;
+        configurationDAO = new ConfigurationDAO();
+        alumnDAO = new AlumnDAO();
     }
 
-    public Alumn getAlumn(){
+    public Alumn getAlumn(long id){
+        Alumn alumn;
+        alumnDAO.open();
+        alumn = alumnDAO.getById(id);
+        alumnDAO.close();
         return alumn;
     }
 
     public Configuration getConfiguration(){
+        Configuration configuration;
+        configurationDAO.open();
+        configuration = configurationDAO.get();
+        configurationDAO.close();
         return configuration;
+    }
+
+    public void setConfiguration(String server, String port){
+        Configuration configuration = new Configuration(server, port);
+        configurationDAO.open();
+        configurationDAO.save(configuration);
+        configurationDAO.close();
+        callback.onUpdateConfiguration(configuration);
+    }
+
+    public void updateConfiguration(String server, String port, long id){
+        Configuration conf = new Configuration(server, port);
+        conf.setId(id);
+        configurationDAO.open();
+        configurationDAO.update(conf);
+        configurationDAO.close();
+        callback.onUpdateConfiguration(conf);
     }
 
 

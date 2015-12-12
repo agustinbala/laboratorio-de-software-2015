@@ -10,6 +10,8 @@ public class Configuration {
     public static final String COLUMN_SERVER = "SERVER";
     public static final String COLUMN_PORT = "PORT";
 
+    public static final String[] ALL_COLUMNS = { COLUMN_ID, COLUMN_PORT, COLUMN_SERVER };
+
     private long id;
     private String server;
     private String port;
@@ -36,5 +38,14 @@ public class Configuration {
 
     public void setPort(String port) {
         this.port = port;
+    }
+
+    public Configuration(){
+
+    }
+
+    public Configuration(String server, String port){
+        setServer(server);
+        setPort(port);
     }
 }

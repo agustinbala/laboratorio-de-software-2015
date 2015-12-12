@@ -13,6 +13,7 @@ import java.util.List;
  */
 public abstract class BaseDAO<T> {
 
+
     protected SQLiteDatabase database;
     protected SQLiteOpenHelper dbHelper;
 
@@ -37,6 +38,8 @@ public abstract class BaseDAO<T> {
     abstract List<T> listAll();
 
     abstract T get();
+
+    abstract T getById(long id);
 
 
 }

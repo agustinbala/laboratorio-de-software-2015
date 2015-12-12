@@ -1,33 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="wrap_content"
+    android:orientation="vertical" android:layout_width="fill_parent"
+    android:layout_margin="10dp"
     android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/configuration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:layout_alignParentLeft="true"
         android:text="@string/title_configuration" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/new_configuration"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignRight="@+id/configuration"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/edit" />
+
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/colorPrimary"/>
 
     <TextView
         android:id="@+id/configuration_ip_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/configuration_title"
         android:text="@string/configuration_ip_title" />
     <TextView
         android:id="@+id/configuration_ip_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/configuration_content"
         />
     <TextView
         android:id="@+id/configuration_port_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/configuration_title"
         android:text="@string/configuration_port_title" />
     <TextView
         android:id="@+id/configuration_port_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/configuration_content"
         />
 
 </LinearLayout>
