@@ -9,12 +9,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.laboratoriodesoftware2015.hermesbucarbala.R;
 import com.laboratoriodesoftware2015.hermesbucarbala.adapter.AlumnAdapter;
@@ -54,17 +57,32 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
 
                 final EditText etName = (EditText) dialog.findViewById(R.id.et_name);
                 final EditText etLastname = (EditText) dialog.findViewById(R.id.et_lastname);
+                final RadioButton rb_male = (RadioButton) dialog.findViewById(R.id.radio_gender_male);
+                final RadioButton rb_female = (RadioButton) dialog.findViewById(R.id.radio_gender_female);
 
                 Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
                 // if button is clicked, close the custom dialog
                 dialogButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        presenter.saveAlumn(etName.getText().toString(), etLastname.getText().toString());
-                        dialog.dismiss();
+                        if(etName.getText().length() > 0 && etLastname.getText().length() > 0 &&
+                                (rb_male.isChecked() || rb_female.isChecked())) {
+                            Character gender = (rb_male.isChecked()) ? 'M' : 'F';
+                            presenter.saveAlumn(etName.getText().toString(), etLastname.getText().toString(),gender);
+                            dialog.dismiss();
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Complete todos los campos", Toast.LENGTH_LONG).show();
+                        }
                     }
                 });
 
+                Button dialogButtonCancel = (Button) dialog.findViewById(R.id.dialogButtonCancel);
+                dialogButtonCancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
                 dialog.show();
             }
         });

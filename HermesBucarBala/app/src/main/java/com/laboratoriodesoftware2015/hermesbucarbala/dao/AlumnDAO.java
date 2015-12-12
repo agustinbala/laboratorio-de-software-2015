@@ -20,6 +20,7 @@ public class AlumnDAO extends BaseDAO<Alumn> {
         ContentValues values = new ContentValues();
         values.put(Alumn.COLUMN_NAME, object.getName());
         values.put(Alumn.COLUMN_LASTNAME, object.getLastname());
+        values.put(Alumn.COLUMN_GENDER, object.getGender().toString());
         long insertId = database.insert(Alumn.TABLE_NAME, null,
                 values);
         Cursor cursor = database.query(Alumn.TABLE_NAME,
@@ -47,10 +48,7 @@ public class AlumnDAO extends BaseDAO<Alumn> {
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            Alumn alumn = new Alumn();
-            alumn.setId(cursor.getInt(0));
-            alumn.setName(cursor.getString(1));
-            alumn.setLastname(cursor.getString(2));
+            Alumn alumn = convertAlumn(cursor);
             alumns.add(alumn);
             cursor.moveToNext();
         }
@@ -81,11 +79,16 @@ public class AlumnDAO extends BaseDAO<Alumn> {
         if (cursor != null)
             cursor.moveToFirst();
 
+        return convertAlumn(cursor);
+    }
+
+    private Alumn convertAlumn(Cursor cursor){
         Alumn alumn = new Alumn();
         alumn.setId(cursor.getInt(0));
         alumn.setName(cursor.getString(1));
         alumn.setLastname(cursor.getString(2));
-
+        alumn.setGender(cursor.getString(3).charAt(0));
+        alumn.setSize(cursor.getString(4));
         return alumn;
     }
 }

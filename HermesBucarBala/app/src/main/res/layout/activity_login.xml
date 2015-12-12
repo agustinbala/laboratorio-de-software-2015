@@ -42,7 +42,11 @@
                 android:textColor="@color/white"
                 />
 
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorPrimary"
+                android:layout_marginTop="15dp"/>
 
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
@@ -50,6 +54,8 @@
                 android:layout_weight="1"
                 android:id="@+id/rv"
                 />
+
+
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -63,7 +69,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_margin="@dimen/fab_margin"
-                    android:src="@drawable/add" />
+                    android:src="@drawable/add_user" />
 
 
 

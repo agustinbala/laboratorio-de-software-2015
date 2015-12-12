@@ -62,8 +62,8 @@ public class ConfigurationActivity extends AppCompatActivity implements Configur
         if(alumn != null) {
             name.setText(alumn.getName());
             lastname.setText(alumn.getLastname());
+            gender.setText(alumn.getGender().toString());
         }
-        //gender.setText(alumn.getGender().toString());
         //size.setText(alumn.getSize());
         if(conf != null) {
             port.setText(conf.getPort());

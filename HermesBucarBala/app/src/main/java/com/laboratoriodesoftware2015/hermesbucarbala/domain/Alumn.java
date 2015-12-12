@@ -20,7 +20,7 @@ public class Alumn implements Serializable{
     public static final String ALUMN_PICTOGRAM_COLUMN_ALUMN_ID = "ALUMN_ID";
     public static final String ALUMN_PICTOGRAM_COLUMN_PICTOGRAM_ID = "PICTOGRAM_ID";
 
-    public static final String[] ALL_COLUMNS = { COLUMN_ID, COLUMN_NAME, COLUMN_LASTNAME };
+    public static final String[] ALL_COLUMNS = { COLUMN_ID, COLUMN_NAME, COLUMN_LASTNAME, COLUMN_GENDER, COLUMN_SIZE };
 
 
     private long id;
@@ -78,9 +78,10 @@ public class Alumn implements Serializable{
         this.tabs = tabs;
     }
 
-    public Alumn(String name, String lastname) {
+    public Alumn(String name, String lastname, Character gender) {
         this.name = name;
         this.lastname = lastname;
+        this.gender = gender;
     }
 
     public Alumn() {
