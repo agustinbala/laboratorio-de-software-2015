@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_marginTop="20dp"
+    android:paddingTop="15dp"
+    android:background="@drawable/alumn_item_selector"
     android:layout_height="match_parent">
 
     <TextView
@@ -14,8 +15,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#FFFFFF"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="10dp"/>
+        android:background="@color/white"
+        android:layout_marginTop="15dp"/>
 
 </LinearLayout>

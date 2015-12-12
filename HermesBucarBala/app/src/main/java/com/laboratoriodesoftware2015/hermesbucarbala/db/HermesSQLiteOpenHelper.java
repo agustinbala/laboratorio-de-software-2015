@@ -29,6 +29,65 @@ public class HermesSQLiteOpenHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_ID+" INTEGER PRIMARY KEY autoincrement, "+Pictogram.COLUMN_NAME+" TEXT NOT NULL, "+Pictogram.COLUMN_FOLDER+" TEXT NOT NULL )");
         db.execSQL("CREATE TABLE "+ Alumn.ALUMN_PICTOGRAM_TABLE_NAME+" ( "+ Alumn.ALUMN_PICTOGRAM_COLUMN_ALUMN_ID+" INT NOT NULL, "+ Alumn.ALUMN_PICTOGRAM_COLUMN_PICTOGRAM_ID+" INT NOT NULL)");
         db.execSQL("CREATE TABLE "+Configuration.TABLE_NAME+" ( "+Configuration.COLUMN_ID+" INTEGER PRIMARY KEY autoincrement, "+Configuration.COLUMN_SERVER+" TEXT NOT NULL, "+Configuration.COLUMN_PORT+" TEXT NOT NULL )");
+
+        loadData(db);
+    }
+
+    private void loadData(SQLiteDatabase db) {
+        db.execSQL("INSERT INTO "+Tab.TABLE_NAME+" ( "+Tab.COLUMN_NAME+" ) VALUES ('establo')");
+        db.execSQL("INSERT INTO "+Tab.TABLE_NAME+" ( "+Tab.COLUMN_NAME+" ) VALUES ('patio')");
+        db.execSQL("INSERT INTO "+Tab.TABLE_NAME+" ( "+Tab.COLUMN_NAME+" ) VALUES ('necesidades')");
+        db.execSQL("INSERT INTO " + Tab.TABLE_NAME + " ( " + Tab.COLUMN_NAME + " ) VALUES ('emociones')");
+
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('asustada', 'emociones')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('asustado', 'emociones')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('cansada', 'emociones')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('cansado', 'emociones')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('contento', 'emociones')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('contenta', 'emociones')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('dolorida', 'emociones')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('dolorido', 'emociones')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('enojada', 'emociones')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('enojado', 'emociones')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('sorprendida', 'emociones')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('sorprendido', 'emociones')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('triste_nena', 'emociones')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('triste_nene', 'emociones')");
+
+
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('caballo', 'establo')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('caballo2', 'establo')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('caballo3', 'establo')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('cepillo', 'establo')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('escarbavasos', 'establo')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('limpieza', 'establo')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('matra', 'establo')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('montura', 'establo')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('pasto', 'establo')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('rasquetablanda', 'establo')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('rasquetadura', 'establo')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('zanahoria', 'establo')");
+
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('banio', 'necesidades')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('no', 'necesidades')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('sed_nena', 'necesidades')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('sed_nene', 'necesidades')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('si', 'necesidades')");
+
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('aro', 'pista')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('broches', 'pista')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('burbujas', 'pista')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('casco', 'pista')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('chapas', 'pista')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('cubos', 'pista')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('letras', 'pista')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('maracas', 'pista')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('palos', 'pista')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('pato', 'pista')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('pelota', 'pista')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('riendas', 'pista')");
+        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('tarima', 'pista')");
+
     }
 
     @Override
