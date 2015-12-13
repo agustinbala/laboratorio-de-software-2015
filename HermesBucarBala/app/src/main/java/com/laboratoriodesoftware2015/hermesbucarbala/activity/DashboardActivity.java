@@ -2,7 +2,9 @@ package com.laboratoriodesoftware2015.hermesbucarbala.activity;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -13,8 +15,12 @@ import android.view.MenuItem;
 
 import com.laboratoriodesoftware2015.hermesbucarbala.R;
 import com.laboratoriodesoftware2015.hermesbucarbala.adapter.TabPagerAdapter;
+import com.laboratoriodesoftware2015.hermesbucarbala.domain.Tab;
 import com.laboratoriodesoftware2015.hermesbucarbala.presenter.DashboardPresenter;
 import com.laboratoriodesoftware2015.hermesbucarbala.view.SlidingTabLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DashboardActivity extends AppCompatActivity {
 
@@ -37,17 +43,33 @@ public class DashboardActivity extends AppCompatActivity {
 
     private DashboardPresenter presenter;
 
+    private Boolean alumnMode;
+
+    private int idAlumn;
+
+    private static final String MODE_ALUMN = "MODE_ALUMN";
+    private static final String ALUMN_ID = "ALUMN_ID";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        alumnMode = sharedPref.getBoolean(MODE_ALUMN, false);
+        idAlumn =  sharedPref.getInt(ALUMN_ID, 0);
         this.presenter = new DashboardPresenter();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        List<Tab> listTab = new ArrayList<Tab>();
+        if(alumnMode){
+            listTab = this.presenter.getListTabsById((long)idAlumn);
+        }else{
+            listTab = this.presenter.getListTabs();
+        }
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new TabPagerAdapter(getFragmentManager(), this.presenter.getListTabs() );
+        mSectionsPagerAdapter = new TabPagerAdapter(getFragmentManager(),  listTab);
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -63,7 +85,12 @@ public class DashboardActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_tab, menu);
+        if(alumnMode){
+            getMenuInflater().inflate(R.menu.menu_tab, menu);
+        }else{
+            getMenuInflater().inflate(R.menu.menu_tab_alumn, menu);
+        }
+
         return true;
     }
 
@@ -78,6 +105,22 @@ public class DashboardActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             Intent intent = new Intent(DashboardActivity.this, ConfigurationActivity.class);
             startActivity(intent);
+        }
+
+        if (id == R.id.action_therapist) {
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putBoolean(MODE_ALUMN, false);
+            editor.commit();
+            recreate();
+        }
+
+        if (id == R.id.action_student) {
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putBoolean(MODE_ALUMN, true);
+            editor.commit();
+            recreate();
         }
 
         return super.onOptionsItemSelected(item);

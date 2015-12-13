@@ -24,6 +24,7 @@ public class AlumnAdapter extends RecyclerView.Adapter<AlumnAdapter.AlumnViewHol
     List<Alumn> alumns;
     Activity context;
     private static final String ALUMN_ID = "ALUMN_ID";
+    private static final String MODE_ALUMN = "MODE_ALUMN";
     public AlumnAdapter(List<Alumn> alumnList, Activity context){
         this.alumns = alumnList;
         this.context = context;
@@ -65,6 +66,7 @@ public class AlumnAdapter extends RecyclerView.Adapter<AlumnAdapter.AlumnViewHol
                     SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
                     SharedPreferences.Editor editor = sharedPref.edit();
                     editor.putInt(ALUMN_ID, (int) id);
+                    editor.putBoolean(MODE_ALUMN, true);
                     editor.commit();
                     Intent intent= new Intent(AlumnAdapter.this.context, DashboardActivity.class);
                     AlumnAdapter.this.context.startActivity(intent);
