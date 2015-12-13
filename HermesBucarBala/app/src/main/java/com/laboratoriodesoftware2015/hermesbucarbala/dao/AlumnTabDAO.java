@@ -17,11 +17,8 @@ public class AlumnTabDAO extends BaseDAO<Alumn> {
         ContentValues values = new ContentValues();
         values.put(Alumn.ALUMN_TAB_COLUMN_ALUMN_ID, object.getId());
         values.put(Alumn.ALUMN_TAB_COLUMN_TAB_ID, object.getTabs().get(0).getId());
-        Cursor cursor = database.query(Alumn.ALUMN_TAB_TABLE_NAME,
-                Alumn.ALL_COLUMNS_ALUM_TAB_TABLE, Alumn.ALUMN_TAB_COLUMN_ALUMN_ID+ " = " + object.getId(), null,
-                null, null, null);
-        cursor.moveToFirst();
-        cursor.close();
+        database.insert(Alumn.ALUMN_TAB_TABLE_NAME, null,
+                values);
 
     }
 
