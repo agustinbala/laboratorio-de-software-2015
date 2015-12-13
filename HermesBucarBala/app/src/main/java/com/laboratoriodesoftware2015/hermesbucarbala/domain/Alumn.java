@@ -12,17 +12,12 @@ public class Alumn implements Serializable{
     public static final String COLUMN_GENDER = "GENDER";
     public static final String COLUMN_SIZE = "SIZE";
 
-    public static final String ALUMN_TAB_TABLE_NAME = "ALUMN_TAB";
-    public static final String ALUMN_TAB_COLUMN_ALUMN_ID = "ALUMN_ID";
-    public static final String ALUMN_TAB_COLUMN_TAB_ID = "TAB_ID";
-
     public static final String ALUMN_PICTOGRAM_TABLE_NAME = "ALUMN_PICTOGRAM";
     public static final String ALUMN_PICTOGRAM_COLUMN_ALUMN_ID = "ALUMN_ID";
     public static final String ALUMN_PICTOGRAM_COLUMN_PICTOGRAM_ID = "PICTOGRAM_ID";
 
     public static final String[] ALL_COLUMNS = { COLUMN_ID, COLUMN_NAME, COLUMN_LASTNAME, COLUMN_GENDER, COLUMN_SIZE };
 
-    public static final String[] ALL_COLUMNS_ALUM_TAB_TABLE = { ALUMN_TAB_COLUMN_ALUMN_ID, ALUMN_TAB_COLUMN_TAB_ID};
 
 
     private long id;

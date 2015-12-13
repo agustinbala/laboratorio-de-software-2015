@@ -10,6 +10,8 @@ public class Pictogram {
     public static final String COLUMN_NAME = "NAME";
     public static final String COLUMN_FOLDER = "FOLDER";
 
+    public static final String[] ALL_COLUMNS = { COLUMN_ID, COLUMN_NAME, COLUMN_FOLDER};
+
     private long id;
     private String name;
     private String folder;

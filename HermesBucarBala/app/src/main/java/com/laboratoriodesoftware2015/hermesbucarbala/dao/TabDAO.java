@@ -18,12 +18,12 @@ public class TabDAO extends BaseDAO<Tab> {
     }
 
     @Override
-    void update(Tab object) {
+    public void update(Tab object) {
 
     }
 
     @Override
-    void delete(Tab object) {
+    public void delete(Tab object) {
 
     }
 
@@ -46,12 +46,12 @@ public class TabDAO extends BaseDAO<Tab> {
     }
 
     @Override
-    Tab get() {
+    public Tab get() {
         return null;
     }
 
     @Override
-    Tab getById(long id) {
+    public Tab getById(long id) {
 
         Tab tab = null;
         Cursor cursorTab =

@@ -54,6 +54,7 @@ public class ConfigurationActivity extends AppCompatActivity implements Configur
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configuration);
         presenter = new ConfigurationPresenter(this);
+        setTitle("Configuración");
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         id = sharedPref.getInt(ALUMN_ID, 0);
         initView();
@@ -128,6 +129,7 @@ public class ConfigurationActivity extends AppCompatActivity implements Configur
         establo.setOnCheckedChangeListener(this);
         necesidades.setOnCheckedChangeListener(this);
         emociones.setOnCheckedChangeListener(this);
+
     }
 
     private void setTabAlumn() {
@@ -157,40 +159,11 @@ public class ConfigurationActivity extends AppCompatActivity implements Configur
 
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-        switch(buttonView.getId()){
-            case R.id.checkbox_pista:
-                if(isChecked){
-                    presenter.updateTab("pista", alumn);
-                }else{
-                    presenter.deleteTab(alumn);
-                }
-                break;
-            case R.id.checkbox_establo:
-                if(isChecked){
-                    presenter.updateTab("establo", alumn);
-                }else{
-                    presenter.deleteTab(alumn);
-                }
-                break;
-            case R.id.checkbox_emociones:
-                if(isChecked){
-                    presenter.updateTab("emociones", alumn);
-                }else{
-                    presenter.deleteTab(alumn);
-                }
-                break;
-            case R.id.checkbox_necesidades:
-                if(isChecked){
-                    presenter.updateTab("necesidades", alumn);
-                }else{
-                    presenter.deleteTab(alumn);
-                }
-                break;
-
+        if(isChecked){
+            presenter.updateTab(buttonView.getText().toString(), alumn);
+        }else{
+            presenter.deleteTab(buttonView.getText().toString(), alumn);
         }
     }
-
-
 
 }

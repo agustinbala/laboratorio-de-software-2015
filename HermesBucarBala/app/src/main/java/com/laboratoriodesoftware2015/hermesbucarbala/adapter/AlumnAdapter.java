@@ -1,10 +1,8 @@
 package com.laboratoriodesoftware2015.hermesbucarbala.adapter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,9 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.laboratoriodesoftware2015.hermesbucarbala.R;
-import com.laboratoriodesoftware2015.hermesbucarbala.activity.ConfigurationActivity;
-import com.laboratoriodesoftware2015.hermesbucarbala.activity.TabActivity;
-import com.laboratoriodesoftware2015.hermesbucarbala.application.HermesApplication;
+import com.laboratoriodesoftware2015.hermesbucarbala.activity.DashboardActivity;
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.Alumn;
 
 import java.util.List;
@@ -70,7 +66,7 @@ public class AlumnAdapter extends RecyclerView.Adapter<AlumnAdapter.AlumnViewHol
                     SharedPreferences.Editor editor = sharedPref.edit();
                     editor.putInt(ALUMN_ID, (int) id);
                     editor.commit();
-                    Intent intent= new Intent(AlumnAdapter.this.context, TabActivity.class);
+                    Intent intent= new Intent(AlumnAdapter.this.context, DashboardActivity.class);
                     AlumnAdapter.this.context.startActivity(intent);
                 }
             });

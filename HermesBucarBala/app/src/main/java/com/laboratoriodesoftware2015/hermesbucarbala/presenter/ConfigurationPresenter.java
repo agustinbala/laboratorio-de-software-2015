@@ -5,6 +5,7 @@ import com.laboratoriodesoftware2015.hermesbucarbala.dao.AlumnTabDAO;
 import com.laboratoriodesoftware2015.hermesbucarbala.dao.ConfigurationDAO;
 import com.laboratoriodesoftware2015.hermesbucarbala.dao.TabDAO;
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.Alumn;
+import com.laboratoriodesoftware2015.hermesbucarbala.domain.AlumnTab;
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.Configuration;
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.Tab;
 import com.laboratoriodesoftware2015.hermesbucarbala.view.ConfigurationView;
@@ -66,28 +67,32 @@ public class ConfigurationPresenter {
 
 
     public void updateTab(String tabName, Alumn alumn) {
+        for ( Tab tab: this.listTabs()) {
+            if(tabName.equals(tab.getName())){
+                alumnTabDAO.open();
+                AlumnTab alumnTab = new AlumnTab(alumn.getId(), tab.getId());
+                alumnTabDAO.save(alumnTab);
+                alumnTabDAO.close();
+            }
+        }
+    }
+
+    public void deleteTab(String tabName , Alumn alumn) {
+        for ( Tab tab: this.listTabs()) {
+            if(tabName.equals(tab.getName())){
+                alumnTabDAO.open();
+                AlumnTab alumnTab = new AlumnTab(alumn.getId(), tab.getId());
+                alumnTabDAO.delete(alumnTab);
+                alumnTabDAO.close();
+            }
+        }
+    }
+
+    private List<Tab> listTabs(){
         List<Tab> tabs = new ArrayList<Tab>();
         tabDAO.open();
         tabs = tabDAO.listAll();
         tabDAO.close();
-        for ( Tab tab: tabs) {
-            if(tabName.equals(tab.getName())){
-                List<Tab> tabsAlumn = new ArrayList<Tab>();
-                tabsAlumn.add(tab);
-               alumn.setTabs(tabsAlumn);
-            }
-        }
-        alumnTabDAO.open();
-        alumnTabDAO.save(alumn);
-        alumnTabDAO.close();
-
-
-
-    }
-
-    public void deleteTab(Alumn alumn) {
-        alumnTabDAO.open();
-        alumnTabDAO.delete(alumn);
-        alumnTabDAO.close();
+        return tabs;
     }
 }

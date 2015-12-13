@@ -29,17 +29,17 @@ public abstract class BaseDAO<T> {
         dbHelper.close();
     }
 
-    abstract void save(T object);
+    public abstract void save(T object);
 
-    abstract void update(T object);
+    public abstract void update(T object);
 
-    abstract void delete(T object);
+    public abstract void delete(T object);
 
-    abstract List<T> listAll();
+    public abstract List<T> listAll();
 
-    abstract T get();
+    public  abstract T get();
 
-    abstract T getById(long id);
+    public  abstract T getById(long id);
 
 
 }

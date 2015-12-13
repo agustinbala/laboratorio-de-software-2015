@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.Alumn;
+import com.laboratoriodesoftware2015.hermesbucarbala.domain.AlumnTab;
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.Configuration;
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.Tab;
 
@@ -59,7 +60,7 @@ public class AlumnDAO extends BaseDAO<Alumn> {
     }
 
     @Override
-    Alumn get() {
+    public Alumn get() {
         return null;
     }
 
@@ -84,8 +85,8 @@ public class AlumnDAO extends BaseDAO<Alumn> {
         cursor.close();
         ArrayList idAlumTab = new ArrayList();
         Cursor cursorAlumnTab =
-                database.query(Alumn.ALUMN_TAB_TABLE_NAME,
-                        Alumn.ALL_COLUMNS_ALUM_TAB_TABLE,
+                database.query(AlumnTab.TABLE_NAME,
+                        AlumnTab.ALL_COLUMNS,
                         " alumn_id = ?",
                         new String[]{String.valueOf(alumn.getId())},
                         null,
