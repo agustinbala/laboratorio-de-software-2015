@@ -16,11 +16,16 @@ import android.widget.TextView;
 import com.laboratoriodesoftware2015.hermesbucarbala.R;
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.Alumn;
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.Configuration;
+import com.laboratoriodesoftware2015.hermesbucarbala.domain.Tab;
 import com.laboratoriodesoftware2015.hermesbucarbala.presenter.ConfigurationPresenter;
 import com.laboratoriodesoftware2015.hermesbucarbala.view.ConfigurationView;
 
 
 import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by natalia on 10/12/15.
@@ -68,12 +73,15 @@ public class ConfigurationActivity extends AppCompatActivity implements Configur
         establo = (CheckBox) findViewById(R.id.checkbox_establo);
         necesidades = (CheckBox) findViewById(R.id.checkbox_necesidades);
         emociones = (CheckBox) findViewById(R.id.checkbox_emociones);
-        alumn= presenter.getAlumn(id);
+        alumn = presenter.getAlumn(id);
         final Configuration conf = presenter.getConfiguration();
         if(alumn != null) {
             name.setText(alumn.getName());
             lastname.setText(alumn.getLastname());
             gender.setText(alumn.getGender().toString());
+            if(alumn.getTabs() != null){
+               setTabAlumn();
+            }
         }
         //size.setText(alumn.getSize());
         if(conf != null) {
@@ -120,6 +128,25 @@ public class ConfigurationActivity extends AppCompatActivity implements Configur
         establo.setOnCheckedChangeListener(this);
         necesidades.setOnCheckedChangeListener(this);
         emociones.setOnCheckedChangeListener(this);
+    }
+
+    private void setTabAlumn() {
+        for (Tab tab: alumn.getTabs()) {
+            switch((int)tab.getId()){
+                case 1:
+                    establo.setChecked(true);
+                    break;
+                case 2:
+                    pista.setChecked(true);
+                    break;
+                case 3:
+                    necesidades.setChecked(true);
+                    break;
+                case 4:
+                    emociones.setChecked(true);
+                    break;
+            }
+        }
     }
 
     @Override

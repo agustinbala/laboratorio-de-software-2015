@@ -52,6 +52,23 @@ public class TabDAO extends BaseDAO<Tab> {
 
     @Override
     Tab getById(long id) {
-        return null;
+
+        Tab tab = null;
+        Cursor cursorTab =
+                database.query(Tab.TABLE_NAME,
+                        Tab.ALL_COLUMNS,
+                        " id = ?",
+                        new String[]{String.valueOf(id)},
+                        null,
+                        null,
+                        null,
+                        null);
+        if(cursorTab !=null) {
+            cursorTab.moveToFirst();
+             tab = new Tab(cursorTab.getString(1));
+            tab.setId(cursorTab.getInt(0));
+        }
+        return tab;
+
     }
 }

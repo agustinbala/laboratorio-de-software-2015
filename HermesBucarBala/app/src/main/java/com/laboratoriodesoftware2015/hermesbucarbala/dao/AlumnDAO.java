@@ -5,6 +5,7 @@ import android.database.Cursor;
 
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.Alumn;
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.Configuration;
+import com.laboratoriodesoftware2015.hermesbucarbala.domain.Tab;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +70,7 @@ public class AlumnDAO extends BaseDAO<Alumn> {
                 database.query(Alumn.TABLE_NAME,
                         Alumn.ALL_COLUMNS,
                         " id = ?",
-                        new String[] { String.valueOf(id) },
+                        new String[]{String.valueOf(id)},
                         null,
                         null,
                         null,
@@ -79,7 +80,39 @@ public class AlumnDAO extends BaseDAO<Alumn> {
         if (cursor != null)
             cursor.moveToFirst();
 
-        return convertAlumn(cursor);
+        Alumn alumn = convertAlumn(cursor);
+        cursor.close();
+        ArrayList idAlumTab = new ArrayList();
+        Cursor cursorAlumnTab =
+                database.query(Alumn.ALUMN_TAB_TABLE_NAME,
+                        Alumn.ALL_COLUMNS_ALUM_TAB_TABLE,
+                        " alumn_id = ?",
+                        new String[]{String.valueOf(alumn.getId())},
+                        null,
+                        null,
+                        null,
+                        null);
+
+        cursorAlumnTab.moveToFirst();
+        while (!cursorAlumnTab.isAfterLast()) {
+            idAlumTab.add(cursorAlumnTab.getInt(1));
+            cursorAlumnTab.moveToNext();
+        }
+        cursorAlumnTab.close();
+        List<Tab> tabs = new ArrayList<Tab>();
+        TabDAO dao = new TabDAO();
+        dao.open();
+        for(int i=0; i<idAlumTab.size(); i++) {
+            Tab tab = dao.getById(Long.valueOf(String.valueOf(idAlumTab.get(i))));
+            if(tab != null) {
+                tabs.add(tab);
+            }
+        }
+        dao.close();
+
+        alumn.setTabs(tabs);
+
+        return alumn;
     }
 
     private Alumn convertAlumn(Cursor cursor){
