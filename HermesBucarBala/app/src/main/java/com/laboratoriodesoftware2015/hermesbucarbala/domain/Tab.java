@@ -9,6 +9,8 @@ public class Tab {
     public static final String COLUMN_ID = "ID";
     public static final String COLUMN_NAME = "NAME";
 
+    public static final String[] ALL_COLUMNS = { COLUMN_ID, COLUMN_NAME};
+
     private long id;
     private String name;
 
@@ -27,4 +29,9 @@ public class Tab {
     public void setName(String name) {
         this.name = name;
     }
+
+    public Tab(String name){
+        setName(name);
+    }
+
 }

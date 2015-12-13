@@ -87,7 +87,7 @@
             style="@style/configuration_content"
             android:layout_marginLeft="5dp"
             android:text="@string/pista"
-            android:onClick="onCheckboxClicked"/>
+            />
 
         <CheckBox android:id="@+id/checkbox_establo"
             android:layout_width="wrap_content"
@@ -95,7 +95,7 @@
             android:text="@string/establo"
             android:layout_marginLeft="5dp"
             style="@style/configuration_content"
-            android:onClick="onCheckboxClicked"/>
+            />
 
         <CheckBox android:id="@+id/checkbox_necesidades"
             android:layout_width="wrap_content"
@@ -103,7 +103,7 @@
             android:text="@string/necesidades"
             style="@style/configuration_content"
             android:layout_marginLeft="5dp"
-            android:onClick="onCheckboxClicked"/>
+           />
 
         <CheckBox android:id="@+id/checkbox_emociones"
             android:layout_width="wrap_content"
@@ -111,7 +111,7 @@
             android:text="@string/emociones"
             style="@style/configuration_content"
             android:layout_marginLeft="5dp"
-            android:onClick="onCheckboxClicked"/>
+            />
     </LinearLayout>
 
 </LinearLayout>

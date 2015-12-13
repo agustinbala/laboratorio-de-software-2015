@@ -22,6 +22,8 @@ public class Alumn implements Serializable{
 
     public static final String[] ALL_COLUMNS = { COLUMN_ID, COLUMN_NAME, COLUMN_LASTNAME, COLUMN_GENDER, COLUMN_SIZE };
 
+    public static final String[] ALL_COLUMNS_ALUM_TAB_TABLE = { ALUMN_TAB_COLUMN_ALUMN_ID, ALUMN_TAB_COLUMN_TAB_ID};
+
 
     private long id;
     private String name;

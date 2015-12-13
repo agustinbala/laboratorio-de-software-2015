@@ -35,7 +35,7 @@ public class HermesSQLiteOpenHelper extends SQLiteOpenHelper {
 
     private void loadData(SQLiteDatabase db) {
         db.execSQL("INSERT INTO "+Tab.TABLE_NAME+" ( "+Tab.COLUMN_NAME+" ) VALUES ('establo')");
-        db.execSQL("INSERT INTO "+Tab.TABLE_NAME+" ( "+Tab.COLUMN_NAME+" ) VALUES ('patio')");
+        db.execSQL("INSERT INTO "+Tab.TABLE_NAME+" ( "+Tab.COLUMN_NAME+" ) VALUES ('pista')");
         db.execSQL("INSERT INTO "+Tab.TABLE_NAME+" ( "+Tab.COLUMN_NAME+" ) VALUES ('necesidades')");
         db.execSQL("INSERT INTO " + Tab.TABLE_NAME + " ( " + Tab.COLUMN_NAME + " ) VALUES ('emociones')");
 

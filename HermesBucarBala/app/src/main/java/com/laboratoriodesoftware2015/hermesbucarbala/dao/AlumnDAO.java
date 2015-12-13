@@ -48,9 +48,9 @@ public class AlumnDAO extends BaseDAO<Alumn> {
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            Alumn alumn = convertAlumn(cursor);
-            alumns.add(alumn);
-            cursor.moveToNext();
+                Alumn alumn = convertAlumn(cursor);
+                alumns.add(alumn);
+                cursor.moveToNext();
         }
         // make sure to close the cursor
         cursor.close();

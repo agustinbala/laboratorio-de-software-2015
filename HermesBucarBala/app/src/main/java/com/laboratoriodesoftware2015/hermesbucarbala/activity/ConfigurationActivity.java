@@ -9,6 +9,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.laboratoriodesoftware2015.hermesbucarbala.R;
@@ -23,7 +25,7 @@ import org.w3c.dom.Text;
 /**
  * Created by natalia on 10/12/15.
  */
-public class ConfigurationActivity extends AppCompatActivity implements ConfigurationView{
+public class ConfigurationActivity extends AppCompatActivity implements ConfigurationView, CompoundButton.OnCheckedChangeListener{
 
     private ConfigurationPresenter presenter;
     private TextView name;
@@ -33,7 +35,12 @@ public class ConfigurationActivity extends AppCompatActivity implements Configur
     private TextView port;
     private TextView ip;
     private FloatingActionButton editButton;
+    private CheckBox pista;
+    private CheckBox establo;
+    private CheckBox necesidades;
+    private CheckBox emociones;
     private long id;
+    private Alumn alumn;
     private static final String ALUMN_ID = "ALUMN_ID";
 
 
@@ -43,7 +50,7 @@ public class ConfigurationActivity extends AppCompatActivity implements Configur
         setContentView(R.layout.activity_configuration);
         presenter = new ConfigurationPresenter(this);
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        long id = sharedPref.getInt(ALUMN_ID, 0);
+        id = sharedPref.getInt(ALUMN_ID, 0);
         initView();
 
     }
@@ -57,7 +64,11 @@ public class ConfigurationActivity extends AppCompatActivity implements Configur
         port= (TextView) findViewById(R.id.configuration_port_content);
         ip = (TextView) findViewById(R.id.configuration_ip_content);
         editButton = (FloatingActionButton) findViewById(R.id.new_configuration);
-        Alumn alumn = presenter.getAlumn(id);
+        pista = (CheckBox) findViewById(R.id.checkbox_pista);
+        establo = (CheckBox) findViewById(R.id.checkbox_establo);
+        necesidades = (CheckBox) findViewById(R.id.checkbox_necesidades);
+        emociones = (CheckBox) findViewById(R.id.checkbox_emociones);
+        alumn= presenter.getAlumn(id);
         final Configuration conf = presenter.getConfiguration();
         if(alumn != null) {
             name.setText(alumn.getName());
@@ -105,6 +116,10 @@ public class ConfigurationActivity extends AppCompatActivity implements Configur
             }
         });
 
+        pista.setOnCheckedChangeListener(this);
+        establo.setOnCheckedChangeListener(this);
+        necesidades.setOnCheckedChangeListener(this);
+        emociones.setOnCheckedChangeListener(this);
     }
 
     @Override
@@ -112,4 +127,43 @@ public class ConfigurationActivity extends AppCompatActivity implements Configur
         port.setText(configuration.getPort());
         ip.setText(configuration.getServer());
     }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+        switch(buttonView.getId()){
+            case R.id.checkbox_pista:
+                if(isChecked){
+                    presenter.updateTab("pista", alumn);
+                }else{
+                    presenter.deleteTab(alumn);
+                }
+                break;
+            case R.id.checkbox_establo:
+                if(isChecked){
+                    presenter.updateTab("establo", alumn);
+                }else{
+                    presenter.deleteTab(alumn);
+                }
+                break;
+            case R.id.checkbox_emociones:
+                if(isChecked){
+                    presenter.updateTab("emociones", alumn);
+                }else{
+                    presenter.deleteTab(alumn);
+                }
+                break;
+            case R.id.checkbox_necesidades:
+                if(isChecked){
+                    presenter.updateTab("necesidades", alumn);
+                }else{
+                    presenter.deleteTab(alumn);
+                }
+                break;
+
+        }
+    }
+
+
+
 }
