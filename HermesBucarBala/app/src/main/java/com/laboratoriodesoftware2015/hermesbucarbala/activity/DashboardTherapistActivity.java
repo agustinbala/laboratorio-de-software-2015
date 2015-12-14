@@ -138,15 +138,7 @@ public class DashboardTherapistActivity extends AppCompatActivity implements Das
 
     private void setTabs(){
         List<Tab> listTab = this.presenter.getListTabs();
-        mSectionsPagerAdapter = new TabPagerAdapter(getFragmentManager(),  listTab, false, idAlumn, this.presenter.getAlumnName(idAlumn));
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-
-        // Give the SlidingTabLayout the ViewPager, this must be done AFTER the ViewPager has had
-        // it's PagerAdapter set.
-        mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.pager_header);
-        mSlidingTabLayout.setDistributeEvenly(true);
-        mSlidingTabLayout.setViewPager(mViewPager);
+        mSectionsPagerAdapter.setList(listTab);
     }
 
 }

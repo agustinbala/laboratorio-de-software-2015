@@ -59,7 +59,16 @@ public class DashboardAlumnActivity extends AppCompatActivity implements Dashboa
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        setTabs();
+        List<Tab> listTab = this.presenter.getListTabsById((long)idAlumn);
+        mSectionsPagerAdapter = new TabPagerAdapter(getFragmentManager(),  listTab, true, idAlumn, this.presenter.getAlumnName(idAlumn));
+        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        // Give the SlidingTabLayout the ViewPager, this must be done AFTER the ViewPager has had
+        // it's PagerAdapter set.
+        mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.pager_header);
+        mSlidingTabLayout.setDistributeEvenly(true);
+        mSlidingTabLayout.setViewPager(mViewPager);
 
     }
 
@@ -73,15 +82,7 @@ public class DashboardAlumnActivity extends AppCompatActivity implements Dashboa
 
     private void setTabs(){
         List<Tab> listTab = this.presenter.getListTabsById((long)idAlumn);
-        mSectionsPagerAdapter = new TabPagerAdapter(getFragmentManager(),  listTab, true, idAlumn, this.presenter.getAlumnName(idAlumn));
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-
-        // Give the SlidingTabLayout the ViewPager, this must be done AFTER the ViewPager has had
-        // it's PagerAdapter set.
-        mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.pager_header);
-        mSlidingTabLayout.setDistributeEvenly(true);
-        mSlidingTabLayout.setViewPager(mViewPager);
+        mSectionsPagerAdapter.setList(listTab);
     }
 
     @Override

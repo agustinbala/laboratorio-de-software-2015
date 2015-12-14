@@ -90,10 +90,7 @@ public class HermesSQLiteOpenHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('riendas', 'pista')");
         db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('tarima', 'pista')");
 
-        db.execSQL("INSERT INTO "+AlumnPictogram.TABLE_NAME+" ( "+AlumnPictogram.COLUMN_ALUMN_ID+" , "+AlumnPictogram.COLUMN_PICTOGRAM_ID+" ) VALUES (1, 1)");
-        db.execSQL("INSERT INTO "+AlumnPictogram.TABLE_NAME+" ( "+AlumnPictogram.COLUMN_ALUMN_ID+" , "+AlumnPictogram.COLUMN_PICTOGRAM_ID+" ) VALUES (1, 16)");
-        db.execSQL("INSERT INTO "+AlumnPictogram.TABLE_NAME+" ( "+AlumnPictogram.COLUMN_ALUMN_ID+" , "+AlumnPictogram.COLUMN_PICTOGRAM_ID+" ) VALUES (1, 27)");
-        db.execSQL("INSERT INTO "+AlumnPictogram.TABLE_NAME+" ( "+AlumnPictogram.COLUMN_ALUMN_ID+" , "+AlumnPictogram.COLUMN_PICTOGRAM_ID+" ) VALUES (1, 41)");
+
 
 
     }
