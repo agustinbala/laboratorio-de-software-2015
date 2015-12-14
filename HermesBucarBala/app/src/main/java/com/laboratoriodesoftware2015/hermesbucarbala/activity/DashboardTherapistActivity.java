@@ -17,11 +17,12 @@ import com.laboratoriodesoftware2015.hermesbucarbala.R;
 import com.laboratoriodesoftware2015.hermesbucarbala.adapter.TabPagerAdapter;
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.Tab;
 import com.laboratoriodesoftware2015.hermesbucarbala.presenter.DashboardPresenter;
+import com.laboratoriodesoftware2015.hermesbucarbala.view.DashboardView;
 import com.laboratoriodesoftware2015.hermesbucarbala.view.SlidingTabLayout;
 
 import java.util.List;
 
-public class DashboardTherapistActivity extends AppCompatActivity {
+public class DashboardTherapistActivity extends AppCompatActivity implements DashboardView {
 
     /**
      * The {@link PagerAdapter} that will provide
@@ -111,6 +112,41 @@ public class DashboardTherapistActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void deletePictogram(Integer pictogramId) {
+        presenter.deletePictogram(idAlumn, pictogramId);
+        updateView();
+    }
+
+    @Override
+    public void addOrDeletePictogram(Integer pictogramId) {
+        if(presenter.getAlumnPictogram(idAlumn,pictogramId) != null){
+            presenter.deletePictogram(idAlumn,pictogramId);
+        } else {
+            presenter.savePictogram(idAlumn, pictogramId);
+        }
+       updateView();
+    }
+
+    private void updateView(){
+        Integer currentPosition = mSectionsPagerAdapter.getCurrentPosition();
+        setTabs();
+        mViewPager.setCurrentItem(currentPosition);
+    }
+
+    private void setTabs(){
+        List<Tab> listTab = this.presenter.getListTabs();
+        mSectionsPagerAdapter = new TabPagerAdapter(getFragmentManager(),  listTab, false, idAlumn, this.presenter.getAlumnName(idAlumn));
+        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        // Give the SlidingTabLayout the ViewPager, this must be done AFTER the ViewPager has had
+        // it's PagerAdapter set.
+        mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.pager_header);
+        mSlidingTabLayout.setDistributeEvenly(true);
+        mSlidingTabLayout.setViewPager(mViewPager);
     }
 
 }

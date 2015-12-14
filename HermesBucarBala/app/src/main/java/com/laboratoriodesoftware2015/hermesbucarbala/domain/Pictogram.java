@@ -12,15 +12,15 @@ public class Pictogram {
 
     public static final String[] ALL_COLUMNS = { COLUMN_ID, COLUMN_NAME, COLUMN_FOLDER};
 
-    private long id;
+    private Integer id;
     private String name;
     private String folder;
 
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -38,5 +38,21 @@ public class Pictogram {
 
     public void setFolder(String folder) {
         this.folder = folder;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Pictogram pictogram = (Pictogram) o;
+
+        return id == pictogram.id;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (id ^ (id >>> 32));
     }
 }

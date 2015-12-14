@@ -79,4 +79,8 @@ public class TabPresenter {
         pictogramDAO.close();
         return result;
     }
+
+    public void deletePictogram(Integer alumnId){
+
+    }
 }

@@ -19,10 +19,10 @@ import java.io.InputStream;
  */
 public class AudioUtil {
 
-    private static MediaPlayer m = new MediaPlayer();
 
     public static void reproduce(Context context ,String audio) {
         try {
+            MediaPlayer m = new MediaPlayer();
             AssetFileDescriptor afd = context.getAssets().openFd(audio);
             m.setDataSource(afd.getFileDescriptor(),afd.getStartOffset(),afd.getLength());
             m.prepare();
