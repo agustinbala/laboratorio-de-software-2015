@@ -65,7 +65,7 @@ public class TabDAO extends BaseDAO<Tab> {
                         null);
         if(cursorTab !=null) {
             cursorTab.moveToFirst();
-             tab = new Tab(cursorTab.getString(1));
+            tab = new Tab(cursorTab.getString(1));
             tab.setId(cursorTab.getInt(0));
         }
         return tab;

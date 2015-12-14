@@ -23,6 +23,7 @@ import com.laboratoriodesoftware2015.hermesbucarbala.R;
 import com.laboratoriodesoftware2015.hermesbucarbala.adapter.AlumnAdapter;
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.Alumn;
 import com.laboratoriodesoftware2015.hermesbucarbala.presenter.LoginPresenter;
+import com.laboratoriodesoftware2015.hermesbucarbala.util.AudioUtil;
 import com.laboratoriodesoftware2015.hermesbucarbala.view.LoginView;
 
 import java.util.ArrayList;
@@ -87,14 +88,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
             }
         });
 
-        newStudent = (FloatingActionButton) findViewById(R.id.new_student);
-        newStudent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent= new Intent(LoginActivity.this,ConfigurationActivity.class);
-                startActivity(intent);
-            }
-        });
+        // AudioUtil.reproduce(LoginActivity.this, "establo/limpieza.m4a");
 
         recyclerView = (RecyclerView) findViewById(R.id.rv);
         recyclerView.setHasFixedSize(true);

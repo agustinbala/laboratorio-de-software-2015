@@ -35,4 +35,12 @@ public class DashboardPresenter {
         alumnDAO.close();
         return alumn.getTabs();
     }
+
+    public String getAlumnName(Integer idAlumn){
+        Alumn alumn = new Alumn();
+        alumnDAO.open();
+        alumn = alumnDAO.getById(idAlumn);
+        alumnDAO.close();
+        return alumn.getName();
+    }
 }

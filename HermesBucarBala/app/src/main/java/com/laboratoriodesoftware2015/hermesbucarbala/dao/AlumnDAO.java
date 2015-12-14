@@ -4,8 +4,10 @@ import android.content.ContentValues;
 import android.database.Cursor;
 
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.Alumn;
+import com.laboratoriodesoftware2015.hermesbucarbala.domain.AlumnPictogram;
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.AlumnTab;
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.Configuration;
+import com.laboratoriodesoftware2015.hermesbucarbala.domain.Pictogram;
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.Tab;
 
 import java.util.ArrayList;
@@ -83,6 +85,7 @@ public class AlumnDAO extends BaseDAO<Alumn> {
 
         Alumn alumn = convertAlumn(cursor);
         cursor.close();
+
         ArrayList idAlumTab = new ArrayList();
         Cursor cursorAlumnTab =
                 database.query(AlumnTab.TABLE_NAME,
@@ -110,9 +113,7 @@ public class AlumnDAO extends BaseDAO<Alumn> {
             }
         }
         dao.close();
-
         alumn.setTabs(tabs);
-
         return alumn;
     }
 

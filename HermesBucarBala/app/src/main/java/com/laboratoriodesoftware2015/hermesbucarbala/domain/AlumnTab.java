@@ -13,26 +13,26 @@ public class AlumnTab implements Serializable {
 
     public static final String[] ALL_COLUMNS = { COLUMN_ALUMN_ID, COLUMN_TAB_ID};
 
-    private Long alumnId;
-    private Long tabId;
+    private Integer alumnId;
+    private Integer tabId;
 
-    public Long getAlumnId() {
+    public Integer getAlumnId() {
         return alumnId;
     }
 
-    public Long getTabId() {
+    public Integer getTabId() {
         return tabId;
     }
 
-    public void setAlumnId(Long alumnId) {
+    public void setAlumnId(Integer alumnId) {
         this.alumnId = alumnId;
     }
 
-    public void setTabId(Long tabId) {
+    public void setTabId(Integer tabId) {
         this.tabId = tabId;
     }
 
-    public AlumnTab(Long alumnId, Long tabId){
+    public AlumnTab(Integer alumnId, Integer tabId){
         this.alumnId = alumnId;
         this.tabId = tabId;
     }

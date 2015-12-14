@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.Alumn;
+import com.laboratoriodesoftware2015.hermesbucarbala.domain.AlumnPictogram;
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.AlumnTab;
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.Configuration;
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.Pictogram;
@@ -28,7 +29,7 @@ public class HermesSQLiteOpenHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE "+Tab.TABLE_NAME+" ( "+Tab.COLUMN_ID+" INTEGER PRIMARY KEY autoincrement, "+Tab.COLUMN_NAME+" TEXT NOT NULL )");
         db.execSQL("CREATE TABLE "+ AlumnTab.TABLE_NAME+" ( "+ AlumnTab.COLUMN_ALUMN_ID+" INT NOT NULL, "+ AlumnTab.COLUMN_TAB_ID+" INT KEY NOT NULL )");
         db.execSQL("CREATE TABLE "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_ID+" INTEGER PRIMARY KEY autoincrement, "+Pictogram.COLUMN_NAME+" TEXT NOT NULL, "+Pictogram.COLUMN_FOLDER+" TEXT NOT NULL )");
-        db.execSQL("CREATE TABLE "+ Alumn.ALUMN_PICTOGRAM_TABLE_NAME+" ( "+ Alumn.ALUMN_PICTOGRAM_COLUMN_ALUMN_ID+" INT NOT NULL, "+ Alumn.ALUMN_PICTOGRAM_COLUMN_PICTOGRAM_ID+" INT NOT NULL)");
+        db.execSQL("CREATE TABLE "+ AlumnPictogram.TABLE_NAME+" ( "+ AlumnPictogram.COLUMN_ALUMN_ID+" INT NOT NULL, "+ AlumnPictogram.COLUMN_PICTOGRAM_ID+" INT NOT NULL)");
         db.execSQL("CREATE TABLE "+Configuration.TABLE_NAME+" ( "+Configuration.COLUMN_ID+" INTEGER PRIMARY KEY autoincrement, "+Configuration.COLUMN_SERVER+" TEXT NOT NULL, "+Configuration.COLUMN_PORT+" TEXT NOT NULL )");
 
         loadData(db);
@@ -70,10 +71,10 @@ public class HermesSQLiteOpenHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('zanahoria', 'establo')");
 
         db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('banio', 'necesidades')");
-        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('no', 'necesidades')");
+        //db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('no', 'necesidades')");
         db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('sed_nena', 'necesidades')");
         db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('sed_nene', 'necesidades')");
-        db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('si', 'necesidades')");
+       // db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('si', 'necesidades')");
 
         db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('aro', 'pista')");
         db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('broches', 'pista')");
@@ -89,6 +90,12 @@ public class HermesSQLiteOpenHelper extends SQLiteOpenHelper {
         db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('riendas', 'pista')");
         db.execSQL("INSERT INTO "+Pictogram.TABLE_NAME+" ( "+Pictogram.COLUMN_NAME+" , "+Pictogram.COLUMN_FOLDER+" ) VALUES ('tarima', 'pista')");
 
+        db.execSQL("INSERT INTO "+AlumnPictogram.TABLE_NAME+" ( "+AlumnPictogram.COLUMN_ALUMN_ID+" , "+AlumnPictogram.COLUMN_PICTOGRAM_ID+" ) VALUES (1, 1)");
+        db.execSQL("INSERT INTO "+AlumnPictogram.TABLE_NAME+" ( "+AlumnPictogram.COLUMN_ALUMN_ID+" , "+AlumnPictogram.COLUMN_PICTOGRAM_ID+" ) VALUES (1, 16)");
+        db.execSQL("INSERT INTO "+AlumnPictogram.TABLE_NAME+" ( "+AlumnPictogram.COLUMN_ALUMN_ID+" , "+AlumnPictogram.COLUMN_PICTOGRAM_ID+" ) VALUES (1, 27)");
+        db.execSQL("INSERT INTO "+AlumnPictogram.TABLE_NAME+" ( "+AlumnPictogram.COLUMN_ALUMN_ID+" , "+AlumnPictogram.COLUMN_PICTOGRAM_ID+" ) VALUES (1, 41)");
+
+
     }
 
     @Override
@@ -97,7 +104,7 @@ public class HermesSQLiteOpenHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS "+ Tab.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS "+ AlumnTab.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS "+ Pictogram.TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS "+ Alumn.ALUMN_PICTOGRAM_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS "+ AlumnPictogram.TABLE_NAME);
         db.execSQL("DROP TABLE IF EXISTS "+ Configuration.TABLE_NAME);
         onCreate(db);
     }

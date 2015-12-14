@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">HermesBucarBala</string>
+    <string name="app_name">Hermes</string>
     <string name="action_settings">Configuración</string>
     <string name="action_therapist">Terapeuta</string>
     <string name="action_student">Alumno</string>
@@ -14,7 +14,7 @@
     <string name="title_configuration">Configuración Personal</string>
     <string name="configuration_ip_title">Dirección IP del Monitor</string>
     <string name="configuration_port_title">Puerto del Monitor</string>
-    <string name="title_activity_tab">TabActivity</string>
+    <string name="title_activity_tab">Hermes</string>
     <string name="section_format">Hello World from section: %1$d</string>
 	<string name="pista">pista</string>
     <string name="establo">establo</string>

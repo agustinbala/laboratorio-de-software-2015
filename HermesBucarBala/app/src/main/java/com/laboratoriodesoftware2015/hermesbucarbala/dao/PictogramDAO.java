@@ -55,6 +55,23 @@ public class PictogramDAO extends  BaseDAO<Pictogram> {
 
     @Override
     public Pictogram getById(long id) {
-        return null;
+        Pictogram pictogram = null;
+        Cursor cursorPictogram =
+                database.query(Pictogram.TABLE_NAME,
+                        Pictogram.ALL_COLUMNS,
+                        " id = ?",
+                        new String[]{String.valueOf(id)},
+                        null,
+                        null,
+                        null,
+                        null);
+        if(cursorPictogram !=null) {
+            cursorPictogram.moveToFirst();
+            pictogram = new Pictogram();
+            pictogram.setId(cursorPictogram.getInt(0));
+            pictogram.setName(cursorPictogram.getString(1));
+            pictogram.setFolder(cursorPictogram.getString(2));
+        }
+        return pictogram;
     }
 }

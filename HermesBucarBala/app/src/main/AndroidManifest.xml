@@ -25,7 +25,17 @@
             android:label="@string/app_name"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".activity.DashboardActivity"
+            android:name=".activity.DashboardAlumnActivity"
+            android:label="@string/title_activity_tab"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".activity.LoginActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.laboratoriodesoftware2015.hermesbucarbala.activity.LoginActivity" />
+        </activity>
+        <activity
+            android:name=".activity.DashboardTherapistActivity"
             android:label="@string/title_activity_tab"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme.NoActionBar"

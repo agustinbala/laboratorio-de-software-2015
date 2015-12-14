@@ -24,6 +24,7 @@ import com.laboratoriodesoftware2015.hermesbucarbala.presenter.TabPresenter;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,10 +35,13 @@ public class PlaceholderFragment extends Fragment {
      * The fragment argument representing the section number for this
      * fragment.
      */
-    private static final String ARG_SECTION_NUMBER = "section_number";
+    private static final String ARG_TAB_ID = "tab_id";
+    private static final String ARG_ALUMN_ID = "alumn_id";
+    private static final String ARG_ALUMN_MODE = "alumn_mode";
 
     private TabPresenter presenter;
     private TabFragmentAdapter tabAdapter;
+    private List<Pictogram> list;
 
     public PlaceholderFragment() {
     }
@@ -46,10 +50,12 @@ public class PlaceholderFragment extends Fragment {
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static PlaceholderFragment newInstance(String tabName) {
+    public static PlaceholderFragment newInstance(Integer tabId, Boolean alumnMode, Integer alumnId) {
         PlaceholderFragment fragment = new PlaceholderFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_SECTION_NUMBER, tabName);
+        args.putInt(ARG_TAB_ID, tabId);
+        args.putInt(ARG_ALUMN_ID, alumnId);
+        args.putBoolean(ARG_ALUMN_MODE,alumnMode);
         fragment.setArguments(args);
 
         return fragment;
@@ -60,16 +66,25 @@ public class PlaceholderFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_tab, container, false);
-        TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-        textView.setText(getArguments().getString(ARG_SECTION_NUMBER));
+        Boolean isAlumnMode = getArguments().getBoolean(ARG_ALUMN_MODE);
+        Integer alumnId = getArguments().getInt(ARG_ALUMN_ID);
+        Integer tabId = getArguments().getInt(ARG_TAB_ID);
         RecyclerView pictureContainer = (RecyclerView) rootView.findViewById(R.id.container);
         pictureContainer.setHasFixedSize(true);
         StaggeredGridLayoutManager gridLayoutManager =
                 new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL);
         pictureContainer.setLayoutManager(gridLayoutManager);
         this.presenter = new TabPresenter();
-        List<Pictogram> list = this.presenter.getPictogramsByTab(getArguments().getString(ARG_SECTION_NUMBER));
-        tabAdapter = new TabFragmentAdapter(list, getActivity());
+        if(tabId == -1){
+            list = this.presenter.getPictogramsByAlumn(alumnId);
+        } else {
+            if (!isAlumnMode) {
+                list = this.presenter.getPictogramsByTab(getArguments().getInt(ARG_TAB_ID));
+            } else {
+                list = this.presenter.getPictogramsByTabAndAlumn(tabId, alumnId);
+            }
+        }
+        tabAdapter = new TabFragmentAdapter(list, getActivity(), isAlumnMode,tabId );
         pictureContainer.setAdapter(tabAdapter);
         return rootView;
     }

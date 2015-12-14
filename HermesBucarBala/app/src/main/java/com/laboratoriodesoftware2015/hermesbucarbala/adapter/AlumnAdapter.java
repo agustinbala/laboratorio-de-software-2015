@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.laboratoriodesoftware2015.hermesbucarbala.R;
-import com.laboratoriodesoftware2015.hermesbucarbala.activity.DashboardActivity;
+import com.laboratoriodesoftware2015.hermesbucarbala.activity.DashboardAlumnActivity;
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.Alumn;
 
 import java.util.List;
@@ -68,7 +68,7 @@ public class AlumnAdapter extends RecyclerView.Adapter<AlumnAdapter.AlumnViewHol
                     editor.putInt(ALUMN_ID, (int) id);
                     editor.putBoolean(MODE_ALUMN, true);
                     editor.commit();
-                    Intent intent= new Intent(AlumnAdapter.this.context, DashboardActivity.class);
+                    Intent intent= new Intent(AlumnAdapter.this.context, DashboardAlumnActivity.class);
                     AlumnAdapter.this.context.startActivity(intent);
                 }
             });

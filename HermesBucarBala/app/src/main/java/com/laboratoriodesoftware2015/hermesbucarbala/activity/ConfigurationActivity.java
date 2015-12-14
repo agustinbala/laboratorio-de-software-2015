@@ -54,7 +54,6 @@ public class ConfigurationActivity extends AppCompatActivity implements Configur
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configuration);
         presenter = new ConfigurationPresenter(this);
-        setTitle("Configuración");
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         id = sharedPref.getInt(ALUMN_ID, 0);
         initView();
