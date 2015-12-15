@@ -12,7 +12,7 @@
         android:textSize="17dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:text="Nombre"
+        android:text="@string/student_name_title"
        />
 
     <EditText
@@ -34,7 +34,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:textColor="#FFF"
-        android:text="Apellido"
+        android:text="@string/student_last_name_title"
         />
 
     <EditText
@@ -57,7 +57,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:textColor="#FFF"
-        android:text="Sexo"
+        android:text="@string/student_fame_title"
         />
 
         <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
@@ -73,14 +73,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
                 android:textColor="#FFF"
-                android:text="Masculino"
+                android:text="@string/student_male_value"
                 android:textSize="17dp"
                />
             <RadioButton android:id="@+id/radio_gender_female"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#FFF"
-                android:text="Femenino"
+                android:text="@string/student_female_value"
                 android:textSize="17dp"
                 />
         </RadioGroup>
@@ -95,19 +95,40 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:textColor="#FFF"
-        android:text="Tamaño del pictograma"
+        android:text="@string/student_pictogram_size_title"
         />
 
-    <EditText
-        android:id="@+id/et_size"
-        android:layout_width="match_parent"
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:textSize="15dp"
-        android:imeOptions="actionDone"
-        android:textColor="#FFF"/>
+        android:orientation="horizontal">
+
+        <RadioButton android:id="@+id/radio_size_small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:textColor="#FFF"
+            android:text="@string/pictogram_size_small"
+            android:textSize="17dp"
+            />
+        <RadioButton android:id="@+id/radio_size_medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFF"
+            android:text="@string/pictogram_size_medium"
+            android:textSize="17dp"
+            />
+        <RadioButton android:id="@+id/radio_size_big"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFF"
+            android:text="@string/pictogram_size_big"
+            android:textSize="17dp"
+            />
+    </RadioGroup>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -120,7 +141,7 @@
             android:id="@+id/dialogButtonOK"
             android:layout_width="100px"
             android:layout_height="50px"
-            android:text="Guardar"
+            android:text="@string/button_save"
             android:layout_gravity="center"
             android:layout_marginRight="20dp"
             android:textColor="#FFF"
@@ -131,7 +152,7 @@
             android:id="@+id/dialogButtonCancel"
             android:layout_width="100px"
             android:layout_height="50px"
-            android:text="Cancelar"
+            android:text="@string/button_cancel"
             android:layout_gravity="center"
             android:textColor="#FFF"
             android:background="@drawable/button_selector"

@@ -84,7 +84,9 @@ public class ConfigurationActivity extends AppCompatActivity implements Configur
         if(alumn != null) {
             name.setText(alumn.getName());
             lastname.setText(alumn.getLastname());
-            gender.setText(alumn.getGender().toString());
+            if(alumn.getGender() != null) {
+                gender.setText(("M".equals(alumn.getGender()) ? getString(R.string.student_male_value) : getString( R.string.student_female_value)));
+            }
             size.setText(alumn.getSize());
             if(alumn.getTabs() != null){
                setTabAlumn();
@@ -102,7 +104,7 @@ public class ConfigurationActivity extends AppCompatActivity implements Configur
             public void onClick(View view) {
                 final Dialog dialog = new Dialog(ConfigurationActivity.this);
                 dialog.setContentView(R.layout.configuration_new_dialog);
-                dialog.setTitle("Configuracion Personal");
+                dialog.setTitle(getString(R.string.action_settings));
 
                 final EditText etServer = (EditText) dialog.findViewById(R.id.et_ip);
                 final EditText etPort = (EditText) dialog.findViewById(R.id.et_port);

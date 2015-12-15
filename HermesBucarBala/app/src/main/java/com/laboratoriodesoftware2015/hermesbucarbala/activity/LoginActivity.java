@@ -60,7 +60,9 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
                 final EditText etLastname = (EditText) dialog.findViewById(R.id.et_lastname);
                 final RadioButton rb_male = (RadioButton) dialog.findViewById(R.id.radio_gender_male);
                 final RadioButton rb_female = (RadioButton) dialog.findViewById(R.id.radio_gender_female);
-                final EditText etSize = (EditText) dialog.findViewById(R.id.et_size);
+                final RadioButton rb_size_small = (RadioButton) dialog.findViewById(R.id.radio_size_small);
+                final RadioButton rb_size_medium = (RadioButton) dialog.findViewById(R.id.radio_size_medium);
+                final RadioButton rb_size_big= (RadioButton) dialog.findViewById(R.id.radio_size_big);
 
                 Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
                 // if button is clicked, close the custom dialog
@@ -68,9 +70,11 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
                     @Override
                     public void onClick(View v) {
                         if(etName.getText().length() > 0 && etLastname.getText().length() > 0 &&
-                                (rb_male.isChecked() || rb_female.isChecked())) {
+                                (rb_male.isChecked() || rb_female.isChecked()) &&
+                                (rb_size_small.isChecked() || rb_size_medium.isChecked() || rb_size_big.isChecked())) {
                             Character gender = (rb_male.isChecked()) ? 'M' : 'F';
-                            presenter.saveAlumn(etName.getText().toString(), etLastname.getText().toString(),gender, etSize.getText().toString());
+                            String size= (rb_size_small.isChecked()) ? Alumn.SIZE_SMALL : (rb_size_big.isChecked()) ? Alumn.SIZE_BIG: Alumn.SIZE_MEDIUM;
+                            presenter.saveAlumn(etName.getText().toString(), etLastname.getText().toString(),gender, size);
                             dialog.dismiss();
                         } else {
                             Toast.makeText(LoginActivity.this, "Complete todos los campos", Toast.LENGTH_LONG).show();

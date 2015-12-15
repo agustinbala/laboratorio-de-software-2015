@@ -12,7 +12,7 @@
         android:textSize="17dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:text="Dirección ip"
+        android:text="@string/configuration_ip_address"
         />
 
     <EditText
@@ -34,7 +34,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:textColor="#FFF"
-        android:text="Puerto"
+        android:text="@string/configuration_port"
         />
 
     <EditText
@@ -51,7 +51,7 @@
         android:id="@+id/dialogConfingOK"
         android:layout_width="wrap_content"
         android:layout_height="50px"
-        android:text="Guardar"
+        android:text="@string/button_save"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
