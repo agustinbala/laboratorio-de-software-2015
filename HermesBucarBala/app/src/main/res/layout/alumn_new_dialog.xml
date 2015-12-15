@@ -85,6 +85,30 @@
                 />
         </RadioGroup>
 
+
+    <TextView
+        android:id="@+id/tv_size"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="17dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textColor="#FFF"
+        android:text="Tamaño del pictograma"
+        />
+
+    <EditText
+        android:id="@+id/et_size"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:textSize="15dp"
+        android:imeOptions="actionDone"
+        android:textColor="#FFF"/>
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"

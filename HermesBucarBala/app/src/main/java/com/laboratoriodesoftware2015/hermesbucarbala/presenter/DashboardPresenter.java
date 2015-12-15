@@ -48,6 +48,14 @@ public class DashboardPresenter {
         return alumn.getName();
     }
 
+    public String getAlumnPictureSize(Integer idAlumn){
+        Alumn alumn = new Alumn();
+        alumnDAO.open();
+        alumn = alumnDAO.getById(idAlumn);
+        alumnDAO.close();
+        return alumn.getSize();
+    }
+
     public void deletePictogram(Integer idAlumn, Integer idPictogram){
         alumnPictogramDAO.open();
         alumnPictogramDAO.delete(new AlumnPictogram(idAlumn, idPictogram));

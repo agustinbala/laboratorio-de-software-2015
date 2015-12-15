@@ -1,6 +1,7 @@
 package com.laboratoriodesoftware2015.hermesbucarbala.adapter;
 
 import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.drawable.Drawable;
@@ -36,13 +37,15 @@ public class TabFragmentAdapter extends RecyclerView.Adapter<TabFragmentAdapter.
     private Boolean isAlumnMode;
     private Integer tabId;
     private List<Pictogram> selectedPictograms;
+    private String pictureSize;
 
-    public TabFragmentAdapter(List<Pictogram> pictogramList, Activity context,  Boolean alumnMode, Integer tabId, List<Pictogram> selectedPictograms){
+    public TabFragmentAdapter(List<Pictogram> pictogramList, Activity context,  Boolean alumnMode, Integer tabId, List<Pictogram> selectedPictograms, String pictureSize){
         this.pictograms = pictogramList;
         this.context = context;
         this.isAlumnMode= alumnMode;
         this.tabId = tabId;
         this.selectedPictograms = selectedPictograms;
+        this.pictureSize = pictureSize;
     }
 
     @Override
@@ -60,6 +63,7 @@ public class TabFragmentAdapter extends RecyclerView.Adapter<TabFragmentAdapter.
             holder.imPicture.setImageDrawable(d);
             if(tabId == -1){
                 if(isAlumnMode) {
+                    holder.pictureContainer.setLayoutParams(getLayoutParams());
                     holder.imPicture.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -150,6 +154,22 @@ public class TabFragmentAdapter extends RecyclerView.Adapter<TabFragmentAdapter.
 
     }
 
+    private ViewGroup.LayoutParams getLayoutParams() {
+
+        LinearLayout.LayoutParams layoutParams =  new LinearLayout.LayoutParams(200, 200);
+
+        if(pictureSize.toUpperCase().equals("MEDIANO")){
+            layoutParams = new LinearLayout.LayoutParams(200, 200);
+        }
+        if(pictureSize.toUpperCase().equals("CHICO")){
+            layoutParams = new LinearLayout.LayoutParams(100, 100);
+        }
+        if(pictureSize.toUpperCase().equals("GRANDE")){
+            layoutParams = new LinearLayout.LayoutParams(300, 300);
+        }
+        return layoutParams;
+    }
+
     @Override
     public int getItemCount() {
         return pictograms.size();
@@ -167,6 +187,7 @@ public class TabFragmentAdapter extends RecyclerView.Adapter<TabFragmentAdapter.
 
         }
     }
+
 
 
 }

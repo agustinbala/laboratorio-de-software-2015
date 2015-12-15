@@ -61,7 +61,7 @@ public class DashboardTherapistActivity extends AppCompatActivity implements Das
 
         List<Tab> listTab = this.presenter.getListTabs();
 
-        mSectionsPagerAdapter = new TabPagerAdapter(getFragmentManager(),  listTab, false, idAlumn, this.presenter.getAlumnName(idAlumn));
+        mSectionsPagerAdapter = new TabPagerAdapter(getFragmentManager(),  listTab, false, idAlumn, this.presenter.getAlumnName(idAlumn), this.presenter.getAlumnPictureSize(idAlumn));
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 

@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.laboratoriodesoftware2015.hermesbucarbala.R;
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.Alumn;
@@ -46,6 +47,7 @@ public class ConfigurationActivity extends AppCompatActivity implements Configur
     private CheckBox emociones;
     private long id;
     private Alumn alumn;
+    private LinearLayout student;
     private static final String ALUMN_ID = "ALUMN_ID";
 
 
@@ -56,12 +58,14 @@ public class ConfigurationActivity extends AppCompatActivity implements Configur
         presenter = new ConfigurationPresenter(this);
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         id = sharedPref.getInt(ALUMN_ID, 0);
+        alumn = null;
         initView();
 
     }
 
     public void initView(){
 
+        student = (LinearLayout) findViewById(R.id.configuration_student);
         name = (TextView) findViewById(R.id.student_name_content);
         lastname = (TextView) findViewById(R.id.student_last_name);
         gender = (TextView) findViewById(R.id.student_fame);
@@ -73,17 +77,21 @@ public class ConfigurationActivity extends AppCompatActivity implements Configur
         establo = (CheckBox) findViewById(R.id.checkbox_establo);
         necesidades = (CheckBox) findViewById(R.id.checkbox_necesidades);
         emociones = (CheckBox) findViewById(R.id.checkbox_emociones);
-        alumn = presenter.getAlumn(id);
+        if(id != 0) {
+            alumn = presenter.getAlumn(id);
+        }
         final Configuration conf = presenter.getConfiguration();
         if(alumn != null) {
             name.setText(alumn.getName());
             lastname.setText(alumn.getLastname());
             gender.setText(alumn.getGender().toString());
+            size.setText(alumn.getSize());
             if(alumn.getTabs() != null){
                setTabAlumn();
             }
+        }else{
+            student.setVisibility(View.GONE);
         }
-        //size.setText(alumn.getSize());
         if(conf != null) {
             port.setText(conf.getPort());
             ip.setText(conf.getServer());

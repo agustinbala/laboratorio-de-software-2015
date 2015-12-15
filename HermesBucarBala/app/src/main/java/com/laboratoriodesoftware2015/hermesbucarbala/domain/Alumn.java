@@ -80,10 +80,11 @@ public class Alumn implements Serializable{
         this.pictograms = pictograms;
     }
 
-    public Alumn(String name, String lastname, Character gender) {
+    public Alumn(String name, String lastname, Character gender, String size) {
         this.name = name;
         this.lastname = lastname;
         this.gender = gender;
+        this.size = size;
     }
 
     public Alumn() {

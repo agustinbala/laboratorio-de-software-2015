@@ -60,6 +60,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
                 final EditText etLastname = (EditText) dialog.findViewById(R.id.et_lastname);
                 final RadioButton rb_male = (RadioButton) dialog.findViewById(R.id.radio_gender_male);
                 final RadioButton rb_female = (RadioButton) dialog.findViewById(R.id.radio_gender_female);
+                final EditText etSize = (EditText) dialog.findViewById(R.id.et_size);
 
                 Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
                 // if button is clicked, close the custom dialog
@@ -69,7 +70,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
                         if(etName.getText().length() > 0 && etLastname.getText().length() > 0 &&
                                 (rb_male.isChecked() || rb_female.isChecked())) {
                             Character gender = (rb_male.isChecked()) ? 'M' : 'F';
-                            presenter.saveAlumn(etName.getText().toString(), etLastname.getText().toString(),gender);
+                            presenter.saveAlumn(etName.getText().toString(), etLastname.getText().toString(),gender, etSize.getText().toString());
                             dialog.dismiss();
                         } else {
                             Toast.makeText(LoginActivity.this, "Complete todos los campos", Toast.LENGTH_LONG).show();
@@ -88,24 +89,31 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
             }
         });
 
+        FloatingActionButton settings = (FloatingActionButton) findViewById(R.id.settings);
+        settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent= new Intent(LoginActivity.this, ConfigurationActivity.class);
+                startActivity(intent);
 
+            }});
 
-        recyclerView = (RecyclerView) findViewById(R.id.rv);
-        recyclerView.setHasFixedSize(true);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(llm);
-        alumnAdapter = new AlumnAdapter(new ArrayList<Alumn>(), this);
-        recyclerView.setAdapter(alumnAdapter);
-        presenter.getAlumns();
-    }
+                recyclerView = (RecyclerView) findViewById(R.id.rv);
+                recyclerView.setHasFixedSize(true);
+                LinearLayoutManager llm = new LinearLayoutManager(this);
+                recyclerView.setLayoutManager(llm);
+                alumnAdapter = new AlumnAdapter(new ArrayList<Alumn>(), this);
+                recyclerView.setAdapter(alumnAdapter);
+                presenter.getAlumns();
+            }
 
-    @Override
-    public void onListAlumns(List<Alumn> alumnList) {
-        alumnAdapter.setAlumns(alumnList);
-    }
+            @Override
+            public void onListAlumns(List<Alumn> alumnList) {
+                alumnAdapter.setAlumns(alumnList);
+            }
 
-    @Override
-    public void onCreatedAlumn() {
-        presenter.getAlumns();
-    }
-}
+            @Override
+            public void onCreatedAlumn() {
+                presenter.getAlumns();
+            }
+        }

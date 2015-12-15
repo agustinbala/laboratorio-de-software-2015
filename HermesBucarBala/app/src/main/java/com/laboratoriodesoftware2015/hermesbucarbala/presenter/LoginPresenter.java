@@ -40,12 +40,12 @@ public class LoginPresenter {
         }).start();
     }
 
-    public void saveAlumn(final String name, final String lastname, final Character gender){
+    public void saveAlumn(final String name, final String lastname, final Character gender, final String size){
         new Thread(new Runnable() {
             @Override
             public void run() {
                 alumnDAO.open();
-                alumnDAO.save(new Alumn(name, lastname, gender));
+                alumnDAO.save(new Alumn(name, lastname, gender, size));
                 alumnDAO.close();
                 ((Activity)callback).runOnUiThread(new Runnable() {
                     @Override
@@ -56,5 +56,6 @@ public class LoginPresenter {
             }
         }).start();
     }
+
 
 }

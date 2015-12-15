@@ -60,7 +60,7 @@ public class DashboardAlumnActivity extends AppCompatActivity implements Dashboa
         setSupportActionBar(toolbar);
 
         List<Tab> listTab = this.presenter.getListTabsById((long)idAlumn);
-        mSectionsPagerAdapter = new TabPagerAdapter(getFragmentManager(),  listTab, true, idAlumn, this.presenter.getAlumnName(idAlumn));
+        mSectionsPagerAdapter = new TabPagerAdapter(getFragmentManager(),  listTab, true, idAlumn, this.presenter.getAlumnName(idAlumn), this.presenter.getAlumnPictureSize(idAlumn));
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 

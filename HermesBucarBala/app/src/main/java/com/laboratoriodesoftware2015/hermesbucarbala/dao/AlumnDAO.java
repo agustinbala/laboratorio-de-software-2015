@@ -25,6 +25,7 @@ public class AlumnDAO extends BaseDAO<Alumn> {
         values.put(Alumn.COLUMN_NAME, object.getName());
         values.put(Alumn.COLUMN_LASTNAME, object.getLastname());
         values.put(Alumn.COLUMN_GENDER, object.getGender().toString());
+        values.put(Alumn.COLUMN_SIZE, object.getSize());
         long insertId = database.insert(Alumn.TABLE_NAME, null,
                 values);
         Cursor cursor = database.query(Alumn.TABLE_NAME,

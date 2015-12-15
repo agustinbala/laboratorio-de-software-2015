@@ -24,13 +24,15 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
     private Integer alumnId;
     private String alumnName;
     private Integer currentPosition;
+    private String pictureSize;
 
-    public TabPagerAdapter(FragmentManager fm, List<Tab> tabList, Boolean alumnMode, Integer alumnId, String alumnName) {
+    public TabPagerAdapter(FragmentManager fm, List<Tab> tabList, Boolean alumnMode, Integer alumnId, String alumnName, String pictureSize) {
         super(fm);
         this.tabList = tabList;
         this.alumnMode = alumnMode;
         this.alumnId = alumnId;
         this.alumnName = alumnName;
+        this.pictureSize = pictureSize;
     }
 
     @Override
@@ -38,9 +40,9 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
         // getItem is called to instantiate the fragment for the given page.
         // Return a TabFragment (defined as a static inner class below).
         if (position == 0) {
-            return TabFragment.newInstance(-1, alumnMode, alumnId);
+            return TabFragment.newInstance(-1, alumnMode, alumnId, pictureSize);
         } else {
-            return TabFragment.newInstance(this.tabList.get(position - 1).getId(), alumnMode, alumnId);
+            return TabFragment.newInstance(this.tabList.get(position - 1).getId(), alumnMode, alumnId, pictureSize);
         }
     }
 
