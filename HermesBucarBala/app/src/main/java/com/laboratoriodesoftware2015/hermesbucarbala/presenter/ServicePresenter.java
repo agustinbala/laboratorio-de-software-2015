@@ -4,9 +4,11 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.laboratoriodesoftware2015.hermesbucarbala.dao.AlumnDAO;
+import com.laboratoriodesoftware2015.hermesbucarbala.dao.ConfigurationDAO;
 import com.laboratoriodesoftware2015.hermesbucarbala.dao.PictogramDAO;
 import com.laboratoriodesoftware2015.hermesbucarbala.dao.TabDAO;
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.Alumn;
+import com.laboratoriodesoftware2015.hermesbucarbala.domain.Configuration;
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.Pictogram;
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.Tab;
 import com.laboratoriodesoftware2015.hermesbucarbala.service.RestApi;
@@ -20,34 +22,47 @@ public class ServicePresenter {
     private RestApi service;
     private AlumnDAO alumnDao;
     private PictogramDAO pictogramDAO;
+    private ConfigurationDAO configurationDAO;
+
+    public ServicePresenter(){
+        this.alumnDao = new AlumnDAO();
+        this.service = new RestApiImpl();
+        this.pictogramDAO = new PictogramDAO();
+        this.configurationDAO = new ConfigurationDAO();
+    }
 
     public void sendNotification(Integer idPicture, Integer idAlumn){
-        Alumn alumn;
-        Pictogram pictogram;
-        alumn = getAlumn(idAlumn);
-        pictogram = getPictogram(idPicture);
-        service = new RestApiImpl();
-
-        service.sendNotification(pictogram.getName(), pictogram.getFolder(), alumn.getName());
+        final Alumn alumn = getAlumn(idAlumn);
+        final Pictogram pictogram = getPictogram(idPicture);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                service.sendNotification(pictogram.getName(), pictogram.getFolder(), alumn.getName(), getUrl());
+            }}).start();
     }
 
     private Pictogram getPictogram(Integer idPicture) {
-        Pictogram pictogram;
-        pictogramDAO = new PictogramDAO();
         pictogramDAO.open();
-        pictogram =pictogramDAO.getById(idPicture);
+        Pictogram pictogram =pictogramDAO.getById(idPicture);
         pictogramDAO.close();
         return pictogram;
     }
 
 
     private Alumn getAlumn(Integer id) {
-        Alumn alumn;
-        alumnDao = new AlumnDAO();
         alumnDao.open();
-        alumn = alumnDao.getById(id);
+        Alumn alumn = alumnDao.getById(id);
         alumnDao.close();
         return alumn;
+    }
 
+    private String getUrl(){
+        configurationDAO.open();
+        Configuration configuration = configurationDAO.get();
+        configurationDAO.close();
+        if(configuration != null){
+            return "http://"+configuration.getServer()+":"+configuration.getPort()+"/notification";
+        }
+        return "";
     }
 }

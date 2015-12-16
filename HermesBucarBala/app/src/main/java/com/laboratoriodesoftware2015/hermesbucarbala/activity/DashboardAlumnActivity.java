@@ -149,9 +149,7 @@ public class DashboardAlumnActivity extends AppCompatActivity implements Dashboa
 
     @Override
     public void sendNotification(Integer idPicture) {
-
         service.sendNotification(idPicture, idAlumn);
-
     }
 
     private void updateView(){

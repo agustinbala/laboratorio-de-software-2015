@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.laboratoriodesoftware2015.hermesbucarbala"
-        minSdkVersion 19
+        minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -27,4 +27,6 @@ dependencies {
     compile 'com.android.support:support-v13:23.1.1'
     compile 'com.google.android.gms:play-services-appindexing:8.1.0'
     compile 'com.google.code.gson:gson:2.2.4'
+    compile 'com.squareup.okhttp:okhttp:2.5.0'
+
 }

@@ -5,5 +5,5 @@ package com.laboratoriodesoftware2015.hermesbucarbala.service;
  */
 public interface RestApi {
 
-    void sendNotification(String text, String category, String children);
+    void sendNotification(String text, String category, String children, String url);
 }
