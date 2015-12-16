@@ -10,6 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
+        android:layout_marginBottom="20dp"
         android:textSize="30sp"
         android:text="@string/title_student" />
 
@@ -71,10 +72,7 @@
         style="@style/configuration_content"
         />
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+
         <TextView
             android:id="@+id/student_categorias_title"
             android:layout_width="wrap_content"
@@ -82,11 +80,15 @@
             style="@style/configuration_title"
             android:text="@string/student_category_title" />
 
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
         <CheckBox android:id="@+id/checkbox_pista"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/configuration_content"
-            android:layout_marginLeft="5dp"
             android:text="@string/pista"
             />
 
