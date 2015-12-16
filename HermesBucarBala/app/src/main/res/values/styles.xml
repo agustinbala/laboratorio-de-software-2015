@@ -29,4 +29,10 @@
         <item name="android:textSize">14sp</item>
         <item name="android:layout_marginBottom">10dp</item>
     </style>
+
+    <style name="CustomDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:height">400dp</item>
+        <item name="android:width">500dp</item>
+    </style>
 </resources>

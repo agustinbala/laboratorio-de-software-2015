@@ -3,13 +3,9 @@
     android:orientation="vertical"
     android:layout_margin="10dp"
     android:padding="10dp"
+    android:id="@+id/image_tab_container"
     android:layout_width="500dp"
-    android:layout_height="500dp">
+    android:layout_height="400dp">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerInside"
-        android:id="@+id/image_tab_container"/>
 
 </LinearLayout>

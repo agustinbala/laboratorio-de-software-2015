@@ -73,19 +73,7 @@ public class TabFragmentAdapter extends RecyclerView.Adapter<TabFragmentAdapter.
                     holder.imPicture.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            ((DashboardView) context).sendNotification(pictograms.get(position).getId());
-                            final Dialog dialog = new Dialog(context);
-                            dialog.setContentView(R.layout.pictogram_image_dialog);
-                            dialog.setTitle(pictograms.get(position).getName());
-                            final ImageView imageView = (ImageView) dialog.findViewById(R.id.image_tab_container);
-                            try (InputStream ims = context.getAssets().open(pictograms.get(position).getFolder()+"/"+pictograms.get(position).getName()+".png")) {
-                                Drawable d = Drawable.createFromStream(ims, null);
-                                imageView.setImageDrawable(d);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                            dialog.show();
-                            AudioUtil.reproduce(context, pictograms.get(position).getFolder() + "/" + pictograms.get(position).getName() + ".m4a");
+                            onPictogramPressed(position);
                         }
                     });
                     holder.imPicture.setOnLongClickListener(new View.OnLongClickListener() {
@@ -115,19 +103,7 @@ public class TabFragmentAdapter extends RecyclerView.Adapter<TabFragmentAdapter.
                     holder.imPicture.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            ((DashboardView) context).sendNotification(pictograms.get(position).getId());
-                            final Dialog dialog = new Dialog(context);
-                            dialog.setContentView(R.layout.pictogram_image_dialog);
-                            dialog.setTitle(pictograms.get(position).getName());
-                            final ImageView imageView = (ImageView) dialog.findViewById(R.id.image_tab_container);
-                            try (InputStream ims = context.getAssets().open(pictograms.get(position).getFolder()+"/"+pictograms.get(position).getName()+".png")) {
-                                Drawable d = Drawable.createFromStream(ims, null);
-                                imageView.setImageDrawable(d);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                            dialog.show();
-                            AudioUtil.reproduce(context, pictograms.get(position).getFolder()+"/"+pictograms.get(position).getName()+".m4a");
+                            onPictogramPressed(position);
                         }
                     });
                     holder.imPicture.setOnLongClickListener(new View.OnLongClickListener() {
@@ -198,6 +174,21 @@ public class TabFragmentAdapter extends RecyclerView.Adapter<TabFragmentAdapter.
         }
     }
 
+    private void onPictogramPressed(Integer position){
+        ((DashboardView) context).sendNotification(pictograms.get(position).getId());
+        final Dialog dialog = new Dialog(context, R.style.CustomDialog);
+        dialog.setContentView(R.layout.pictogram_image_dialog);
+        dialog.setTitle(pictograms.get(position).getName());
+        final LinearLayout imageView = (LinearLayout) dialog.findViewById(R.id.image_tab_container);
+        try (InputStream ims = context.getAssets().open(pictograms.get(position).getFolder()+"/"+pictograms.get(position).getName()+".png")) {
+            Drawable d = Drawable.createFromStream(ims, null);
+            imageView.setBackground(d);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        dialog.show();
+        AudioUtil.reproduce(context, pictograms.get(position).getFolder() + "/" + pictograms.get(position).getName() + ".m4a");
+    }
 
 
 }
