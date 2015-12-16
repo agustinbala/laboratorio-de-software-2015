@@ -117,6 +117,7 @@
         <RadioButton android:id="@+id/radio_size_medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
             android:textColor="#FFF"
             android:text="@string/pictogram_size_medium"
             android:textSize="17dp"
