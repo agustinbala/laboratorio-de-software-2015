@@ -4,8 +4,11 @@ import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.Service;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +22,7 @@ import android.widget.Toast;
 
 import com.laboratoriodesoftware2015.hermesbucarbala.R;
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.Pictogram;
+import com.laboratoriodesoftware2015.hermesbucarbala.presenter.ServicePresenter;
 import com.laboratoriodesoftware2015.hermesbucarbala.presenter.TabPresenter;
 import com.laboratoriodesoftware2015.hermesbucarbala.util.AudioUtil;
 import com.laboratoriodesoftware2015.hermesbucarbala.view.DashboardView;
@@ -38,6 +42,7 @@ public class TabFragmentAdapter extends RecyclerView.Adapter<TabFragmentAdapter.
     private Integer tabId;
     private List<Pictogram> selectedPictograms;
     private String pictureSize;
+    private static final String ALUMN_ID = "ALUMN_ID";
 
     public TabFragmentAdapter(List<Pictogram> pictogramList, Activity context,  Boolean alumnMode, Integer tabId, List<Pictogram> selectedPictograms, String pictureSize){
         this.pictograms = pictogramList;
@@ -67,7 +72,7 @@ public class TabFragmentAdapter extends RecyclerView.Adapter<TabFragmentAdapter.
                     holder.imPicture.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            //TODO SENT TO MONITOR
+                            ((DashboardView) context).sendNotification(pictograms.get(position).getId());
                             final Dialog dialog = new Dialog(context);
                             dialog.setContentView(R.layout.pictogram_image_dialog);
                             dialog.setTitle(pictograms.get(position).getName());
@@ -109,7 +114,7 @@ public class TabFragmentAdapter extends RecyclerView.Adapter<TabFragmentAdapter.
                     holder.imPicture.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            //TODO SENT TO MONITOR
+                            ((DashboardView) context).sendNotification(pictograms.get(position).getId());
                             final Dialog dialog = new Dialog(context);
                             dialog.setContentView(R.layout.pictogram_image_dialog);
                             dialog.setTitle(pictograms.get(position).getName());

@@ -130,6 +130,11 @@ public class DashboardTherapistActivity extends AppCompatActivity implements Das
        updateView();
     }
 
+    @Override
+    public void sendNotification(Integer pictogramId) {
+
+    }
+
     private void updateView(){
         Integer currentPosition = mSectionsPagerAdapter.getCurrentPosition();
         setTabs();

@@ -8,4 +8,6 @@ public interface DashboardView {
     void deletePictogram(Integer pictogramId);
 
     void addOrDeletePictogram(Integer pictogramId);
+
+    void sendNotification(Integer pictogramId);
 }

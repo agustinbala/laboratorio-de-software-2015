@@ -17,6 +17,7 @@ import com.laboratoriodesoftware2015.hermesbucarbala.R;
 import com.laboratoriodesoftware2015.hermesbucarbala.adapter.TabPagerAdapter;
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.Tab;
 import com.laboratoriodesoftware2015.hermesbucarbala.presenter.DashboardPresenter;
+import com.laboratoriodesoftware2015.hermesbucarbala.presenter.ServicePresenter;
 import com.laboratoriodesoftware2015.hermesbucarbala.view.DashboardView;
 import com.laboratoriodesoftware2015.hermesbucarbala.view.SlidingTabLayout;
 
@@ -42,6 +43,7 @@ public class DashboardAlumnActivity extends AppCompatActivity implements Dashboa
     private SlidingTabLayout mSlidingTabLayout;
 
     private DashboardPresenter presenter;
+    private ServicePresenter service;
 
 
     private int idAlumn;
@@ -56,6 +58,7 @@ public class DashboardAlumnActivity extends AppCompatActivity implements Dashboa
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         idAlumn =  sharedPref.getInt(ALUMN_ID, 0);
         this.presenter = new DashboardPresenter();
+        this.service = new ServicePresenter();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -132,6 +135,13 @@ public class DashboardAlumnActivity extends AppCompatActivity implements Dashboa
             presenter.savePictogram(idAlumn,pictogramId);
         }
         updateView();
+    }
+
+    @Override
+    public void sendNotification(Integer idPicture) {
+
+        service.sendNotification(idPicture, idAlumn);
+
     }
 
     private void updateView(){
