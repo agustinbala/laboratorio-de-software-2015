@@ -25,9 +25,11 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
     private String alumnName;
     private Integer currentPosition;
     private String pictureSize;
+    private FragmentManager fm;
 
     public TabPagerAdapter(FragmentManager fm, List<Tab> tabList, Boolean alumnMode, Integer alumnId, String alumnName, String pictureSize) {
         super(fm);
+        this.fm = fm;
         this.tabList = tabList;
         this.alumnMode = alumnMode;
         this.alumnId = alumnId;

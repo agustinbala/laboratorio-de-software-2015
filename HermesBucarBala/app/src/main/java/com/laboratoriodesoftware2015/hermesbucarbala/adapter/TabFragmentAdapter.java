@@ -21,6 +21,7 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.laboratoriodesoftware2015.hermesbucarbala.R;
+import com.laboratoriodesoftware2015.hermesbucarbala.domain.Alumn;
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.Pictogram;
 import com.laboratoriodesoftware2015.hermesbucarbala.presenter.ServicePresenter;
 import com.laboratoriodesoftware2015.hermesbucarbala.presenter.TabPresenter;
@@ -163,14 +164,18 @@ public class TabFragmentAdapter extends RecyclerView.Adapter<TabFragmentAdapter.
 
         LinearLayout.LayoutParams layoutParams =  new LinearLayout.LayoutParams(200, 200);
 
-        if(pictureSize.toUpperCase().equals("MEDIANO")){
+        if(pictureSize != null) {
+            if (pictureSize.toUpperCase().equals(Alumn.SIZE_MEDIUM)) {
+                layoutParams = new LinearLayout.LayoutParams(200, 200);
+            }
+            if (pictureSize.toUpperCase().equals(Alumn.SIZE_SMALL)) {
+                layoutParams = new LinearLayout.LayoutParams(100, 100);
+            }
+            if (pictureSize.toUpperCase().equals(Alumn.SIZE_BIG)) {
+                layoutParams = new LinearLayout.LayoutParams(300, 300);
+            }
+        } else {
             layoutParams = new LinearLayout.LayoutParams(200, 200);
-        }
-        if(pictureSize.toUpperCase().equals("CHICO")){
-            layoutParams = new LinearLayout.LayoutParams(100, 100);
-        }
-        if(pictureSize.toUpperCase().equals("GRANDE")){
-            layoutParams = new LinearLayout.LayoutParams(300, 300);
         }
         return layoutParams;
     }

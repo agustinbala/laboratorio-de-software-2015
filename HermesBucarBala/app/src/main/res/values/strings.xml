@@ -6,12 +6,16 @@
     <string name="delete_student">Eliminar Alumn@</string>
     <string name="add_student">Nuevo Alumn@</string>
     <string name="title_student">Alumn@</string>
+    <string name="list_alumns_title">ALUMN@S</string>
     <string name="student_name_title">Nombre</string>
     <string name="student_last_name_title">Apellido</string>
     <string name="student_fame_title">Sexo</string>
+    <string name="student_female_value">Femenino</string>
+    <string name="student_male_value">Masculino</string>
+    <string name="student_pictogram_size_title">Tamaño del pictograma</string>
     <string name="student_picture_title">Tamaño de pictograma</string>
     <string name="student_category_title">Habilitar Categorias</string>
-    <string name="title_configuration">Configuración Personal</string>
+    <string name="title_configuration">Configuración General</string>
     <string name="configuration_ip_title">Dirección IP del Monitor</string>
     <string name="configuration_port_title">Puerto del Monitor</string>
     <string name="title_activity_tab">Hermes</string>
@@ -20,4 +24,11 @@
     <string name="establo">establo</string>
     <string name="necesidades">necesidades</string>
     <string name="emociones">emociones</string>
+    <string name="configuration_ip_address">Dirección IP</string>
+    <string name="configuration_port">Puerto</string>
+    <string name="button_save">GUARDAR</string>
+    <string name="button_cancel">CANCELAR</string>
+    <string name="pictogram_size_small">Chico</string>
+    <string name="pictogram_size_medium">Mediano</string>
+    <string name="pictogram_size_big">Grande</string>
 </resources>

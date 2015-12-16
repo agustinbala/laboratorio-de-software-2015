@@ -12,6 +12,10 @@ public class Alumn implements Serializable{
     public static final String COLUMN_GENDER = "GENDER";
     public static final String COLUMN_SIZE = "SIZE";
 
+    public static final String SIZE_SMALL = "CHICO";
+    public static final String SIZE_MEDIUM = "MEDIANO";
+    public static final String SIZE_BIG= "GRANDE";
+
     public static final String[] ALL_COLUMNS = { COLUMN_ID, COLUMN_NAME, COLUMN_LASTNAME, COLUMN_GENDER, COLUMN_SIZE };
 
 

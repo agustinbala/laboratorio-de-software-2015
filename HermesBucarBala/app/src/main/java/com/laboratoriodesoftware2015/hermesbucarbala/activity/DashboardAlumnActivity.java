@@ -47,6 +47,7 @@ public class DashboardAlumnActivity extends AppCompatActivity implements Dashboa
 
 
     private int idAlumn;
+    private Boolean fromConfigurationScreen = false;
 
     private static final String MODE_ALUMN = "MODE_ALUMN";
     private static final String ALUMN_ID = "ALUMN_ID";
@@ -62,6 +63,22 @@ public class DashboardAlumnActivity extends AppCompatActivity implements Dashboa
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        drawViewPager();
+
+    }
+
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (fromConfigurationScreen) {
+            drawViewPager();
+        }
+        fromConfigurationScreen = false;
+    }
+
+    private void drawViewPager(){
         List<Tab> listTab = this.presenter.getListTabsById((long)idAlumn);
         mSectionsPagerAdapter = new TabPagerAdapter(getFragmentManager(),  listTab, true, idAlumn, this.presenter.getAlumnName(idAlumn), this.presenter.getAlumnPictureSize(idAlumn));
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -72,16 +89,8 @@ public class DashboardAlumnActivity extends AppCompatActivity implements Dashboa
         mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.pager_header);
         mSlidingTabLayout.setDistributeEvenly(true);
         mSlidingTabLayout.setViewPager(mViewPager);
-
     }
 
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setTabs();
-    }
 
     private void setTabs(){
         List<Tab> listTab = this.presenter.getListTabsById((long)idAlumn);
@@ -104,6 +113,7 @@ public class DashboardAlumnActivity extends AppCompatActivity implements Dashboa
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            fromConfigurationScreen = true;
             Intent intent = new Intent(DashboardAlumnActivity.this, ConfigurationActivity.class);
             startActivity(intent);
         }
