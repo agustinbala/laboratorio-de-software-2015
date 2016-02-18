@@ -1,7 +1,10 @@
 package com.laboratoriodesoftware2015.hermesbucarbala.activity;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -45,6 +48,7 @@ public class ConfigurationActivity extends AppCompatActivity implements Configur
     private CheckBox establo;
     private CheckBox necesidades;
     private CheckBox emociones;
+    private Button deleteBtn;
     private long id;
     private Alumn alumn;
     private LinearLayout student;
@@ -77,8 +81,35 @@ public class ConfigurationActivity extends AppCompatActivity implements Configur
         establo = (CheckBox) findViewById(R.id.checkbox_establo);
         necesidades = (CheckBox) findViewById(R.id.checkbox_necesidades);
         emociones = (CheckBox) findViewById(R.id.checkbox_emociones);
+        deleteBtn = (Button) findViewById(R.id.btn_delete_alumn);
         if(id != 0) {
             alumn = presenter.getAlumn(id);
+            deleteBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new AlertDialog.Builder(ConfigurationActivity.this).setTitle(getString(R.string.delete_alumn_confirmation_title)).setMessage(getString(R.string.delete_alumn_confirmation_message))
+                            .setCancelable(false).setPositiveButton(getString(R.string.dialog_confirmation_button_positive), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            presenter.deleteAlumn(alumn);
+                            Intent intent = new Intent(ConfigurationActivity.this, LoginActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            ConfigurationActivity.this.finish();
+                        }
+                    }).setNegativeButton(getString(R.string.dialog_confirmation_button_negative), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    }).show();
+
+
+                }
+            });
+            deleteBtn.setVisibility(View.VISIBLE);
+        } else {
+            deleteBtn.setVisibility(View.GONE);
         }
         final Configuration conf = presenter.getConfiguration();
         if(alumn != null) {

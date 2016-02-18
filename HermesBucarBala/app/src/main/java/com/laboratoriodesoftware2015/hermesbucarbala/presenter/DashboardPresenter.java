@@ -37,7 +37,11 @@ public class DashboardPresenter {
         alumnDAO.open();
         alumn = alumnDAO.getById(idAlumn);
         alumnDAO.close();
-        return alumn.getTabs();
+        if(alumn != null) {
+            return alumn.getTabs();
+        } else {
+            return null;
+        }
     }
 
     public String getAlumnName(Integer idAlumn){

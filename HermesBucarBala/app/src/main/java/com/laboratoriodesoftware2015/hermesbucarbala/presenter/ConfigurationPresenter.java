@@ -95,4 +95,10 @@ public class ConfigurationPresenter {
         tabDAO.close();
         return tabs;
     }
+
+    public void deleteAlumn(Alumn alumn){
+        alumnDAO.open();
+        alumnDAO.delete(alumn);
+        alumnDAO.close();
+    }
 }

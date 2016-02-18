@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.laboratoriodesoftware2015.hermesbucarbala.R;
 import com.laboratoriodesoftware2015.hermesbucarbala.adapter.TabPagerAdapter;
@@ -133,6 +134,16 @@ public class DashboardTherapistActivity extends AppCompatActivity implements Das
     @Override
     public void sendNotification(Integer pictogramId) {
 
+    }
+
+    @Override
+    public void showConnetionError() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(DashboardTherapistActivity.this, getString(R.string.connection_error_message), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void updateView(){

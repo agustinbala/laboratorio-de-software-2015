@@ -10,4 +10,6 @@ public interface DashboardView {
     void addOrDeletePictogram(Integer pictogramId);
 
     void sendNotification(Integer pictogramId);
+
+    void showConnetionError();
 }

@@ -2,6 +2,7 @@ package com.laboratoriodesoftware2015.hermesbucarbala.service;
 
 import android.util.Log;
 import android.util.Pair;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.squareup.okhttp.MediaType;
@@ -30,25 +31,26 @@ public class RestApiImpl implements RestApi{
 
     @Override
     public void sendNotification(String text, String category, String children, final String url) {
-        Date now = new Date();
-        String contentString = "{\"id\": null, \"name\": \""+ text+"\"}";
-        String contextString = "{\"id\": null, \"name\": \""+ category+"\"}";
-        String childrenString = "{\"id\": null, \"name\": \""+ children+"\"}";
-        String dateString = "\"dateReceived\": \""+df.format(now)+"\"";
-        final String json = "[{\"content\": "+contentString+", \"context\": "+contextString+", \"category\": "+contextString+", \"child\": "+childrenString+" , "+dateString+"}]";
 
-        RequestBody body = RequestBody.create(JSON, json);
-        Request request = new Request.Builder()
-                .url(url)
-                .post(body)
-                .build();
+            Date now = new Date();
+            String contentString = "{\"id\": null, \"name\": \"" + text + "\"}";
+            String contextString = "{\"id\": null, \"name\": \"" + category + "\"}";
+            String childrenString = "{\"id\": null, \"name\": \"" + children + "\"}";
+            String dateString = "\"dateReceived\": \"" + df.format(now) + "\"";
+            final String json = "[{\"content\": " + contentString + ", \"context\": \"CEDICA\"" + ", \"category\": " + contextString + ", \"child\": " + childrenString + " , " + dateString + "}]";
 
-        try {
-            client.newCall(request).execute();
-        } catch (IOException e) {
-            Log.e("RestApiImpl", "Error sending notification to monitor");
+            RequestBody body = RequestBody.create(JSON, json);
+            Request request = new Request.Builder()
+                    .url(url)
+                    .post(body)
+                    .build();
+
+            try {
+                client.newCall(request).execute();
+            } catch (IOException e) {
+                Log.e("RestApiImpl", "Error sending notification to monitor");
+            }
         }
 
 
-    }
 }

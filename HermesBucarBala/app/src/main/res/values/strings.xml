@@ -31,4 +31,9 @@
     <string name="pictogram_size_small">Chico</string>
     <string name="pictogram_size_medium">Mediano</string>
     <string name="pictogram_size_big">Grande</string>
+    <string name="delete_alumn_confirmation_title">Confirmar</string>
+    <string name="delete_alumn_confirmation_message">¿Está seguro que deseas eliminar el alumn@?</string>
+    <string name="dialog_confirmation_button_positive">Si</string>
+    <string name="dialog_confirmation_button_negative">No</string>
+    <string name="connection_error_message">No se configuró correctamente la URL del servidor.\nLa notificación no fue enviada.</string>
 </resources>

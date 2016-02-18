@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.laboratoriodesoftware2015.hermesbucarbala.R;
 import com.laboratoriodesoftware2015.hermesbucarbala.adapter.TabPagerAdapter;
@@ -59,7 +60,7 @@ public class DashboardAlumnActivity extends AppCompatActivity implements Dashboa
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         idAlumn =  sharedPref.getInt(ALUMN_ID, 0);
         this.presenter = new DashboardPresenter();
-        this.service = new ServicePresenter();
+        this.service = new ServicePresenter(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -150,6 +151,16 @@ public class DashboardAlumnActivity extends AppCompatActivity implements Dashboa
     @Override
     public void sendNotification(Integer idPicture) {
         service.sendNotification(idPicture, idAlumn);
+    }
+
+    @Override
+    public void showConnetionError() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(DashboardAlumnActivity.this, getString(R.string.connection_error_message), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void updateView(){

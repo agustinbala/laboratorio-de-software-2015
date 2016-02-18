@@ -42,7 +42,9 @@ public class AlumnDAO extends BaseDAO<Alumn> {
 
     @Override
     public  void delete(Alumn object) {
-
+        database.delete(Alumn.TABLE_NAME,
+                Alumn.COLUMN_ID + " = ?",
+                new String[]{String.valueOf(object.getId())});
     }
 
     @Override
@@ -69,7 +71,7 @@ public class AlumnDAO extends BaseDAO<Alumn> {
 
     @Override
     public Alumn getById(long id) {
-
+        Alumn alumn = null;
         Cursor cursor =
                 database.query(Alumn.TABLE_NAME,
                         Alumn.ALL_COLUMNS,
@@ -84,37 +86,39 @@ public class AlumnDAO extends BaseDAO<Alumn> {
         if (cursor != null)
             cursor.moveToFirst();
 
-        Alumn alumn = convertAlumn(cursor);
-        cursor.close();
+        if(cursor.getCount() > 0) {
+          alumn = convertAlumn(cursor);
+            cursor.close();
 
-        ArrayList idAlumTab = new ArrayList();
-        Cursor cursorAlumnTab =
-                database.query(AlumnTab.TABLE_NAME,
-                        AlumnTab.ALL_COLUMNS,
-                        " alumn_id = ?",
-                        new String[]{String.valueOf(alumn.getId())},
-                        null,
-                        null,
-                        null,
-                        null);
+            ArrayList idAlumTab = new ArrayList();
+            Cursor cursorAlumnTab =
+                    database.query(AlumnTab.TABLE_NAME,
+                            AlumnTab.ALL_COLUMNS,
+                            " alumn_id = ?",
+                            new String[]{String.valueOf(alumn.getId())},
+                            null,
+                            null,
+                            null,
+                            null);
 
-        cursorAlumnTab.moveToFirst();
-        while (!cursorAlumnTab.isAfterLast()) {
-            idAlumTab.add(cursorAlumnTab.getInt(1));
-            cursorAlumnTab.moveToNext();
-        }
-        cursorAlumnTab.close();
-        List<Tab> tabs = new ArrayList<Tab>();
-        TabDAO dao = new TabDAO();
-        dao.open();
-        for(int i=0; i<idAlumTab.size(); i++) {
-            Tab tab = dao.getById(Long.valueOf(String.valueOf(idAlumTab.get(i))));
-            if(tab != null) {
-                tabs.add(tab);
+            cursorAlumnTab.moveToFirst();
+            while (!cursorAlumnTab.isAfterLast()) {
+                idAlumTab.add(cursorAlumnTab.getInt(1));
+                cursorAlumnTab.moveToNext();
             }
+            cursorAlumnTab.close();
+            List<Tab> tabs = new ArrayList<Tab>();
+            TabDAO dao = new TabDAO();
+            dao.open();
+            for (int i = 0; i < idAlumTab.size(); i++) {
+                Tab tab = dao.getById(Long.valueOf(String.valueOf(idAlumTab.get(i))));
+                if (tab != null) {
+                    tabs.add(tab);
+                }
+            }
+            dao.close();
+            alumn.setTabs(tabs);
         }
-        dao.close();
-        alumn.setTabs(tabs);
         return alumn;
     }
 
