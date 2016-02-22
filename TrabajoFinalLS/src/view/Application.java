@@ -356,7 +356,7 @@ public class Application implements OnNotificationReceived {
 				}
 				Date dateTo = dateToFilter.getDate();
 				if (dateTo != null) {
-					dateTo.setHours(11);
+					dateTo.setHours(23);
 					dateTo.setMinutes(59);
 					dateTo.setSeconds(59);
 				}

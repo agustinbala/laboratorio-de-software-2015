@@ -133,7 +133,7 @@ public class NotificationDAOImpl implements NotificationDAO {
 		if(dateToDate != null){
 			toRemove = new ArrayList<Notification>();
 			for (Notification notification : result) {
-				if(notification.getDate().after(dateToDate)){
+				if(notification.getDate().after(dateToDate) || notification.getDate().equals(dateToDate)){
 					toRemove.add(notification);
 				}
 			}
