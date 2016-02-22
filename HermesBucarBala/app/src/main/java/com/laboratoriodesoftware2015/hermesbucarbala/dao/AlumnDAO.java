@@ -42,9 +42,11 @@ public class AlumnDAO extends BaseDAO<Alumn> {
 
     @Override
     public  void delete(Alumn object) {
+
         database.delete(Alumn.TABLE_NAME,
                 Alumn.COLUMN_ID + " = ?",
                 new String[]{String.valueOf(object.getId())});
+
     }
 
     @Override
@@ -119,6 +121,7 @@ public class AlumnDAO extends BaseDAO<Alumn> {
             dao.close();
             alumn.setTabs(tabs);
         }
+        
         return alumn;
     }
 

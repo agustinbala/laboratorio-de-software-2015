@@ -112,6 +112,7 @@
             android:layout_marginRight="20dp"
             android:textColor="#FFF"
             android:text="@string/pictogram_size_small"
+            android:imeOptions="actionDone"
             android:textSize="17dp"
             />
         <RadioButton android:id="@+id/radio_size_medium"
@@ -120,6 +121,7 @@
             android:layout_marginRight="20dp"
             android:textColor="#FFF"
             android:text="@string/pictogram_size_medium"
+            android:imeOptions="actionDone"
             android:textSize="17dp"
             />
         <RadioButton android:id="@+id/radio_size_big"
@@ -127,6 +129,7 @@
             android:layout_height="wrap_content"
             android:textColor="#FFF"
             android:text="@string/pictogram_size_big"
+            android:imeOptions="actionDone"
             android:textSize="17dp"
             />
     </RadioGroup>

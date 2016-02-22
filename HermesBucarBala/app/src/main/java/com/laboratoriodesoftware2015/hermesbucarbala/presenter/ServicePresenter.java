@@ -1,11 +1,18 @@
 package com.laboratoriodesoftware2015.hermesbucarbala.presenter;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.util.Log;
+import android.widget.Toast;
+
 import com.laboratoriodesoftware2015.hermesbucarbala.dao.AlumnDAO;
 import com.laboratoriodesoftware2015.hermesbucarbala.dao.ConfigurationDAO;
 import com.laboratoriodesoftware2015.hermesbucarbala.dao.PictogramDAO;
+import com.laboratoriodesoftware2015.hermesbucarbala.dao.TabDAO;
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.Alumn;
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.Configuration;
 import com.laboratoriodesoftware2015.hermesbucarbala.domain.Pictogram;
+import com.laboratoriodesoftware2015.hermesbucarbala.domain.Tab;
 import com.laboratoriodesoftware2015.hermesbucarbala.service.RestApi;
 import com.laboratoriodesoftware2015.hermesbucarbala.service.RestApiImpl;
 import com.laboratoriodesoftware2015.hermesbucarbala.view.DashboardView;
@@ -21,12 +28,12 @@ public class ServicePresenter {
     private ConfigurationDAO configurationDAO;
     private DashboardView view;
 
-    public ServicePresenter(DashboardView view){
+    public ServicePresenter(Context context){
         this.alumnDao = new AlumnDAO();
         this.service = new RestApiImpl();
         this.pictogramDAO = new PictogramDAO();
         this.configurationDAO = new ConfigurationDAO();
-        this.view = view;
+        this.context = context;
     }
 
     public void sendNotification(Integer idPicture, Integer idAlumn){

@@ -67,22 +67,16 @@ public class TabFragmentAdapter extends RecyclerView.Adapter<TabFragmentAdapter.
         try (InputStream ims = context.getAssets().open(pictograms.get(position).getFolder()+"/"+pictograms.get(position).getName()+".png")) {
             Drawable d = Drawable.createFromStream(ims, null);
             holder.imPicture.setImageDrawable(d);
+            holder.pictureContainer.setLayoutParams(getLayoutParams());
             if(tabId == -1){
                 if(isAlumnMode) {
-                    holder.pictureContainer.setLayoutParams(getLayoutParams());
                     holder.imPicture.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             onPictogramPressed(position);
                         }
                     });
-                    holder.imPicture.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            ((DashboardView) context).deletePictogram(pictograms.get(position).getId());
-                            return true;
-                        }
-                    });
+                    holder.imPicture.setOnLongClickListener(null);
                 } else {
                     holder.imPicture.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -106,13 +100,7 @@ public class TabFragmentAdapter extends RecyclerView.Adapter<TabFragmentAdapter.
                             onPictogramPressed(position);
                         }
                     });
-                    holder.imPicture.setOnLongClickListener(new View.OnLongClickListener() {
-                        @Override
-                        public boolean onLongClick(View v) {
-                            ((DashboardView) context).deletePictogram(pictograms.get(position).getId());
-                            return true;
-                        }
-                    });
+                    holder.imPicture.setOnLongClickListener(null);
                 } else {
                     Boolean isSelected = false;
                     for (Pictogram pic : selectedPictograms) {

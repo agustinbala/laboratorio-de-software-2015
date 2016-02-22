@@ -42,8 +42,8 @@ public class TabFragment extends Fragment {
     private TabPresenter presenter;
     private TabFragmentAdapter tabAdapter;
     private List<Pictogram> list;
-    private ImageView yes;
-    private ImageView no;
+    private LinearLayout yes;
+    private LinearLayout no;
 
 
     public TabFragment() {
@@ -75,12 +75,12 @@ public class TabFragment extends Fragment {
         Integer alumnId = getArguments().getInt(ARG_ALUMN_ID);
         Integer tabId = getArguments().getInt(ARG_TAB_ID);
         String pictureSize = getArguments().getString(PICTURE_SIZE);
-        yes = (ImageView) rootView.findViewById(R.id.si);
-        no = (ImageView) rootView.findViewById(R.id.no);
+        yes = (LinearLayout) rootView.findViewById(R.id.si);
+        no = (LinearLayout) rootView.findViewById(R.id.no);
         LinearLayout afirmativeContainer = (LinearLayout) rootView.findViewById(R.id.afirmative);
         try (InputStream imsSi = getActivity().getAssets().open("si.png")) {
             Drawable dsi = Drawable.createFromStream(imsSi, null);
-            yes.setImageDrawable(dsi);
+            yes.setBackground(dsi);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -92,7 +92,7 @@ public class TabFragment extends Fragment {
         });
         try (InputStream imsNo = getActivity().getAssets().open("no.png")) {
             Drawable dno = Drawable.createFromStream(imsNo, null);
-            no.setImageDrawable(dno);
+            no.setBackground(dno);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -122,7 +122,7 @@ public class TabFragment extends Fragment {
                 alumnPictograms = this.presenter.getPictogramsByAlumn(alumnId);
                 afirmativeContainer.setVisibility(View.GONE);
             } else {
-                list = this.presenter.getPictogramsByTabAndAlumn(tabId, alumnId);
+                list = this.presenter.getPictogramsByTab(getArguments().getInt(ARG_TAB_ID));
                 afirmativeContainer.setVisibility(View.VISIBLE);
             }
         }
@@ -137,10 +137,10 @@ public class TabFragment extends Fragment {
         final Dialog dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.pictogram_image_dialog);
         dialog.setTitle(name);
-        final ImageView imageView = (ImageView) dialog.findViewById(R.id.image_tab_container);
+        final LinearLayout imageView = (LinearLayout) dialog.findViewById(R.id.image_tab_container);
         try (InputStream ims = getActivity().getAssets().open(asset)) {
             Drawable d = Drawable.createFromStream(ims, null);
-            imageView.setImageDrawable(d);
+            imageView.setBackground(d);
         } catch (IOException e) {
             e.printStackTrace();
         }

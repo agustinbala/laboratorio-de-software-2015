@@ -33,16 +33,18 @@
             android:layout_marginTop="80dp"
             android:orientation="vertical">
 
-            <ImageView
+            <LinearLayout
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="10dp"
+                android:orientation="vertical"
                 android:id="@+id/si"/>
 
-            <ImageView
+            <LinearLayout
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_margin="10dp"
+                android:orientation="vertical"
                 android:id="@+id/no"/>
 
         </LinearLayout>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Hermes</string>
+    <string name="app_name">HermesBucarBala</string>
     <string name="action_settings">Configuración</string>
     <string name="action_therapist">Terapeuta</string>
     <string name="action_student">Alumno</string>
