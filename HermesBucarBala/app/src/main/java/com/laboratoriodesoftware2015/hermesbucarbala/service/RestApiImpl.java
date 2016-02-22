@@ -35,9 +35,10 @@ public class RestApiImpl implements RestApi{
             Date now = new Date();
             String contentString = "{\"id\": null, \"name\": \"" + text + "\"}";
             String contextString = "{\"id\": null, \"name\": \"" + "CEDICA" + "\"}";
+            String categoryString = "{\"id\": null, \"name\": \"" + category + "\"}";
             String childrenString = "{\"id\": null, \"name\": \"" + children + "\"}";
             String dateString = "\"dateReceived\": \"" + df.format(now) + "\"";
-            final String json = "[{\"content\": " + contentString + ", \"context\": "+ contextString + ", \"category\": " + contextString + ", \"child\": " + childrenString + " , " + dateString + "}]";
+            final String json = "[{\"content\": " + contentString + ", \"context\": "+ contextString + ", \"category\": " + categoryString + ", \"child\": " + childrenString + " , " + dateString + "}]";
 
             RequestBody body = RequestBody.create(JSON, json);
             Request request = new Request.Builder()
