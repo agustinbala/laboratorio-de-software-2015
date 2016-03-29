@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>Practica1Web31</display-name>
+  <welcome-file-list>
+    <welcome-file>login.html</welcome-file>
+  </welcome-file-list>
+  <servlet>
+    <servlet-name>bienvenido</servlet-name>
+    <servlet-class>misservlets.Bienvenida</servlet-class>
+    <init-param>
+      <param-name>name</param-name>
+      <param-value>Natalia</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>bienvenido</servlet-name>
+    <url-pattern>/bienvenido </url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>contadorVisitas</servlet-name>
+    <servlet-class>misservlets.ContadorVisitas</servlet-class>
+    <init-param>
+      <param-name>cantidadVisitas</param-name>
+      <param-value>0</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>contadorVisitas</servlet-name>
+    <url-pattern>/contadorVisitas </url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>loginUsr</servlet-name>
+    <servlet-class>misservlets.LoginUsr</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>loginUsr</servlet-name>
+    <url-pattern>/loginUsr</url-pattern>
+  </servlet-mapping>
+    <servlet>
+    <servlet-name>encuesta</servlet-name>
+    <servlet-class>misservlets.Encuesta</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>encuesta</servlet-name>
+    <url-pattern>/encuesta</url-pattern>
+  </servlet-mapping>
+</web-app>
