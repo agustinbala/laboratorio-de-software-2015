@@ -10,11 +10,7 @@
 <body>
     <%@ include file="userMenu.html" %>
      <div style="padding:20px;margin-top:30px;height:1500px;">    
-     <ul style="list-style-type:none">
-		  <li><a href="detailRoute.jsp">Ruta 1</a> <button>Editar</button><button>Eliminar</button><li>
-		  <li><a href="detailRoute.jsp">Ruta 2</a>  <button>Editar</button><button>Eliminar</button></li>
-		  <li><a href="detailRoute.jsp">Ruta 3</a> <button>Editar</button><button>Eliminar</button></li>
-    </ul>
+     <p>Detalle de la ruta</p>
     
 </div>
 </body>

@@ -10,7 +10,28 @@
 <body>
     <%@ include file="userMenu.html" %>
      <div style="padding:20px;margin-top:30px;height:1500px;">
-    <p>Buscar nuevas rutas</p>
+     <FORM id="new_route_form" ACTION="http://localhost:8080/jruteros/register" METHOD="POST">
+<TABLE ALIGN="center" WIDTH="100%" CELLSPACING="2" CELLPADDING="2">
+<TR> <TD ALIGN="right">Filtrar: </TD>
+<TD><select name="filtrar">
+  <option value="Actividad">Actividad</option>
+  <option value="Formato">Formato</option>
+  <option value="Distancia">Distancia</option>
+  <option value="Difcultad">Difcultad</option>  
+</select></TD>
+</TR>
+<TR> <TD ALIGN="right">Ordenacion: </TD>
+<TD><select name="ordenacion">
+  <option value="Distancia">Distancia</option>
+  <option value="Dificultad">Dificultad</option>
+  <option value="Puntuacion">Puntuacion</option>
+  <option value="Personas">Cantidad de Personas</option> 
+</select></TD>
+</TR>
+<TR><TD ALIGN="right"></TD><TD><INPUT ALIGN="LEFT" TYPE="Submit" NAME="enviar" VALUE="Buscar"></TD>
+</TR>
+</TABLE>
+</FORM>     
 </div>
 </body>
 </html>

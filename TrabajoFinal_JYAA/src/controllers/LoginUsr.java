@@ -24,14 +24,7 @@ public class LoginUsr extends HttpServlet {
 	private String profile;
 	Hashtable<String, String> userData;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public LoginUsr() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-    
+ 
     @Override
     public void init(ServletConfig servletConfig){
     	userData = new Hashtable<String, String>();

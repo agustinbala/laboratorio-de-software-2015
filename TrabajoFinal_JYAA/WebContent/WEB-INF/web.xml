@@ -7,17 +7,25 @@
   <servlet>
     <servlet-name>loginUsr</servlet-name>
     <servlet-class>controllers.LoginUsr</servlet-class>
-     <init-param>
-		<param-name>admin</param-name>
-		<param-value>admin123</param-value>
-	</init-param>
-	<init-param>
-		<param-name>user</param-name>
-		<param-value>user123</param-value>
-	</init-param>
+    <init-param>
+      <param-name>admin</param-name>
+      <param-value>admin123</param-value>
+    </init-param>
+    <init-param>
+      <param-name>user</param-name>
+      <param-value>user123</param-value>
+    </init-param>
+  </servlet>
+   <servlet>
+    <servlet-name>register</servlet-name>
+    <servlet-class>controllers.Register</servlet-class>  
   </servlet>
   <servlet-mapping>
     <servlet-name>loginUsr</servlet-name>
     <url-pattern>/loginUsr</url-pattern>
+  </servlet-mapping>
+    <servlet-mapping>
+    <servlet-name>register</servlet-name>
+    <url-pattern>/register</url-pattern>
   </servlet-mapping>
 </web-app>
