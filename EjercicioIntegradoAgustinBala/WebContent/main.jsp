@@ -4,16 +4,19 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+
+<link rel="stylesheet" type="text/css" href="/jruteros/styles/main.css" />
+<title>Pantalla Principal</title>
 </head>
 <body>
 <%
-    String perfil = request.getSession().getAttribute("perfil").toString();
-    if(perfil.equals("administrador")) { %>
-    	 <%="Es administrador" %>
-<%    } else {%>
-		<%="Es usuario" %>
-<%    } %>
-
+    if(request.getSession(false) == null) {
+		response.sendRedirect("/jruteros/login.html");	
+    } %>
+    <%@ include file="menu.jsp" %>
+<div id="content-wrapper">
+<div id="content">
+</div>
+</div>
 </body>
 </html>
