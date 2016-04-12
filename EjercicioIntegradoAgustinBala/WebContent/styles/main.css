@@ -1,0 +1,53 @@
+/* CSSTerm.com Simple CSS menu */
+
+ 
+html {
+	 height:100%;
+	 margin: 0px;
+}
+
+body {
+	 height:100%;
+	 margin: 0px;
+}
+
+.header {
+    background: #005555;
+    color: white;
+    height: 230px;
+	margin-top: 46px;    
+}
+
+#content
+{
+    background: grey;
+    color: white;
+    height:100%;
+    margin-top:0px;
+    padding-top:200px;
+}
+
+#content-wrapper
+{
+    width: 100%;
+    height:100%;
+}
+
+img {
+	width: 100%;
+    height:100%;
+	display: block;
+	margin-left: 0px;
+	margin-right: 0px; 
+}
+
+h1 {
+	width: 100%;
+	text-align: center;
+	font-size: 25px;
+	vertical-align: middle;
+	line-height: 100px;   
+	margin: 0px
+}
+
+
