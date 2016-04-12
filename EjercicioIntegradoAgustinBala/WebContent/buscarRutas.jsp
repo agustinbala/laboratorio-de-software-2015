@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 
 <link rel="stylesheet" type="text/css" href="/jruteros/styles/main.css" />
-<title>Pantalla Principal</title>
+<title>Buscar rutas</title>
 </head>
 <body>
 <%
@@ -16,6 +16,7 @@
     <%@ include file="menu.jsp" %>
 <div id="content-wrapper">
 <div id="content">
+<h1>Buscar rutas</h1>
 </div>
 </div>
 </body>

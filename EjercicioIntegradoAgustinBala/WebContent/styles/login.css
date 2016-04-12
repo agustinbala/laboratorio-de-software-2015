@@ -1,0 +1,15 @@
+.login {
+	height: 250px;
+	width: 250px;
+	margin: auto;
+	border: 1px #CCC solid;
+	padding: 10px;
+	margin-top: 300px;
+	background-color: #CCC
+}
+
+input {
+	background: #e0e0e0;
+	border: 1px #FFF solid;
+	padding: 5px;
+}
